@@ -1,0 +1,126 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 19 abr. 2026, 8:22:22 p. m.
+    Author     : Usuario
+*/
+
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f7f7f7;
+}
+
+/* Barra de búsqueda */
+.search-box {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.search-box form {
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 20px 0 0 20px;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-box button {
+    padding: 8px 15px;
+    border: none;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 0 20px 20px 0;
+}
+
+.search-box button:hover {
+    background: #dff9fb;
+}
+
+/* HEADER */
+.header {
+    background: #2e86de;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header a {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+}
+
+/* BANNER */
+.banner {
+    text-align: center;
+    padding: 40px;
+    background: #dff9fb;
+}
+
+/* PRODUCTOS */
+.productos {
+    padding: 20px;
+    text-align: center;
+}
+
+.grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    padding: 15px;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 100%;
+    border-radius: 8px;
+}
+/* Botones */
+.acciones {
+    margin-top: auto; /* 👈 esto los baja siempre al fondo */
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.btn {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    background: #2e86de;
+    color: white;
+    cursor: pointer;
+}
+
+.comprar {
+    background: #27ae60;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background: #2e86de;
+    color: white;
+    margin-top: 20px;
+}
