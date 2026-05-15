@@ -1,10 +1,10 @@
-# 🐾 PetShop - Sistema de Gestión Veterinaria
+# 🐾 PetShop - Plataforma de E-commerce y Venta de Productos para mascotas
 
 [![Licencia: MIT](https://shields.io)](https://opensource.org)
 [![Java: 17](https://shields.io)](https://oracle.com)
 [![Jakarta EE: 10](https://shields.io)](https://jakarta.ee)
 
-Este es un proyecto colaborativo de desarrollo web integrado para la gestión integral de una veterinaria/petshop. La aplicación implementa una arquitectura robusta basada en el patrón **MVC (Modelo-Vista-Controlador)**, utilizando tecnologías modernas de **Jakarta EE** con persistencia de datos en **MySQL**.
+Este es un proyecto colaborativo de desarrollo web integrado para una plataforma E-commerce y venta de productos para mascotas. La aplicación implementa una arquitectura robusta basada en el patrón **MVC (Modelo-Vista-Controlador)**, utilizando tecnologías modernas de **Jakarta EE** con persistencia de datos en **MySQL**.
 
 ---
 
