@@ -1,10 +1,10 @@
-# 🐾 PetShop - Plataforma de E-commerce y Venta de Productos para mascotas
+# 🐾 PetShop - Venta de Productos para mascotas
 
 [![Licencia: MIT](https://shields.io)](https://opensource.org)
 [![Java: 17](https://shields.io)](https://oracle.com)
 [![Jakarta EE: 10](https://shields.io)](https://jakarta.ee)
 
-Este es un proyecto colaborativo de desarrollo web integrado para una plataforma E-commerce y venta de productos para mascotas. La aplicación implementa una arquitectura robusta basada en el patrón **MVC (Modelo-Vista-Controlador)**, utilizando tecnologías modernas de **Jakarta EE** con persistencia de datos en **MySQL**.
+Este es un proyecto colaborativo de desarrollo web para un sistema de gestión y venta de productos para mascotas. La aplicación implementa una arquitectura robusta basada en el patrón **MVC** (Modelo-Vista-Controlador), utilizando tecnologías modernas de Jakarta EE con persistencia de datos en **MySQL**.
 
 ---
 
@@ -12,8 +12,8 @@ Este es un proyecto colaborativo de desarrollo web integrado para una plataforma
 
 Para garantizar la consistencia en el equipo, asegúrate de contar con el siguiente entorno local:
 
-*   **IDE:** Apache NetBeans 21
-*   **Lenguaje:** Java SE / JDK 17
+*   **IDE:** Apache NetBeans 19
+*   **Lenguaje:** Java SE / JDK 21
 *   **Tecnología Web:** Jakarta EE 10 (Servlets, JSP, JSTL)
 *   **Servidor de Aplicaciones Actual:** Apache Tomcat 10.1.12 *(Contenedor de Servlets)*
 *   **Base de Datos:** MySQL Server & phpMyAdmin
@@ -28,10 +28,23 @@ El código fuente sigue un patrón de diseño limpio y una separación estricta 
 *   `src/java/controlador/`: Servlets que interceptan y gestionan las peticiones HTTP (ej. `LoginServlet.java`).
 *   `src/java/modelo/config/`: Clases de infraestructura técnica y conexiones (ej. `ConexionBD.java`).
 *   `src/java/modelo/dao/`: Capa de Acceso a Datos (Data Access Object) para aislamiento de consultas SQL.
+*   `src/java/modelo/dao/impl/`: Implementaciones concretas de los DAOs utilizando JDBC y MySQL.
+*   `src/java/modelo/factory/`: Fábrica de objetos DAO para desacoplar la creación de instancias.
+*   `src/java/modelo/dto/`: Objetos de transferencia de datos utilizados para transportar información entre capas.
 *   `src/java/modelo/entidad/`: Clases POJO que representan las entidades del negocio (ej. `Usuario.java`).
+*   `src/java/util/`: Clases utilitarias como validaciones, constantes y funciones de seguridad.
 *   `src/java/servicio/`: Lógica de negocio intermedia que conecta los controladores con los DAOs.
 *   `web/vista/`: Vistas de usuario estructuradas en subcarpetas para un crecimiento modular y escalable.
 
+## 🔐 Roles del sistema
+*  ADMIN: acceso a CRUD completo
+*  CLIENTE: acceso a compras y catálogo
+
+## 🧩 Funcionalidades
+*  Autenticación con control y sesiones
+*  Gestión de roles(ADMIN / CLIENTE)
+*  Registro de usuarios
+*  Arquitectura en capas basada en MVC con patrones DAO, Service, DTO, Factory y Util para una mejor separación de responsabilidades
 ---
 
 ## 🚀 Guía de Instalación y Despliegue Local
@@ -68,6 +81,7 @@ Este repositorio es una prueba de desarrollo colaborativo y control de versiones
 *   **Stephano Chuchon**
 
 ---
+
 
 ## 📄 Licencia
 
