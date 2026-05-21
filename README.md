@@ -51,7 +51,7 @@ El código fuente sigue un patrón de diseño limpio y una separación estricta 
 
 ### 1. Clonar el repositorio
 ```bash
-[git clone https://github.com](https://github.com/Rojadeveloper/DesarrolloWebIntegrado-PetShop.git)
+git clone https://github.com/Rojadeveloper/DesarrolloWebIntegrado-PetShop.git
 ```
 
 ### 2. Configuración de la Base de Datos
