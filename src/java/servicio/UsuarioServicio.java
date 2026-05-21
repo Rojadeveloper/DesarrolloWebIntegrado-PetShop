@@ -4,30 +4,28 @@
  */
 package servicio;
 
-import modelo.dao.UsuarioDAO;
+import modelo.dao.IUsuarioDAO;
 import modelo.entidad.Usuario;
+import modelo.factory.DAOFactory;
 
 public class UsuarioServicio {
 
-    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private IUsuarioDAO usuarioDAO;
+    
+    public UsuarioServicio(){
+        usuarioDAO = DAOFactory.getUsuarioDAO();
+    }
 
     public Usuario login(String correo, String password) {
 
-        // Validación básica
-        if (correo == null || password == null) {
+        if (!isValid(correo,password)) {
             return null;
         }
         
-        // Llamada al DAO
-        Usuario user = usuarioDAO.login(correo, password);
-
-        // Lógica de negocio
-        if (user != null) {
-            System.out.println("Login correcto");
-        } else {
-            System.out.println("Login incorrecto");
-        }
-
-        return user;
+        return usuarioDAO.login(correo.trim(), password.trim());
+    }
+    
+    private boolean isValid(String correo, String password){
+        return correo !=null && password !=null && !correo.trim().isEmpty() && !password.trim().isEmpty();   
     }
 }

@@ -2,23 +2,29 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package modelo.dao;
-
-import modelo.config.ConexionBD;
+package modelo.dao.impl;
+import modelo.dao.IUsuarioDAO;
 import modelo.entidad.Usuario;
+import modelo.config.ConexionBD;
 import java.sql.*;
-
-public class UsuarioDAO {
-
+/**
+ *
+ * @author User
+ */
+public class UsuarioDAOImpl implements IUsuarioDAO{
+    
+    @Override  
     public Usuario login(String correo, String password) {
+        
         Usuario user = null;
 
-        String sql = "SELECT * FROM usuario WHERE correo=? AND password=?";
+        String sql = "SELECT id_usuario, nombre, correo, rol FROM usuario WHERE correo=? AND password=?";
+        Connection con = ConexionBD.getInstancia().getConexion();
+                
+        try(PreparedStatement ps = con.prepareStatement(sql)) {
 
-        try(Connection con = ConexionBD.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
-
-            ps.setString(1, correo.trim());
-            ps.setString(2, password.trim())    ;
+            ps.setString(1, correo);
+            ps.setString(2, password)    ;
 
             ResultSet rs = ps.executeQuery();
 
@@ -27,6 +33,7 @@ public class UsuarioDAO {
                 user.setId(rs.getInt("id_usuario"));
                 user.setNombre(rs.getString("nombre"));
                 user.setCorreo(rs.getString("correo"));
+                user.setRol(rs.getString("rol"));
             }
 
         } catch (Exception e) {

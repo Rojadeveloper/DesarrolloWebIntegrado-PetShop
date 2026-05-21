@@ -12,6 +12,7 @@ CREATE TABLE usuario (
     contraseña VARCHAR(255),
     telefono VARCHAR(20),
     direccion VARCHAR(200),
+    rol VARCHAR(20) NOT NULL,
     fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -98,3 +99,10 @@ CREATE TABLE pago (
     estado_pago VARCHAR(50),
     FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
 );
+
+INSERT INTO usuario (
+    nombre, apellido, correo, contraseña, telefono, direccion, rol
+)
+VALUE
+('Jesus', 'Roja', 'adminroja@gmail.com', 'admin', '920575983', 'Lima','ADMIN'),
+('Maria', 'Paredes', 'maria@gmail.com', 'maria', '953424555', 'Lima','CLIENTE'),

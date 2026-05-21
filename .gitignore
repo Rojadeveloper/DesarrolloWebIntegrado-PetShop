@@ -1,12 +1,15 @@
-# Carpetas de compilación de NetBeans
+# Build folders
 /build/
 /dist/
 
-# Ignorar TODA la carpeta de configuración del IDE local
-/nbproject/
+# NetBeans private settings
+/nbproject/private/
 
-# Bloquear todos los archivos JAR del sistema por defecto
+# Compiled files
+*.class
+
+# Ignore all jars
 **/*.jar
 
-# EXCEPCIÓN: Permitir únicamente tu conector de MySQL en la carpeta lib
-!lib/mysql-connector-j-*.jar
+# Allow MySQL JDBC Driver
+!lib/mysql-connector-java-*.jar

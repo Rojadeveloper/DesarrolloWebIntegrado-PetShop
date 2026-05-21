@@ -4,29 +4,35 @@
  */
 package modelo.config;
 
-/**
- *
- * @author User
- */
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class ConexionBD {
-
+    private static ConexionBD instancia;
+    private Connection conn;
     private static final String URL = "jdbc:mysql://localhost:3306/tienda_mascotas";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
-    public static Connection getConexion() {
-        Connection conn = null;
-
-        try {
+    private ConexionBD(){
+        try{
             Class.forName("com.mysql.jdbc.Driver"); // Driver antiguo
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            
         } catch (Exception e) {
             System.out.println("Error de conexión: " + e.getMessage());
         }
+    }
+    
+    public static ConexionBD getInstancia() {
 
+        if (instancia == null){
+            instancia = new ConexionBD();
+        }
+        return instancia;
+    }
+    public Connection getConexion(){
         return conn;
     }
 }

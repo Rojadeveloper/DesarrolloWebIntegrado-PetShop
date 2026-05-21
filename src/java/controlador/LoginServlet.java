@@ -15,6 +15,7 @@ import servicio.UsuarioServicio;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+    
     private UsuarioServicio servicio = new UsuarioServicio();
     
     @Override
@@ -36,8 +37,16 @@ public class LoginServlet extends HttpServlet {
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("usuario", user);
-            response.sendRedirect("vista/usuario/conectado.jsp"); 
+            //VALIDAR ROL
+            if ("ADMIN".equals(user.getRol())){
+                response.sendRedirect("vista/admin/dashboard.jsp");
+            } else if ("CLIENTE".equals(user.getRol())){
+                response.sendRedirect("vista/cliente/home.jsp");
+            } else {
+                response.sendRedirect("vista/usuario/login.jsp");
+            }
         } else {
+            
             request.setAttribute("error", "Datos incorrectos");
             request.getRequestDispatcher("vista/usuario/login.jsp").forward(request, response);
         }
