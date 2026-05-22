@@ -8,23 +8,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - PetShop</title>
-    <!-- Conexión al CSS externo -->
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/EstiloLogin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/EstiloAcces.css">
 </head>
 
 <body>
 
 <div class="login-box">
+    <a href="<%= request.getContextPath() %>/index.jsp" class="close-btn" title="Volver al Inicio">×</a>
+    
     <h2>Iniciar Sesión</h2>
-    <a href="<%= request.getContextPath() %>/index.jsp" class="close-btn">×</a>
+    
     <form action="${pageContext.request.contextPath}/login" method="post">
-        <input type="text" name="correo" placeholder="Correo" required>
+        <input type="email" name="correo" placeholder="Correo electrónico" required>
         <input type="password" name="password" placeholder="Contraseña" required>
 
         <button type="submit">Ingresar</button>
-    </form>    
+    </form>  
+    
+    <div class="switch-link">
+        ¿Nuevo por aquí? <a href="<%= request.getContextPath() %>/vista/usuario/registro.jsp">Regístrate aquí</a>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

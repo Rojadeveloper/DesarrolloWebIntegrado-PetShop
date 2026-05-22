@@ -8,53 +8,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - PetShop</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/EstiloRegistro.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/EstiloAcces.css">
 </head>
 
 <body>
 
 <div class="login-box">
-
-    <a href="<%= request.getContextPath() %>/index.jsp" class="close-btn">×</a>
+    <a href="<%= request.getContextPath() %>/index.jsp" class="close-btn" title="Volver al Inicio">×</a>
 
     <h2>Registro de Usuario</h2>
 
-    <form name="formRegistro" onsubmit="return validarFormulario()">
+    <form name="formRegistro" action="registro.jsp" method="POST">
         <input type="text" name="nombre" placeholder="Nombre completo" required>
-
-        <input type="text" name="usuario" placeholder="Usuario" required>
-
+        <input type="text" name="usuario" placeholder="Nombre de usuario" required>
         <input type="password" name="password" placeholder="Contraseña" required>
-
         <input type="email" name="email" placeholder="Correo electrónico" required>
+        <input type="tel" name="telefono" placeholder="Teléfono (Ej: 987654321)" pattern="[0-9]{7,15}" required>
 
-        <input type="tel" name="telefono" placeholder="Ingrese un número válido" pattern="[0-9]{7,15}" required>
-
-        <!-- Rol fijo: cliente -->
         <input type="hidden" name="rol" value="cliente">
 
         <button type="submit">Registrarse</button>
     </form>
 
+    <div class="switch-link">
+        ¿Ya tienes cuenta? <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp">Inicia sesión</a>
+    </div>
+
+    <%-- Lógica de Simulación Temporal en Servidor --%>
     <%
-        String nombre = request.getParameter("nombre");
         String usuario = request.getParameter("usuario");
-        String password = request.getParameter("password");
         String email = request.getParameter("email");
-        String telefono = request.getParameter("telefono");
-        String rol = request.getParameter("rol");
 
-        if (usuario != null && password != null && email != null) {
-
-            // SIMULACIÓN (sin BD todavía)
-            out.println("<p style='color:green;'>Usuario registrado correctamente</p>");
-
-            // aquí luego conectarás a MySQL
+        if (usuario != null && email != null) {
+            out.println("<div class='success-msg'>🐾 ¡Usuario registrado correctamente!</div>");
         }
     %>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

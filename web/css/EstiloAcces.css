@@ -1,0 +1,153 @@
+/* ==========================================================================
+   ESTILOS DE ACCESO (LOGIN / REGISTRO) - PETSHOP
+   Created on : 22 may. 2026, 3:07:33 p. m.
+   Author     : RonaldoYN
+   ========================================================================== */
+
+body {
+    font-family: 'Arial', sans-serif;
+    /* Imagen de fondo premium de mascotas con capa oscura para dar contraste */
+    background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+                url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=1400&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Boton cerrar flotante */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    text-decoration: none;
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: bold;
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #ff6b6b;
+    transform: scale(1.15);
+}
+
+/* Caja de acceso estilo Glassmorphism Premium */
+.login-box {
+    position: relative;
+    background: rgba(255, 255, 255, 0.85); /* Fondo blanco traslúcido */
+    backdrop-filter: blur(10px); /* Efecto difuminado de fondo */
+    -webkit-backdrop-filter: blur(10px);
+    padding: 40px 35px;
+    width: 100%;
+    max-width: 400px; /* Un poco más ancho para albergar cómodamente los campos */
+    border-radius: 16px;
+    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    transition: transform 0.3s ease;
+}
+
+/* Título */
+.login-box h2 {
+    margin-bottom: 25px;
+    color: #2c3e50;
+    font-weight: bold;
+    font-size: 26px;
+    letter-spacing: -0.5px;
+}
+
+/* Contenedor de formulario */
+.login-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px; /* Espaciado uniforme e idéntico para todos los elementos */
+}
+
+/* Inputs Modernos */
+.login-box input,
+.login-box select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: all 0.2s ease;
+}
+
+/* Efecto foco en inputs alineado al verde corporativo */
+.login-box input:focus,
+.login-box select:focus {
+    border-color: #20c997;
+    box-shadow: 0 0 0 3px rgba(32, 201, 151, 0.25);
+    background-color: #ffffff;
+}
+
+/* Botón Principal */
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    background: #20c997; /* Verde PetShop corporativo */
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(32, 201, 151, 0.2);
+}
+
+.login-box button:hover {
+    background: #1aa179;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(32, 201, 151, 0.3);
+}
+
+/* Enlace inferior de intercambio */
+.switch-link {
+    display: block;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.switch-link a {
+    color: #2e86de;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.switch-link a:hover {
+    text-decoration: underline;
+}
+
+/* Alertas de error/éxito */
+.error {
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.success-msg {
+    color: #27ae60;
+    font-size: 14px;
+    margin-top: 15px;
+    font-weight: bold;
+    background: rgba(39, 174, 96, 0.1);
+    padding: 8px;
+    border-radius: 6px;
+}
