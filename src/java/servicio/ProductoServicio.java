@@ -4,10 +4,39 @@
  */
 package servicio;
 
-/**
- *
- * @author User
- */
+import java.util.List;
+
+import modelo.dao.IProductoDAO;
+import modelo.dao.impl.ProductoDAOImpl;
+import modelo.dto.ProductoDTO;
+
 public class ProductoServicio {
-    
+
+    IProductoDAO dao = new ProductoDAOImpl();
+
+    public List<ProductoDTO> listar() {
+        return dao.listar();
+    }
+
+    public boolean agregar(ProductoDTO p) {
+        return dao.agregar(p);
+    }
+
+    public ProductoDTO buscarPorId(int id) {
+        return dao.buscarPorId(id);
+    }
+
+    public boolean modificar(ProductoDTO p) {
+        return dao.modificar(p);
+    }
+
+    public boolean eliminar(int id) {
+        return dao.eliminar(id);
+    }
+
+    public List<ProductoDTO> buscar(String texto) {
+        return dao.buscar(texto);
+    }
 }
+
+
