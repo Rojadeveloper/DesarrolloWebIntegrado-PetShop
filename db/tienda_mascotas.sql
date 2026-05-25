@@ -1,9 +1,14 @@
-CREATE DATABASE tienda_mascotas;
+-- =========================================================
+-- CREACIÓN DE LA BASE DE DATOS Y CONFIGURACIÓN
+-- =========================================================
+CREATE DATABASE IF NOT EXISTS tienda_mascotas;
 USE tienda_mascotas;
 
--- =========================
+-- =========================================================
+-- ESTRUCTURA DE LAS TABLAS (SIN FKs NI PROVEEDORES)
+-- =========================================================
+
 -- TABLA USUARIO
--- =========================
 CREATE TABLE usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100),
@@ -16,18 +21,14 @@ CREATE TABLE usuario (
     fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- =========================
 -- TABLA CATEGORIA
--- =========================
 CREATE TABLE categoria (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100),
     descripcion VARCHAR(200)
 );
 
--- =========================
 -- TABLA PRODUCTO
--- =========================
 CREATE TABLE producto (
     id_producto INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(150),
@@ -35,272 +36,289 @@ CREATE TABLE producto (
     precio DECIMAL(10,2),
     stock INT,
     imagen VARCHAR(255),
-    id_categoria INT,
-    FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
+    id_categoria INT
 );
 
--- =========================
 -- TABLA CARRITO
--- =========================
 CREATE TABLE carrito (
     id_carrito INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
-    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- =========================
 -- TABLA DETALLE_CARRITO
--- =========================
 CREATE TABLE detalle_carrito (
     id_detalle INT AUTO_INCREMENT PRIMARY KEY,
     id_carrito INT,
     id_producto INT,
     cantidad INT,
-    subtotal DECIMAL(10,2),
-    FOREIGN KEY (id_carrito) REFERENCES carrito(id_carrito),
-    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
+    subtotal DECIMAL(10,2)
 );
 
--- =========================
 -- TABLA PEDIDO
--- =========================
 CREATE TABLE pedido (
     id_pedido INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
     fecha_pedido DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10,2),
-    estado VARCHAR(50),
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+    estado VARCHAR(50)
 );
 
--- =========================
 -- TABLA DETALLE_PEDIDO
--- =========================
 CREATE TABLE detalle_pedido (
     id_detalle_pedido INT AUTO_INCREMENT PRIMARY KEY,
     id_pedido INT,
     id_producto INT,
     cantidad INT,
     precio_unitario DECIMAL(10,2),
-    subtotal DECIMAL(10,2),
-    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
-    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
+    subtotal DECIMAL(10,2)
 );
 
--- =========================
 -- TABLA PAGO
--- =========================
 CREATE TABLE pago (
     id_pago INT AUTO_INCREMENT PRIMARY KEY,
     id_pedido INT,
     metodo_pago VARCHAR(50),
     fecha_pago DATETIME DEFAULT CURRENT_TIMESTAMP,
-    estado_pago VARCHAR(50),
-    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
+    estado_pago VARCHAR(50)
 );
 
-INSERT INTO usuario (
-    nombre, apellido, correo, contraseña, telefono, direccion, rol
-)
-VALUE
-('Jesus', 'Roja', 'adminroja@gmail.com', 'admin', '920575983', 'Lima','ADMIN'),
-('Maria', 'Paredes', 'maria@gmail.com', 'maria', '953424555', 'Lima','CLIENTE');
-
--- =========================
--- TABLA PROVEEDOR
--- =========================
-CREATE TABLE proveedor (
-    id_proveedor INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100),
-    descripcion VARCHAR(200),
-    telefono VARCHAR(20),
-    correo VARCHAR(150) UNIQUE,
-    ruc VARCHAR(20) UNIQUE,
-    estado VARCHAR(20));
-
--- =========================
--- ACTUALIZAR T PRODUCTO
--- =========================
-ALTER TABLE producto
-ADD id_proveedor INT;
-
-ALTER TABLE producto
-ADD FOREIGN KEY (id_proveedor)
-REFERENCES proveedor(id_proveedor);
--- =========================
--- ACTUALIZAR T USUARIO
--- =========================
+-- =========================================================
+-- AJUSTES Y ALTERACIONES REQUERIDAS
+-- =========================================================
 ALTER TABLE usuario
 CHANGE contraseña password VARCHAR(255);
 
--- =========================
--- PROCEDURES
--- =========================
+
+-- =========================================================
+-- PROCEDIMIENTOS ALMACENADOS (STORED PROCEDURES)
+-- =========================================================
 DELIMITER //
 
-CREATE PROCEDURE sp_registrarUsuario(IN p_nombre VARCHAR(100),IN p_apellido VARCHAR(100),IN p_correo VARCHAR(150),IN p_password VARCHAR(255),IN p_telefono VARCHAR(20),IN p_direccion VARCHAR(200),IN p_rol VARCHAR(20))
+-- 1. USUARIOS: REGISTRO (Rol CLIENTE automático)
+CREATE PROCEDURE sp_registrarCliente(
+    IN p_nombre VARCHAR(100),
+    IN p_apellido VARCHAR(100),
+    IN p_correo VARCHAR(150),
+    IN p_password VARCHAR(255),
+    IN p_telefono VARCHAR(20),
+    IN p_direccion VARCHAR(200)
+)
 BEGIN
-INSERT INTO usuario(nombre,apellido,correo,password,telefono,direccion,rol)
-VALUES(p_nombre,p_apellido,p_correo,p_password,p_telefono,p_direccion,p_rol);
+    INSERT INTO usuario(nombre, apellido, correo, password, telefono, direccion, rol)
+    VALUES(p_nombre, p_apellido, p_correo, p_password, p_telefono, p_direccion, 'CLIENTE');
 END //
 
-CREATE PROCEDURE sp_agregarCategoria(IN p_nombre VARCHAR(100),IN p_descripcion VARCHAR(200))
+-- 2. USUARIOS: INICIO DE SESIÓN
+CREATE PROCEDURE sp_loginUsuario(
+    IN p_correo VARCHAR(150),
+    IN p_password VARCHAR(255)
+)
 BEGIN
-INSERT INTO categoria(nombre,descripcion)
-VALUES(p_nombre,p_descripcion);
+    SELECT id_usuario, nombre, apellido, correo, rol 
+    FROM usuario 
+    WHERE correo = p_correo AND password = p_password;
 END //
 
-CREATE PROCEDURE sp_agregarProveedor(IN p_nombre VARCHAR(100),IN p_descripcion VARCHAR(200),IN p_telefono VARCHAR(20),IN p_correo VARCHAR(150),IN p_ruc VARCHAR(20),IN p_estado VARCHAR(20))
+-- 3. CATEGORÍAS: CREAR
+CREATE PROCEDURE sp_crearCategoria(
+    IN p_nombre VARCHAR(100),
+    IN p_descripcion VARCHAR(200)
+)
 BEGIN
-INSERT INTO proveedor(nombre,descripcion,telefono,correo,ruc,estado)
-VALUES(p_nombre,p_descripcion,p_telefono,p_correo,p_ruc,p_estado);
+    INSERT INTO categoria(nombre, descripcion)
+    VALUES(p_nombre, p_descripcion);
 END //
 
-CREATE PROCEDURE sp_agregarProducto(IN p_nombre VARCHAR(150),IN p_descripcion TEXT,IN p_precio DECIMAL(10,2),IN p_stock INT,IN p_imagen VARCHAR(255),IN p_id_categoria INT,IN p_id_proveedor INT)
+-- 4. CATEGORÍAS: EDITAR
+CREATE PROCEDURE sp_editarCategoria(
+    IN p_id_categoria INT,
+    IN p_nombre VARCHAR(100),
+    IN p_descripcion VARCHAR(200)
+)
 BEGIN
-INSERT INTO producto(nombre,descripcion,precio,stock,imagen,id_categoria,id_proveedor)
-VALUES(p_nombre,p_descripcion,p_precio,p_stock,p_imagen,p_id_categoria,p_id_proveedor);
+    UPDATE categoria 
+    SET nombre = p_nombre, 
+        descripcion = p_descripcion
+    WHERE id_categoria = p_id_categoria;
 END //
 
+-- 5. CATEGORÍAS: ELIMINAR
+CREATE PROCEDURE sp_eliminarCategoria(
+    IN p_id_categoria INT
+)
+BEGIN
+    DELETE FROM categoria 
+    WHERE id_categoria = p_id_categoria;
+END //
+
+-- 6. PRODUCTOS: CREAR
+CREATE PROCEDURE sp_crearProducto(
+    IN p_nombre VARCHAR(150),
+    IN p_descripcion TEXT,
+    IN p_precio DECIMAL(10,2),
+    IN p_stock INT,
+    IN p_imagen VARCHAR(255),
+    IN p_id_categoria INT
+)
+BEGIN
+    INSERT INTO producto(nombre, descripcion, precio, stock, imagen, id_categoria)
+    VALUES(p_nombre, p_descripcion, p_precio, p_stock, p_imagen, p_id_categoria);
+END //
+
+-- 7. PRODUCTOS: EDITAR
+CREATE PROCEDURE sp_editarProducto(
+    IN p_id_producto INT,
+    IN p_nombre VARCHAR(150),
+    IN p_descripcion TEXT,
+    IN p_precio DECIMAL(10,2),
+    IN p_stock INT,
+    IN p_imagen VARCHAR(255),
+    IN p_id_categoria INT
+)
+BEGIN
+    UPDATE producto 
+    SET nombre = p_nombre,
+        descripcion = p_descripcion,
+        precio = p_precio,
+        stock = p_stock,
+        imagen = p_imagen,
+        id_categoria = p_id_categoria
+    WHERE id_producto = p_id_producto;
+END //
+
+-- 8. PRODUCTOS: ELIMINAR
+CREATE PROCEDURE sp_eliminarProducto(
+    IN p_id_producto INT
+)
+BEGIN
+    DELETE FROM producto 
+    WHERE id_producto = p_id_producto;
+END //
+
+-- 9. COMPRAS: CREAR CARRITO
 CREATE PROCEDURE sp_crearCarrito(IN p_id_usuario INT)
 BEGIN
-INSERT INTO carrito(id_usuario)
-VALUES(p_id_usuario);
+    INSERT INTO carrito(id_usuario)
+    VALUES(p_id_usuario);
 END //
 
-CREATE PROCEDURE sp_agregarDetalleCarrito(IN p_id_carrito INT,IN p_id_producto INT,IN p_cantidad INT,IN p_subtotal DECIMAL(10,2))
+-- 10. COMPRAS: DETALLE CARRITO
+CREATE PROCEDURE sp_agregarDetalleCarrito(IN p_id_carrito INT, IN p_id_producto INT, IN p_cantidad INT, IN p_subtotal DECIMAL(10,2))
 BEGIN
-INSERT INTO detalle_carrito(id_carrito,id_producto,cantidad,subtotal)
-VALUES(p_id_carrito,p_id_producto,p_cantidad,p_subtotal);
+    INSERT INTO detalle_carrito(id_carrito, id_producto, cantidad, subtotal)
+    VALUES(p_id_carrito, p_id_producto, p_cantidad, p_subtotal);
 END //
 
-CREATE PROCEDURE sp_crearPedido(IN p_id_usuario INT,IN p_total DECIMAL(10,2),IN p_estado VARCHAR(50))
+-- 11. COMPRAS: CREAR PEDIDO
+CREATE PROCEDURE sp_crearPedido(IN p_id_usuario INT, IN p_total DECIMAL(10,2), IN p_estado VARCHAR(50))
 BEGIN
-INSERT INTO pedido(id_usuario,total,estado)
-VALUES(p_id_usuario,p_total,p_estado);
+    INSERT INTO pedido(id_usuario, total, estado)
+    VALUES(p_id_usuario, p_total, p_estado);
 END //
 
-CREATE PROCEDURE sp_agregarDetallePedido(IN p_id_pedido INT,IN p_id_producto INT,IN p_cantidad INT,IN p_precio_unitario DECIMAL(10,2),IN p_subtotal DECIMAL(10,2))
+-- 12. COMPRAS: DETALLE PEDIDO
+CREATE PROCEDURE sp_agregarDetallePedido(IN p_id_pedido INT, IN p_id_producto INT, IN p_cantidad INT, IN p_precio_unitario DECIMAL(10,2), IN p_subtotal DECIMAL(10,2))
 BEGIN
-INSERT INTO detalle_pedido(id_pedido,id_producto,cantidad,precio_unitario,subtotal)
-VALUES(p_id_pedido,p_id_producto,p_cantidad,p_precio_unitario,p_subtotal);
+    INSERT INTO detalle_pedido(id_pedido, id_producto, cantidad, precio_unitario, subtotal)
+    VALUES(p_id_pedido, p_id_producto, p_cantidad, p_precio_unitario, p_subtotal);
 END //
 
-CREATE PROCEDURE sp_registrarPago(IN p_id_pedido INT,IN p_metodo_pago VARCHAR(50),IN p_estado_pago VARCHAR(50))
+-- 13. COMPRAS: REGISTRAR PAGO
+CREATE PROCEDURE sp_registrarPago(IN p_id_pedido INT, IN p_metodo_pago VARCHAR(50), IN p_estado_pago VARCHAR(50))
 BEGIN
-INSERT INTO pago(id_pedido,metodo_pago,estado_pago)
-VALUES(p_id_pedido,p_metodo_pago,p_estado_pago);
+    INSERT INTO pago(id_pedido, metodo_pago, estado_pago)
+    VALUES(p_id_pedido, p_metodo_pago, p_estado_pago);
+END //
+
+
+-- =========================================================
+-- NUEVOS PROCEDURES PARA PUNTOS A, B Y C (SELECTS)
+-- =========================================================
+
+-- PUNTO A) Listar todas las categorías
+CREATE PROCEDURE sp_listarCategorias()
+BEGIN
+    SELECT id_categoria, nombre, descripcion 
+    FROM categoria;
+END //
+
+-- PUNTO B) Listar productos por el ID de una categoría específica
+CREATE PROCEDURE sp_buscarProductosPorCategoria(
+    IN p_id_categoria INT
+)
+BEGIN
+    SELECT id_producto, nombre, descripcion, precio, stock, imagen, id_categoria 
+    FROM producto 
+    WHERE id_categoria = p_id_categoria;
+END //
+
+-- PUNTO C) Buscar productos por nombre (Búsqueda global flexible con LIKE)
+CREATE PROCEDURE sp_buscarProductosPorNombre(
+    IN p_nombre_buscar VARCHAR(150)
+)
+BEGIN
+    SELECT id_producto, nombre, descripcion, precio, stock, imagen, id_categoria 
+    FROM producto 
+    WHERE nombre LIKE CONCAT('%', p_nombre_buscar, '%');
 END //
 
 DELIMITER ;
 
--- =========================
--- INSERCIONES CATEGORIAS
--- =========================
-CALL sp_agregarCategoria('Alimentos','Comida y nutricion para mascotas');
-CALL sp_agregarCategoria('Accesorios','Productos de uso diario para mascotas');
-CALL sp_agregarCategoria('Juguetes','Juguetes y entretenimiento para mascotas');
-CALL sp_agregarCategoria('Higiene','Productos de limpieza y cuidado');
-CALL sp_agregarCategoria('Salud','Vitaminas, antipulgas y suplementos');
-CALL sp_agregarCategoria('Snacks y premios','Galletas, huesos y premios para mascotas');
-CALL sp_agregarCategoria('Transporte','Mochilas, jaulas y transportadoras');
+--  ============================
+--  Insercion de Categorias
+--  ============================
 
--- =========================
--- INSERCIONES PROVEEDORES
--- =========================
-CALL sp_agregarProveedor('Purina Peru','Ofrece nutricion balanceada para mascotas','987654321','contacto@purina.pe','20111111111','activo');
-CALL sp_agregarProveedor('Royal Canin Peru','Especializada en alimentacion premium','987654322','ventas@royalcanin.pe','20222222222','activo');
-CALL sp_agregarProveedor('Pro Plan Peru','Formulas avanzadas para mascotas','987654323','contacto@proplan.pe','20333333333','activo');
-CALL sp_agregarProveedor('Pedigree Peru','Alimentos completos para perros','987654324','ventas@pedigree.pe','20444444444','activo');
-CALL sp_agregarProveedor('Pet Toys SAC','Distribuye juguetes interactivos','987654325','ventas@pettoys.pe','20555555555','activo');
-CALL sp_agregarProveedor('Mascota Feliz Distribuciones','Accesorios y productos esenciales','987654326','contacto@mascotafeliz.pe','20666666666','activo');
-CALL sp_agregarProveedor('VetCare Peru','Soluciones veterinarias','987654327','info@vetcare.pe','20777777777','activo');
-CALL sp_agregarProveedor('Pet Snacks Company','Snacks y premios para mascotas','987654328','ventas@petsnacks.pe','20888888888','activo');
-CALL sp_agregarProveedor('Travel Pets Peru','Productos de transporte para mascotas','987654329','contacto@travelpets.pe','20999999999','activo');
+CALL sp_crearCategoria('Alimentos y Nutrición', 'Comida seca, húmeda, snacks y suplementos alimenticios');
+CALL sp_crearCategoria('Paseo y Viaje', 'Correas, arneses, transportadoras y seguridad para autos');
+CALL sp_crearCategoria('Descanso y Confort', 'Camas, colchonetas, cobijas y casas para mascotas');
+CALL sp_crearCategoria('Higiene y Estética', 'Shampoos, cepillos, colonias y cuidado de uñas');
+CALL sp_crearCategoria('Juguetes y Entretenimiento', 'Juguetes interactivos, pelotas, rascadores y diversión');
+CALL sp_crearCategoria('Salud y Bienestar', 'Antipulgas, vitaminas, arenas sanitarias y cuidado médico');
+CALL sp_crearCategoria('Comederos y Accesorios del Hogar', 'Platos, fuentes de agua automáticas y contenedores de comida');
 
--- =========================
--- INSERCIONES PRODUCTOS
--- =========================
-CALL sp_agregarProducto('Dog Chow Adultos 15KG','Alimento balanceado para perros adultos de razas medianas y grandes',129.90,25,'dogchow15kg.jpg',1,1);
-CALL sp_agregarProducto('Cat Chow Gatitos 8KG','Nutricion especializada para gatitos en crecimiento',98.50,18,'catchow8kg.jpg',1,1);
-CALL sp_agregarProducto('Dog Chow Cachorros 8KG','Formula rica en proteinas para cachorros en etapa de desarrollo',89.90,22,'dogchowcachorro.jpg',1,1);
-CALL sp_agregarProducto('Royal Canin Mini Adult','Alimento premium para perros adultos de raza pequeña',165.90,12,'royalminiadult.jpg',1,2);
-CALL sp_agregarProducto('Royal Canin Persian Adult','Formula especializada para gatos persas adultos',189.90,10,'royalpersian.jpg',1,2);
-CALL sp_agregarProducto('Royal Canin Sterilised Cat','Nutricion diseñada para gatos esterilizados',176.80,11,'royalsterilised.jpg',1,2);
-CALL sp_agregarProducto('Pro Plan Puppy Sensitive','Nutricion avanzada para cachorros con digestion sensible',154.90,16,'proplanpuppy.jpg',1,3);
-CALL sp_agregarProducto('Pro Plan Adult Salmon','Alimento premium sabor salmon para perros adultos',172.50,14,'proplansalmon.jpg',1,3);
-CALL sp_agregarProducto('Pro Plan Reduced Calorie','Control nutricional para perros adultos con sobrepeso',168.90,9,'proplanreduced.jpg',1,3);
-CALL sp_agregarProducto('Pedigree Carne y Vegetales 15KG','Alimento completo para perros adultos activos',112.90,30,'pedigree15kg.jpg',1,4);
-CALL sp_agregarProducto('Pedigree Cachorro Pollo 10KG','Formula para cachorros enriquecida con vitaminas y minerales',105.40,20,'pedigreecachorro.jpg',1,4);
-CALL sp_agregarProducto('Pedigree Senior Razas Medianas','Nutricion especializada para perros mayores',118.70,13,'pedigreesenior.jpg',1,4);
+-- =========================================================
+-- INSERCIÓN DE PRODUCTOS CON ENFOQUE WEB OPTIMIZADO
+-- =========================================================
 
-CALL sp_agregarProducto('Correa Ajustable Roja','Correa resistente para perros medianos y grandes',35.90,40,'correaroja.jpg',2,6);
-CALL sp_agregarProducto('Collar Antitirones','Collar comodo con ajuste de seguridad para paseos',42.50,30,'collarantitirones.jpg',2,6);
-CALL sp_agregarProducto('Cama Acolchada Mediana','Cama suave y confortable para mascotas pequeñas',89.90,15,'camamediana.jpg',2,6);
-CALL sp_agregarProducto('Plato Doble Acero','Comedero doble de acero inoxidable para agua y comida',48.90,25,'platodoble.jpg',2,6);
-CALL sp_agregarProducto('Arnes Deportivo','Arnes ergonomico ideal para caminatas y entrenamiento',59.90,18,'arnesdeportivo.jpg',2,6);
-CALL sp_agregarProducto('Rascador para Gato','Rascador vertical reforzado para gatos activos',95.00,12,'rascadorgato.jpg',2,6);
-CALL sp_agregarProducto('Fuente de Agua Automatica','Dispensador automatico de agua para mascotas',120.50,10,'fuenteagua.jpg',2,6);
-CALL sp_agregarProducto('Manta Termica para Mascotas','Manta suave diseñada para epocas frias',44.90,20,'mantatermica.jpg',2,6);
-CALL sp_agregarProducto('Comedero Elevado','Comedero elevado que mejora la postura al alimentarse',68.90,14,'comederoelevado.jpg',2,6);
-CALL sp_agregarProducto('Cama Premium XL','Cama acolchada grande para perros de gran tamaño',145.90,8,'camaxl.jpg',2,6);
+-- ---------- CATEGORÍA 1: Alimentos y Nutrición (id_categoria = 1) ----------
+CALL sp_crearProducto('Royal Canin Mini Adult 3KG', 'Alimento premium equilibrado para perros adultos de razas pequeñas', 165.90, 15, 'royal_mini_adult.jpg', 1);
+CALL sp_crearProducto('Pro Plan Gatos Esterilizados Salmon 3KG', 'Fórmula avanzada para el control de peso y salud urinaria en gatos', 178.50, 12, 'proplan_cat_sterilised.jpg', 1);
+CALL sp_crearProducto('Lata de Comida Húmeda Hill s Science Diet Perro', 'Estofado premium de pollo y vegetales para digestión sensible', 14.90, 40, 'hills_lata_perro.jpg', 1);
+CALL sp_crearProducto('Snacks Funcionales Dentales Twist', 'Premios masticables que ayudan a reducir el sarro y refrescar el aliento', 22.50, 35, 'snacks_dentales_twist.jpg', 1);
 
-CALL sp_agregarProducto('Pelota Mordedora','Pelota resistente diseñada para perros activos',24.90,50,'pelotamordedora.jpg',3,5);
-CALL sp_agregarProducto('Raton Interactivo','Juguete interactivo para estimular gatos curiosos',29.90,35,'ratoninteractivo.jpg',3,5);
-CALL sp_agregarProducto('Cuerda Dental','Juguete de cuerda que ayuda a limpiar los dientes',19.90,45,'cuerdadental.jpg',3,5);
-CALL sp_agregarProducto('Disco Volador Canino','Frisbee flexible ideal para entrenamiento y juego',27.50,22,'discovolador.jpg',3,5);
-CALL sp_agregarProducto('Tunel para Gatos','Tunel plegable para entretenimiento felino',54.90,16,'tunelgatos.jpg',3,5);
-CALL sp_agregarProducto('Mordedor de Goma','Mordedor resistente con textura antiestrés',21.90,38,'mordedorgoma.jpg',3,5);
-CALL sp_agregarProducto('Pelota Sonora','Pelota con sonido para estimular el juego',26.90,28,'pelotasonora.jpg',3,5);
-CALL sp_agregarProducto('Juguete Dispensa Snacks','Juguete interactivo con compartimento para premios',39.90,19,'dispensasnacks.jpg',3,5);
-CALL sp_agregarProducto('Varita con Plumas','Varita diseñada para entretenimiento de gatos',18.90,32,'varitaplumas.jpg',3,5);
-CALL sp_agregarProducto('Hueso de Caucho','Juguete resistente para perros que aman morder',23.50,40,'huesocaucho.jpg',3,5);
+-- ---------- CATEGORÍA 2: Paseo y Viaje (id_categoria = 2) ----------
+CALL sp_crearProducto('Arnés Ergonómico Reflectante Negro', 'Arnés antitirones acolchado con bandas reflectantes para paseos nocturnos', 65.00, 20, 'arnes_reflectante_negro.jpg', 2);
+CALL sp_crearProducto('Correa Retráctil de 5 Metros', 'Correa extensible con sistema de frenado rápido para perros de hasta 25kg', 45.90, 25, 'correa_retractil.jpg', 2);
+CALL sp_crearProducto('Mochila Astronauta Expandible para Gatos', 'Mochila con visor de burbuja transparente y ventilación reforzada', 145.50, 8, 'mochila_astronauta_gato.jpg', 2);
+CALL sp_crearProducto('Cinturón de Seguridad para Auto', 'Adaptador ajustable para conectar el arnés del perro al broche del vehículo', 24.90, 50, 'cinturon_seguridad_auto.jpg', 2);
 
-CALL sp_agregarProducto('Shampoo Antipulgas','Shampoo especializado para eliminar pulgas y garrapatas',32.90,25,'shampooantipulgas.jpg',4,6);
-CALL sp_agregarProducto('Arena Sanitaria Premium','Arena absorbente para gatos con control de olores',45.50,30,'arenapremium.jpg',4,6);
-CALL sp_agregarProducto('Cepillo Desenredante','Cepillo diseñado para remover pelo muerto',28.90,20,'cepillodesenredante.jpg',4,6);
-CALL sp_agregarProducto('Toallitas Humedas','Toallitas de limpieza rapida para mascotas',18.50,35,'toallitashumedas.jpg',4,6);
-CALL sp_agregarProducto('Corta Uñas Profesional','Corta uñas seguro para perros y gatos',26.90,15,'cortaunas.jpg',4,6);
-CALL sp_agregarProducto('Removedor de Olores','Elimina olores fuertes en ambientes de mascotas',34.90,18,'removedorolores.jpg',4,6);
-CALL sp_agregarProducto('Shampoo Piel Sensible','Formula suave para mascotas con piel delicada',36.50,14,'shampoopielsensible.jpg',4,6);
-CALL sp_agregarProducto('Pañales para Perro','Pañales absorbentes para mascotas',39.90,16,'panalesperro.jpg',4,6);
-CALL sp_agregarProducto('Peine Antipulgas','Peine fino para limpieza y control de pulgas',17.90,28,'peineantipulgas.jpg',4,6);
-CALL sp_agregarProducto('Limpiador de Oidos','Solucion especializada para higiene auditiva',24.50,12,'limpiadoroidos.jpg',4,6);
+-- ---------- CATEGORÍA 3: Descanso y Confort (id_categoria = 3) ----------
+CALL sp_crearProducto('Cama Ortopédica Memory Foam L', 'Cama de espuma viscoelástica ideal para el cuidado articular de perros grandes', 189.90, 10, 'cama_ortopedica_l.jpg', 3);
+CALL sp_crearProducto('Cuna Acolchada Antiansiedad para Gatos', 'Cama redonda de felpa ultrasuave que simula el pelaje materno', 75.00, 18, 'cuna_antiansiedad_cat.jpg', 3);
+CALL sp_crearProducto('Manta Térmica Lavable', 'Manta polar suave ideal para proteger sillones y mantener abrigada a la mascota', 39.90, 30, 'manta_termica.jpg', 3);
+CALL sp_crearProducto('Casa Iglú para Gatos y Perros Mini', 'Refugio cerrado de espuma cubierta de tela que brinda privacidad y calor', 85.00, 12, 'casa_iglu_mascota.jpg', 3);
 
-CALL sp_agregarProducto('Antipulgas Canino','Proteccion mensual contra pulgas y garrapatas',58.90,20,'antipulgascanino.jpg',5,7);
-CALL sp_agregarProducto('Vitaminas para Gatos','Suplemento vitamínico para gatos adultos',42.50,18,'vitaminasgatos.jpg',5,7);
-CALL sp_agregarProducto('Calcio para Cachorros','Complemento nutricional para desarrollo oseo',39.90,15,'calciocachorros.jpg',5,7);
-CALL sp_agregarProducto('Jarabe Multivitaminico','Refuerza defensas y energia en mascotas',34.90,17,'jarabemultivitaminico.jpg',5,7);
-CALL sp_agregarProducto('Protector Hepatico','Suplemento veterinario para salud hepática',62.90,10,'protectorhepatico.jpg',5,7);
-CALL sp_agregarProducto('Desparasitante Interno','Control efectivo contra parasitos intestinales',29.90,25,'desparasitante.jpg',5,7);
-CALL sp_agregarProducto('Suplemento Articular','Ayuda al cuidado de articulaciones en perros mayores',74.90,9,'suplementoarticular.jpg',5,7);
-CALL sp_agregarProducto('Gotas Oftalmicas','Limpieza y cuidado ocular para mascotas',27.50,13,'gotasoftalmicas.jpg',5,7);
-CALL sp_agregarProducto('Antiinflamatorio Veterinario','Apoyo para molestias musculares y articulares',68.90,8,'antiinflamatorio.jpg',5,7);
-CALL sp_agregarProducto('Spray Cicatrizante','Ayuda en la recuperación de heridas leves',31.90,19,'spraycicatrizante.jpg',5,7);
+-- ---------- CATEGORÍA 4: Higiene y Estética (id_categoria = 4) ----------
+CALL sp_crearProducto('Shampoo Hipoalergénico de Avena 500ml', 'Fórmula suave para mascotas con piel sensible o alergias dermatológicas', 34.90, 22, 'shampoo_avena_sensible.jpg', 4);
+CALL sp_crearProducto('Cepillo Deslanador Furminator', 'Herramienta profesional que reduce la caída del pelo hasta en un 90%', 89.90, 15, 'cepillo_deslanador.jpg', 4);
+CALL sp_crearProducto('Toallitas Húmedas Sanitarias x100', 'Toallitas gruesas e hidratadas con aloe vera para limpieza de patitas y pelaje', 19.90, 45, 'toallitas_sanitarias.jpg', 4);
+CALL sp_crearProducto('Cortaúñas Profesional con Tope de Seguridad', 'Alicate de acero inoxidable con guía para evitar cortes excesivos', 28.50, 20, 'cortaunas_seguridad.jpg', 4);
 
-CALL sp_agregarProducto('Galletas Caninas','Premios crocantes sabor carne para perros',16.90,40,'galletascaninas.jpg',6,8);
-CALL sp_agregarProducto('Snack Dental','Snack que ayuda a mantener dientes limpios',22.50,32,'snackdental.jpg',6,8);
-CALL sp_agregarProducto('Huesos de Carnaza','Premios masticables para perros activos',19.90,28,'huesoscarnaza.jpg',6,8);
-CALL sp_agregarProducto('Premios para Gatos','Snacks sabor salmon para gatos',14.90,35,'premiosgatos.jpg',6,8);
-CALL sp_agregarProducto('Bocaditos de Pollo','Snacks blandos ricos en proteina',18.50,26,'bocaditospollo.jpg',6,8);
-CALL sp_agregarProducto('Mini Treats','Pequeños premios ideales para entrenamiento',12.90,30,'minitreats.jpg',6,8);
-CALL sp_agregarProducto('Snack Natural','Premios elaborados con ingredientes naturales',21.90,22,'snacknatural.jpg',6,8);
-CALL sp_agregarProducto('Barritas Nutritivas','Snack energetico para mascotas activas',17.50,20,'barritasnutritivas.jpg',6,8);
-CALL sp_agregarProducto('Cubitos de Carne','Premios deshidratados sabor res',24.90,16,'cubitoscarne.jpg',6,8);
-CALL sp_agregarProducto('Premios Crunchy','Snacks crocantes para perros pequeños',15.90,27,'premioscrunchy.jpg',6,8);
+-- ---------- CATEGORÍA 5: Juguetes y Entretenimiento (id_categoria = 5) ----------
+CALL sp_crearProducto('Juguete Rellenable KONG Classic L', 'Juguete de caucho natural ultra resistente para morder y rellenar con premios', 59.90, 30, 'kong_classic_l.jpg', 5);
+CALL sp_crearProducto('Rascador de Tres Pisos con Juguete', 'Torre rascadora para gatos con postes de yute, plataformas y pelota colgante', 149.90, 7, 'rascador_tres_pisos.jpg', 5);
+CALL sp_crearProducto('Lanzador de Pelotas de Tenis', 'Brazo ergonómico para lanzar pelotas a gran distancia sin cansar el brazo', 26.90, 25, 'lanzador_pelotas.jpg', 5);
+CALL sp_crearProducto('Circuito de Juego Interactivo para Gatos', 'Pista con pelota iluminada que se mueve al tacto para estimular el instinto cazador', 54.90, 14, 'circuito_gato_interactivo.jpg', 5);
 
-CALL sp_agregarProducto('Transportadora Mediana','Transportadora resistente para perros pequeños',129.90,10,'transportadoramediana.jpg',7,9);
-CALL sp_agregarProducto('Mochila para Gatos','Mochila ventilada para transporte felino',145.50,8,'mochilagatos.jpg',7,9);
-CALL sp_agregarProducto('Bolso de Viaje','Bolso acolchado para mascotas pequeñas',98.90,12,'bolsoviaje.jpg',7,9);
-CALL sp_agregarProducto('Jaula Plegable','Jaula metalica facil de transportar',185.90,7,'jaulaplegable.jpg',7,9);
-CALL sp_agregarProducto('Asiento para Auto','Asiento de seguridad para viajes en auto',112.90,9,'asientoauto.jpg',7,9);
-CALL sp_agregarProducto('Correa de Seguridad','Correa diseñada para viajes seguros en vehiculos',34.90,20,'correaseguridad.jpg',7,9);
-CALL sp_agregarProducto('Transportadora Premium','Modelo premium con ventilacion reforzada',210.50,5,'transportadorapremium.jpg',7,9);
-CALL sp_agregarProducto('Mochila Expandible','Mochila amplia para viajes largos',168.90,6,'mochilaexpandible.jpg',7,9);
-CALL sp_agregarProducto('Coche para Mascotas','Coche plegable para perros pequeños y gatos',320.90,4,'cochemascotas.jpg',7,9);
-CALL sp_agregarProducto('Bolso Transparente','Bolso moderno con visor transparente',138.90,11,'bolsotransparente.jpg',7,9);
+-- ---------- CATEGORÍA 6: Salud y Bienestar (id_categoria = 6) ----------
+CALL sp_crearProducto('Antipulgas y Garrapatas Bravecto Perros 10-20KG', 'Tableta masticable que brinda protección total durante 12 semanas', 145.00, 25, 'bravecto_perro_medium.jpg', 6);
+CALL sp_crearProducto('Arena Sanitaria de Bentonita Premium 10KG', 'Arena aglomerante de alta calidad con excelente control de olores', 52.90, 40, 'arena_bentonita_10kg.jpg', 6);
+CALL sp_crearProducto('Suplemento Omega 3 y 6 en Aceite 250ml', 'Suplemento líquido para mejorar el brillo del pelaje y la salud del corazón', 48.00, 18, 'omega3_6_suplemento.jpg', 6);
+CALL sp_crearProducto('Hierba Gatera (Catnip) en Spray', 'Extracto concentrado para estimular el juego y relajar a los felinos', 22.90, 30, 'catnip_spray.jpg', 6);
 
-
-
-
+-- ---------- CATEGORÍA 7: Comederos y Accesorios del Hogar (id_categoria = 7) ----------
+CALL sp_crearProducto('Fuente de Agua Automática con Filtro 2L', 'Dispensador eléctrico tipo cascada que mantiene el agua oxigenada y limpia', 119.90, 10, 'fuente_agua_automatica.jpg', 7);
+CALL sp_crearProducto('Plato de Alimentación Lenta (Anti-Ansiedad)', 'Comedero con laberintos internos para evitar que el perro coma demasiado rápido', 35.00, 28, 'plato_alimentacion_lenta.jpg', 7);
+CALL sp_crearProducto('Comedero Doble Elevado de Bambú', 'Estructura de madera con dos platos de acero inoxidable para mejorar la postura', 79.90, 12, 'comedero_elevado_bambu.jpg', 7);
+CALL sp_crearProducto('Contenedor Hermético para Alimento 15KG', 'Depósito plástico con sello de goma para mantener las croquetas frescas y secas', 69.90, 15, 'contenedor_alimento_15kg.jpg', 7);
