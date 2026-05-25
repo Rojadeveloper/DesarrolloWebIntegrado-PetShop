@@ -5,21 +5,20 @@
 package modelo.dao;
 
 import java.util.List;
-
-import modelo.dto.ProductoDTO;
+import modelo.entidad.Producto;
 
 public interface IProductoDAO {
 
-    List<ProductoDTO> listar();
+    List<Producto> listar();
 
-    boolean agregar(ProductoDTO p);
+    boolean agregar(Producto p);
 
-    ProductoDTO buscarPorId(int id);
+    Producto buscarPorId(int id);
 
-    boolean modificar(ProductoDTO p);
+    boolean modificar(Producto p);
 
     boolean eliminar(int id);
 
-    List<ProductoDTO> buscar(String texto);
+    List<Producto> buscar(String texto);
 }
 

@@ -67,7 +67,8 @@
     <!-- BUSCADOR -->
     <div class="card p-3 mb-4 shadow-sm">
 
-        <form method="GET" action="dashboard.jsp">
+        <form method="GET"
+              action="${pageContext.request.contextPath}/vista/admin/dashboard.jsp">
 
             <div class="row">
 
