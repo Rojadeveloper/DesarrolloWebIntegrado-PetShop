@@ -21,39 +21,23 @@
 
     <h2>Registro de Usuario</h2>
 
-    <form name="formRegistro" onsubmit="return validarFormulario()">
-        <input type="text" name="nombre" placeholder="Nombre completo" required>
+    <form action="<%= request.getContextPath() %>/registro" method="post" name="formRegistro" onsubmit="return validarFormulario()">
+        
+        <input type="text" name="nombre" placeholder="Nombre" required>
 
-        <input type="text" name="usuario" placeholder="Usuario" required>
+        <input type="text" name="apellido" placeholder="Apellido" required>
 
+        <input type="email" name="correo" placeholder="Correo electrónico" required>
+        
         <input type="password" name="password" placeholder="Contraseña" required>
 
-        <input type="email" name="email" placeholder="Correo electrónico" required>
-
         <input type="tel" name="telefono" placeholder="Ingrese un número válido" pattern="[0-9]{7,15}" required>
-
-        <!-- Rol fijo: cliente -->
-        <input type="hidden" name="rol" value="cliente">
+        
+        <input type="text" name="direccion" placeholder="Dirección">
 
         <button type="submit">Registrarse</button>
     </form>
 
-    <%
-        String nombre = request.getParameter("nombre");
-        String usuario = request.getParameter("usuario");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        String telefono = request.getParameter("telefono");
-        String rol = request.getParameter("rol");
-
-        if (usuario != null && password != null && email != null) {
-
-            // SIMULACIÓN (sin BD todavía)
-            out.println("<p style='color:green;'>Usuario registrado correctamente</p>");
-
-            // aquí luego conectarás a MySQL
-        }
-    %>
 </div>
 
 </body>

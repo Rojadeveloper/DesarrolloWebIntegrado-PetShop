@@ -5,6 +5,8 @@
 package servicio;
 
 import modelo.dao.IUsuarioDAO;
+import modelo.dto.RegistroDTO;
+import modelo.dao.impl.UsuarioDAOImpl;
 import modelo.entidad.Usuario;
 import modelo.factory.DAOFactory;
 
@@ -27,5 +29,25 @@ public class UsuarioServicio {
     
     private boolean isValid(String correo, String password){
         return correo !=null && password !=null && !correo.trim().isEmpty() && !password.trim().isEmpty();   
+    }
+    
+    public boolean registrarUsuario(RegistroDTO dto) {
+
+        IUsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO();
+
+        if (usuarioDAO.existeCorreo(dto.getCorreo())) {
+            return false;
+        }
+
+        Usuario usuario = new Usuario();
+
+        usuario.setNombre(dto.getNombre());
+        usuario.setApellido(dto.getApellido());
+        usuario.setCorreo(dto.getCorreo());
+        usuario.setPassword(dto.getPassword());
+        usuario.setTelefono(dto.getTelefono());
+        usuario.setDireccion(dto.getDireccion());
+
+        return usuarioDAO.registrarUsuario(usuario);
     }
 }

@@ -1,31 +1,33 @@
-    /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package modelo.entidad;
-import java.time.LocalDateTime;
+package modelo.dto;
 
-public class Usuario {
-
-    private int id;
+/**
+ *
+ * @author User
+ */
+public class RegistroDTO {
     private String nombre;
     private String apellido;
     private String correo;
     private String password;
     private String telefono;
     private String direccion;
-    private String rol;
-    private LocalDateTime fechaRegistro;
 
-
-    // GETTERS Y SETTERS
-
-    public int getId() {
-        return id;
+    public RegistroDTO() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public RegistroDTO(String nombre, String apellido, String correo,
+            String password, String telefono, String direccion) {
+
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.password = password;
+        this.telefono = telefono;
+        this.direccion = direccion;
     }
 
     public String getNombre() {
@@ -59,14 +61,6 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    public String getRol(){
-        return rol;
-    }
-    
-    public void setRol(String rol){
-        this.rol = rol;
-    }
 
     public String getTelefono() {
         return telefono;
@@ -83,13 +77,4 @@ public class Usuario {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-
-    public LocalDateTime getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(LocalDateTime fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
-    
 }
