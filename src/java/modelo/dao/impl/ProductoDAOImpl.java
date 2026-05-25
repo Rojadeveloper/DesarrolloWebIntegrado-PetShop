@@ -13,6 +13,7 @@ import java.util.List;
 import modelo.config.ConexionBD;
 import modelo.dao.IProductoDAO;
 import modelo.dto.ProductoDTO;
+import modelo.entidad.Producto;
 
 public class ProductoDAOImpl implements IProductoDAO {
 
@@ -21,9 +22,9 @@ public class ProductoDAOImpl implements IProductoDAO {
     ResultSet rs;
 
     @Override
-    public List<ProductoDTO> listar() {
+    public List<Producto> listar() {
 
-        List<ProductoDTO> lista = new ArrayList<>();
+        List<Producto> lista = new ArrayList<>();
 
         String sql = "SELECT * FROM producto";
 
@@ -37,7 +38,7 @@ public class ProductoDAOImpl implements IProductoDAO {
 
             while (rs.next()) {
 
-                ProductoDTO p = new ProductoDTO();
+                Producto p = new Producto();
 
                 p.setIdProducto(rs.getInt("id_producto"));
                 p.setNombre(rs.getString("nombre"));
@@ -56,7 +57,7 @@ public class ProductoDAOImpl implements IProductoDAO {
     }
 
     @Override
-    public boolean agregar(ProductoDTO p) {
+    public boolean agregar(Producto p) {
 
         String sql = "INSERT INTO producto(nombre, descripcion, precio, stock) VALUES(?,?,?,?)";
 
@@ -83,9 +84,9 @@ public class ProductoDAOImpl implements IProductoDAO {
     }
 
     @Override
-    public ProductoDTO buscarPorId(int id) {
+    public Producto buscarPorId(int id) {
 
-        ProductoDTO p = new ProductoDTO();
+        Producto p = new Producto();
 
         String sql = "SELECT * FROM producto WHERE id_producto=?";
 
@@ -116,7 +117,7 @@ public class ProductoDAOImpl implements IProductoDAO {
     }
 
     @Override
-    public boolean modificar(ProductoDTO p) {
+    public boolean modificar(Producto p) {
 
         String sql = "UPDATE producto SET nombre=?, descripcion=?, precio=?, stock=? WHERE id_producto=?";
 
@@ -168,9 +169,9 @@ public class ProductoDAOImpl implements IProductoDAO {
     }
 
     @Override
-    public List<ProductoDTO> buscar(String texto) {
+    public List<Producto> buscar(String texto) {
 
-        List<ProductoDTO> lista = new ArrayList<>();
+        List<Producto> lista = new ArrayList<>();
 
         String sql = "SELECT * FROM producto WHERE nombre LIKE ?";
 
@@ -186,7 +187,7 @@ public class ProductoDAOImpl implements IProductoDAO {
 
             while (rs.next()) {
 
-                ProductoDTO p = new ProductoDTO();
+                Producto p = new Producto();
 
                 p.setIdProducto(rs.getInt("id_producto"));
                 p.setNombre(rs.getString("nombre"));
