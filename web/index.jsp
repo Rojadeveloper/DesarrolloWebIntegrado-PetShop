@@ -5,11 +5,12 @@
 --%>
 
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ page import="modelo.entidad.Usuario" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-<title>PetShop - Productos para Mascotas</title>
+    <title>PetShop - Productos para Mascotas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/EstiloGlobal.css">
     <link rel="stylesheet" href="css/Responsive.css">
@@ -44,7 +45,7 @@
                        href="#"
                        role="button"
                        data-bs-toggle="dropdown">
-                        Categorías
+                         Categorías
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">🐶 Perros</a></li>
@@ -59,14 +60,44 @@
                 <button class="btn btn-light" type="submit">🔍</button>
             </form>
 
-            <a class="btn btn-outline-light me-2" href="<%= request.getContextPath() %>/vista/usuario/login.jsp">
-                Login
-            </a>
+            <% 
+                // VERIFICACIÓN INTEGRADA CON LOGINSERVLET
+                if (session.getAttribute("usuarioLogueado") == null) { 
+            %>
+                <a class="btn btn-outline-light me-2" href="<%= request.getContextPath() %>/vista/usuario/login.jsp">
+                    Login
+                </a>
 
-            <a class="btn btn-warning" href="<%= request.getContextPath() %>/vista/usuario/registro.jsp">
-                Registro
-            </a>
-               
+                <a class="btn btn-warning" href="<%= request.getContextPath() %>/vista/usuario/registro.jsp">
+                    Registro
+                </a>
+            <% 
+                } else { 
+                    // MENÚ PARA EL CLIENTE LOGUEADO
+                    String nombreCliente = (String) session.getAttribute("nombreUsuario");
+            %>
+                <div class="nav-item dropdown me-2">
+                    <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-user me-1"></i> Bienvenido, <%= nombreCliente %>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="<%= request.getContextPath() %>/vista/cliente/perfil.jsp">
+                                <i class="fa-solid fa-id-card me-2"></i> Mi Perfil / Compras
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="<%= request.getContextPath() %>/CerrarSesionServlet">
+                                <i class="fa-solid fa-right-from-bracket me-2"></i> Cerrar Sesión
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            <% 
+                } 
+            %>
+                
             <a class="btn btn-light position-relative me-2" href="#" data-bs-toggle="offcanvas" data-bs-target="#carritoSidebar">
                 🛒 Carrito
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -133,7 +164,11 @@
                     <span>S/. 35.00</span>
                     <div class="acciones">
                         <button class="custom-btn ver-producto-btn">Ver producto</button>
-                        <button class="custom-btn comprar">Comprar</button>
+                        <% if (session.getAttribute("usuarioLogueado") == null) { %>
+                            <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
+                        <% } else { %>
+                            <a href="<%= request.getContextPath() %>/CarritoServlet?accion=agregar&id=1" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -144,11 +179,15 @@
                         <img src="imagen/JugueteGato.jpg" class="img-fluid" alt="Juguete Gato">
                     </div>
                     <h3>Juguete para Gato</h3>
-                    <p>Divertido y resistente para el entretenimiento de tu michi.</p>
+                    <p>Divertido y resistente para el entertainment de tu michi.</p>
                     <span>S/. 15.00</span>
                     <div class="acciones">
                         <button class="custom-btn ver-producto-btn">Ver producto</button>
-                        <button class="custom-btn comprar">Comprar</button>
+                        <% if (session.getAttribute("usuarioLogueado") == null) { %>
+                            <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
+                        <% } else { %>
+                            <a href="<%= request.getContextPath() %>/CarritoServlet?accion=agregar&id=2" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
+                        <% } %>
                     </div>    
                 </div>
             </div>    
@@ -163,7 +202,11 @@
                     <span>S/. 25.00</span>
                     <div class="acciones">
                         <button class="custom-btn ver-producto-btn">Ver producto</button>
-                        <button class="custom-btn comprar">Comprar</button>
+                        <% if (session.getAttribute("usuarioLogueado") == null) { %>
+                            <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
+                        <% } else { %>
+                            <a href="<%= request.getContextPath() %>/CarritoServlet?accion=agregar&id=3" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
+                        <% } %>
                     </div>            
                 </div>
             </div>
@@ -178,7 +221,11 @@
                     <span>S/. 35.00</span>
                     <div class="acciones">
                         <button class="custom-btn ver-producto-btn">Ver producto</button>
-                        <button class="custom-btn comprar">Comprar</button>
+                        <% if (session.getAttribute("usuarioLogueado") == null) { %>
+                            <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
+                        <% } else { %>
+                            <a href="<%= request.getContextPath() %>/CarritoServlet?accion=agregar&id=4" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
+                        <% } %>
                     </div>      
                 </div>
             </div>
@@ -193,7 +240,11 @@
                     <span>S/. 15.00</span>
                     <div class="acciones">
                         <button class="custom-btn ver-producto-btn">Ver producto</button>
-                        <button class="custom-btn comprar">Comprar</button>
+                        <% if (session.getAttribute("usuarioLogueado") == null) { %>
+                            <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
+                        <% } else { %>
+                            <a href="<%= request.getContextPath() %>/CarritoServlet?accion=agregar&id=5" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -242,7 +293,7 @@
 
     </div>
 </div>
-                
+                    
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <%-- 
-    Document   : registro
+    Document   : registro.jsp
     Created on : 24 abr 2026, 6:41:57
     Author     : User
 --%>
@@ -22,15 +22,18 @@
 
     <h2>Registro de Usuario</h2>
 
-    <form name="formRegistro" action="registro.jsp" method="POST">
-        <input type="text" name="nombre" placeholder="Nombre completo" required>
-        <input type="text" name="usuario" placeholder="Nombre de usuario" required>
-        <input type="password" name="password" placeholder="Contraseña" required>
-        <input type="email" name="email" placeholder="Correo electrónico" required>
-        <input type="tel" name="telefono" placeholder="Teléfono (Ej: 987654321)" pattern="[0-9]{7,15}" required>
+    <% if (request.getAttribute("error") != null) { %>
+        <div class="alert alert-danger py-2 text-center small" role="alert">
+            ⚠️ <%= request.getAttribute("error") %>
+        </div>
+    <% } %>
+    <% if (request.getAttribute("exito") != null) { %>
+        <div class="alert alert-success py-2 text-center small" role="alert">
+            🐾 <%= request.getAttribute("exito") %>
+        </div>
+    <% } %>
 
-        <input type="hidden" name="rol" value="cliente">
-    <form action="<%= request.getContextPath() %>/registro" method="post" name="formRegistro" onsubmit="return validarFormulario()">
+    <form action="<%= request.getContextPath() %>/registro" method="POST" name="formRegistro">
         
         <input type="text" name="nombre" placeholder="Nombre" required>
 
@@ -40,9 +43,11 @@
         
         <input type="password" name="password" placeholder="Contraseña" required>
 
-        <input type="tel" name="telefono" placeholder="Ingrese un número válido" pattern="[0-9]{7,15}" required>
+        <input type="tel" name="telefono" placeholder="Teléfono (Ej: 987654321)" pattern="[0-9]{7,15}" required>
         
-        <input type="text" name="direccion" placeholder="Dirección">
+        <input type="text" name="direccion" placeholder="Dirección de entrega">
+
+        <input type="hidden" name="rol" value="CLIENTE">
 
         <button type="submit">Registrarse</button>
     </form>
@@ -51,15 +56,6 @@
         ¿Ya tienes cuenta? <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp">Inicia sesión</a>
     </div>
 
-    <%-- Lógica de Simulación Temporal en Servidor --%>
-    <%
-        String usuario = request.getParameter("usuario");
-        String email = request.getParameter("email");
-
-        if (usuario != null && email != null) {
-            out.println("<div class='success-msg'>🐾 ¡Usuario registrado correctamente!</div>");
-        }
-    %>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
