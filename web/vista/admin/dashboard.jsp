@@ -190,7 +190,20 @@
         <%= mensajeError %>
     </div>
 
-<% } %>                   
+<% } %>
+
+<!-- MENSAJE EXITOSO -->
+<%
+    String mensaje = request.getParameter("mensaje");
+%>
+
+<% if (mensaje != null) { %>
+
+    <div class="alert alert-success">
+        <%= mensaje %>
+    </div>
+
+<% } %>                 
                            
                            
     <!-- TABLA -->

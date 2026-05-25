@@ -36,7 +36,7 @@ public class ProductoServlet extends HttpServlet {
 
                 servicio.eliminar(id);
 
-                response.sendRedirect("vista/admin/dashboard.jsp");
+                response.sendRedirect("vista/admin/dashboard.jsp?mensaje=Producto eliminado exitosamente.");
             }
 
             // EDITAR
@@ -55,48 +55,54 @@ public class ProductoServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
 
-        String accion = request.getParameter("accion");
+    String accion = request.getParameter("accion");
 
-        ProductoDTO p = new ProductoDTO();
+    ProductoDTO p = new ProductoDTO();
 
-        p.setNombre(request.getParameter("nombre"));
-        p.setDescripcion(request.getParameter("descripcion"));
-        p.setPrecio(Double.parseDouble(request.getParameter("precio")));
-        p.setStock(Integer.parseInt(request.getParameter("stock")));
+    p.setNombre(request.getParameter("nombre"));
+    p.setDescripcion(request.getParameter("descripcion"));
+    p.setPrecio(Double.parseDouble(request.getParameter("precio")));
+    p.setStock(Integer.parseInt(request.getParameter("stock")));
 
-        // AGREGAR
-        if (accion.equals("agregar")) {
+    String mensaje = "";
 
-            servicio.agregar(p);
+    // AGREGAR
+    if (accion.equals("agregar")) {
+
+        servicio.agregar(p);
+
+        mensaje = "Producto agregado exitosamente.";
+    }
+
+    // MODIFICAR
+    else if (accion.equals("modificar")) {
+
+        String idTexto = request.getParameter("idProducto");
+
+        // VALIDAR SI SE SELECCIONÓ UN PRODUCTO
+        if (idTexto == null || idTexto.trim().isEmpty()) {
+
+            request.setAttribute("mensajeError",
+                    "Debe seleccionar un producto de la tabla para modificar.");
+
+            request.getRequestDispatcher("vista/admin/dashboard.jsp")
+                    .forward(request, response);
+
+            return;
         }
 
-        // MODIFICAR
-        else if (accion.equals("modificar")) {
+        p.setIdProducto(Integer.parseInt(idTexto));
 
-    String idTexto = request.getParameter("idProducto");
+        servicio.modificar(p);
 
-    // VALIDAR SI SE SELECCIONÓ UN PRODUCTO
-    if (idTexto == null || idTexto.trim().isEmpty()) {
-
-        request.setAttribute("mensajeError",
-                "Debe seleccionar un producto de la tabla para modificar.");
-
-        request.getRequestDispatcher("vista/admin/dashboard.jsp")
-                .forward(request, response);
-
-        return;
+        mensaje = "Producto modificado exitosamente.";
     }
 
-    p.setIdProducto(Integer.parseInt(idTexto));
-
-    servicio.modificar(p);
+    response.sendRedirect("vista/admin/dashboard.jsp?mensaje=" + mensaje);
 }
-
-        response.sendRedirect("vista/admin/dashboard.jsp");
-    }
 }
 
 
