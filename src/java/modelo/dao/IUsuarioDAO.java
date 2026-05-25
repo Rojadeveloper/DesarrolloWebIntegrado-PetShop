@@ -10,4 +10,7 @@ import modelo.entidad.Usuario;
 public interface IUsuarioDAO {
     Usuario login(String correo, String password);
     
+    boolean registrarUsuario(Usuario usuario);
+
+    boolean existeCorreo(String correo);
 }

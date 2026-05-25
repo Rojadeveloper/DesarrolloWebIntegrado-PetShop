@@ -30,6 +30,19 @@
         <input type="tel" name="telefono" placeholder="Teléfono (Ej: 987654321)" pattern="[0-9]{7,15}" required>
 
         <input type="hidden" name="rol" value="cliente">
+    <form action="<%= request.getContextPath() %>/registro" method="post" name="formRegistro" onsubmit="return validarFormulario()">
+        
+        <input type="text" name="nombre" placeholder="Nombre" required>
+
+        <input type="text" name="apellido" placeholder="Apellido" required>
+
+        <input type="email" name="correo" placeholder="Correo electrónico" required>
+        
+        <input type="password" name="password" placeholder="Contraseña" required>
+
+        <input type="tel" name="telefono" placeholder="Ingrese un número válido" pattern="[0-9]{7,15}" required>
+        
+        <input type="text" name="direccion" placeholder="Dirección">
 
         <button type="submit">Registrarse</button>
     </form>
