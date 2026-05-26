@@ -109,16 +109,24 @@ BEGIN
     VALUES(p_nombre, p_apellido, p_correo, p_password, p_telefono, p_direccion, 'CLIENTE');
 END //
 
--- 2. USUARIOS: INICIO DE SESIÓN
+-- 2. USUARIOS: INICIO DE SESIÓN + (NEW: Datos para Mi Perfil)
+
+DROP PROCEDURE IF EXISTS sp_loginUsuario;
+
+DELIMITER //
+
 CREATE PROCEDURE sp_loginUsuario(
     IN p_correo VARCHAR(150),
     IN p_password VARCHAR(255)
 )
 BEGIN
-    SELECT id_usuario, nombre, apellido, correo, rol 
+    -- Traemos todos los campos (incluyendo password, telefono y direccion)
+    SELECT id_usuario, nombre, apellido, correo, password, telefono, direccion, rol 
     FROM usuario 
     WHERE correo = p_correo AND password = p_password;
 END //
+
+DELIMITER ;
 
 -- 3. CATEGORÍAS: CREAR
 CREATE PROCEDURE sp_crearCategoria(

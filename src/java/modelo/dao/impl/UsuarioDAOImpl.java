@@ -18,7 +18,8 @@ public class UsuarioDAOImpl implements IUsuarioDAO{
         
         Usuario user = null;
 
-        String sql = "SELECT id_usuario, nombre, correo, rol FROM usuario WHERE correo=? AND password=?";
+    // 🔍 Modificado: Agregamos apellido, password, telefono y direccion a la consulta SQL
+        String sql = "SELECT id_usuario, nombre, apellido, correo, password, telefono, direccion, rol FROM usuario WHERE correo=? AND password=?";
         Connection con = ConexionBD.getInstancia().getConexion();
                 
         try(PreparedStatement ps = con.prepareStatement(sql)) {
@@ -34,6 +35,12 @@ public class UsuarioDAOImpl implements IUsuarioDAO{
                 user.setNombre(rs.getString("nombre"));
                 user.setCorreo(rs.getString("correo"));
                 user.setRol(rs.getString("rol"));
+                
+                // 📝 Seteamos los campos faltantes para que fluyan hacia la sesión de perfil.jsp
+                user.setApellido(rs.getString("apellido"));
+                user.setPassword(rs.getString("password"));
+                user.setTelefono(rs.getString("telefono"));
+                user.setDireccion(rs.getString("direccion"));
             }
 
         } catch (Exception e) {
@@ -87,6 +94,28 @@ public class UsuarioDAOImpl implements IUsuarioDAO{
             e.printStackTrace();
         }
 
+        return false;
+    }
+    
+    @Override
+    public boolean actualizarUsuario(Usuario usuario) {
+        String sql = "UPDATE usuario SET nombre = ?, apellido = ?, password = ?, telefono = ?, direccion = ? WHERE id_usuario = ?";
+
+        try (Connection con = ConexionBD.getInstancia().getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, usuario.getNombre());
+            ps.setString(2, usuario.getApellido());
+            ps.setString(3, usuario.getPassword());
+            ps.setString(4, usuario.getTelefono());
+            ps.setString(5, usuario.getDireccion());
+            ps.setInt(6, usuario.getId());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 }

@@ -13,4 +13,7 @@ public interface IUsuarioDAO {
     boolean registrarUsuario(Usuario usuario);
 
     boolean existeCorreo(String correo);
+    
+    // Método añadido para la actualización del perfil
+    boolean actualizarUsuario(Usuario usuario);
 }
