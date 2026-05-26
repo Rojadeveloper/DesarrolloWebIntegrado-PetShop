@@ -322,3 +322,23 @@ CALL sp_crearProducto('Fuente de Agua Automática con Filtro 2L', 'Dispensador e
 CALL sp_crearProducto('Plato de Alimentación Lenta (Anti-Ansiedad)', 'Comedero con laberintos internos para evitar que el perro coma demasiado rápido', 35.00, 28, 'plato_alimentacion_lenta.jpg', 7);
 CALL sp_crearProducto('Comedero Doble Elevado de Bambú', 'Estructura de madera con dos platos de acero inoxidable para mejorar la postura', 79.90, 12, 'comedero_elevado_bambu.jpg', 7);
 CALL sp_crearProducto('Contenedor Hermético para Alimento 15KG', 'Depósito plástico con sello de goma para mantener las croquetas frescas y secas', 69.90, 15, 'contenedor_alimento_15kg.jpg', 7);
+
+
+-- =========================================================
+-- INSERCIÓN DE USUARIOS (ADMINISTRADORES Y CLIENTES)
+-- =========================================================
+
+-- ---------- 5 USUARIOS CON ROL: ADMIN ----------
+INSERT INTO usuario (nombre, apellido, correo, password, telefono, direccion, rol)
+VALUES 
+('Jesus', 'Roja', 'adminroja@petshop.com', 'admin123', '920575983', 'Av. Central 456, Lima', 'ADMIN'),
+('Ronaldo', 'Nunez', 'adminRN@petshop.com', '123456', '987654321', 'Miraflores, Lima', 'ADMIN'),
+('Ramiro', 'Admin', 'adminramiro@petshop.com', 'admin123', '955443322', 'Cercado de Lima', 'ADMIN'),
+('Jalit', 'Admin', 'adminjalit@petshop.com', 'admin123', '912345678', 'Miraflores, Lima', 'ADMIN'),
+('Josue', 'Espinoza', 'adminjosue@petshop.com', 'admin123', '933221100', 'Callao, Lima', 'ADMIN');
+
+
+-- ---------- 2 USUARIOS CON ROL: CLIENTE ----------
+-- Nota: Usamos el Procedure creado que asigna el rol 'CLIENTE' automáticamente
+CALL sp_registrarCliente('Cliente', 'Prueba', 'cliente@petshop.com', 'cliente', '953424555', 'Av. Arequipa 3200, San Isidro, Lima');
+CALL sp_registrarCliente('Cliente2', 'Prueba2', 'cliente2@petshop.com', 'cliente2', '953424222', 'Av. Arequipa 3200, San Isidro, Lima');

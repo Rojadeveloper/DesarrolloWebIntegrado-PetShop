@@ -1,11 +1,17 @@
 <%-- 
     Document   : index.jsp
     Created on : 24 abr 2026, 6:44:17
-    Author     : User
+    Author     : User & Edit by: RonaldoYN
 --%>
 
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page import="modelo.entidad.Usuario" %>
+<%
+    // 🛡️ Limpieza estricta de caché: Fuerza al navegador a pedir los datos limpios al servidor
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setDateHeader("Expires", 0); // Proxies
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,7 +67,7 @@
             </form>
 
             <% 
-                // VERIFICACIÓN INTEGRADA CON LOGINSERVLET
+                // VERIFICACIÓN DE SESIÓN activa
                 if (session.getAttribute("usuarioLogueado") == null) { 
             %>
                 <a class="btn btn-outline-light me-2" href="<%= request.getContextPath() %>/vista/usuario/login.jsp">
@@ -73,22 +79,46 @@
                 </a>
             <% 
                 } else { 
-                    // MENÚ PARA EL CLIENTE LOGUEADO
-                    String nombreCliente = (String) session.getAttribute("nombreUsuario");
+                    // Capturamos el objeto completo para verificar el ROL en tiempo real
+                    Usuario userLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+                    String nombreUsuario = (String) session.getAttribute("nombreUsuario");
             %>
                 <div class="nav-item dropdown me-2">
                     <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        <i class="fa-solid fa-user me-1"></i> Bienvenido, <%= nombreCliente %>
+                        <i class="fa-solid fa-user me-1"></i> Bienvenido, <%= nombreUsuario %>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item" href="<%= request.getContextPath() %>/vista/cliente/perfil.jsp">
-                                <i class="fa-solid fa-id-card me-2"></i> Mi Perfil / Compras
-                            </a>
-                        </li>
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        
+                        <%-- 🔑 CONDICIONAL INTELIGENTE SEGÚN EL ROL --%>
+                        <% if (userLogueado != null && "ADMIN".equals(userLogueado.getRol())) { %>
+                            <%-- Menú exclusivo para el Administrador --%>
+                            <li>
+                                <a class="dropdown-item fw-bold text-success" href="<%= request.getContextPath() %>/vista/admin/dashboard.jsp">
+                                    <i class="fa-solid fa-gauge me-2"></i> Panel Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="<%= request.getContextPath() %>/vista/cliente/perfil.jsp">
+                                    <i class="fa-solid fa-user-gear me-2"></i> Mi Perfil (Admin)
+                                </a>
+                            </li>
+                        <% } else { %>
+                            <%-- Menú exclusivo para Clientes Compradores --%>
+                            <li>
+                                <a class="dropdown-item" href="<%= request.getContextPath() %>/vista/cliente/perfil.jsp">
+                                    <i class="fa-solid fa-id-card me-2"></i> Mi Perfil
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fa-solid fa-bag-shopping me-2"></i> Mis Compras
+                                </a>
+                            </li>
+                        <% } %>
+                        
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <a class="dropdown-item text-danger" href="<%= request.getContextPath() %>/CerrarSesionServlet">
+                            <a class="dropdown-item text-danger fw-bold" href="<%= request.getContextPath() %>/logout">
                                 <i class="fa-solid fa-right-from-bracket me-2"></i> Cerrar Sesión
                             </a>
                         </li>
