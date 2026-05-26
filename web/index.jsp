@@ -47,17 +47,9 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"
-                       href="#"
-                       role="button"
-                       data-bs-toggle="dropdown">
-                         Categorías
+                    <a class="nav-link dropdown-toggle" href="<%= request.getContextPath() %>/vista/cliente/catalogoProductos.jsp">
+                        Todos los Productos
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">🐶 Perros</a></li>
-                        <li><a class="dropdown-item" href="#">🐱 Gatos</a></li>
-                        <li><a class="dropdown-item" href="#">🎾 Accesorios</a></li>
-                    </ul>
                 </li>
             </ul>
 
@@ -110,8 +102,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fa-solid fa-bag-shopping me-2"></i> Mis Compras
+                                <a class="dropdown-item" href="<%= request.getContextPath() %>/vista/cliente/catalogoProductos.jsp">
+                                    <i class="fa-solid fa-bag-shopping me-2"></i> Ver Productos
                                 </a>
                             </li>
                         <% } %>

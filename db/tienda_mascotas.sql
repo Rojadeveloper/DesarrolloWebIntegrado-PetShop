@@ -350,3 +350,51 @@ VALUES
 -- Nota: Usamos el Procedure creado que asigna el rol 'CLIENTE' automáticamente
 CALL sp_registrarCliente('Cliente', 'Prueba', 'cliente@petshop.com', 'cliente', '953424555', 'Av. Arequipa 3200, San Isidro, Lima');
 CALL sp_registrarCliente('Cliente2', 'Prueba2', 'cliente2@petshop.com', 'cliente2', '953424222', 'Av. Arequipa 3200, San Isidro, Lima');
+
+-- ====================================================================
+-- 1. PROCEDIMIENTO PARA LISTAR TODAS LAS CATEGORÍAS ACTIVAS
+-- ====================================================================
+DROP PROCEDURE IF EXISTS sp_listarCategorias;
+DELIMITER //
+CREATE PROCEDURE sp_listarCategorias()
+BEGIN
+    SELECT id_categoria, nombre, estado FROM categoria WHERE estado = 1;
+END //
+DELIMITER ;
+
+-- ====================================================================
+-- 2. PROCEDIMIENTO PARA PRODUCTOS DESTACADOS (POCO STOCK / AL AZAR)
+-- ====================================================================
+DROP PROCEDURE IF EXISTS sp_listarProductosDestacados;
+DELIMITER //
+CREATE PROCEDURE sp_listarProductosDestacados()
+BEGIN
+    -- Muestra los productos con stock menor a 15 unidades primero (Poco Stock / Más buscados)
+    SELECT id_producto, nombre, descripcion, precio, stock, imagen, id_categoria 
+    FROM producto 
+    WHERE stock > 0 
+    ORDER BY stock ASC 
+    LIMIT 4;
+END //
+DELIMITER ;
+
+-- ====================================================================
+-- 3. PROCEDIMIENTO PARA FILTRAR PRODUCTOS POR CATEGORÍA
+-- ====================================================================
+DROP PROCEDURE IF EXISTS sp_listarProductosPorCategoria;
+DELIMITER //
+CREATE PROCEDURE sp_listarProductosPorCategoria(
+    IN p_id_categoria INT
+)
+BEGIN
+    -- Si se envía 0, muestra absolutamente todos los productos del PetShop
+    IF p_id_categoria = 0 THEN
+        SELECT id_producto, nombre, descripcion, precio, stock, imagen, id_categoria 
+        FROM producto WHERE stock > 0;
+    ELSE
+        SELECT id_producto, nombre, descripcion, precio, stock, imagen, id_categoria 
+        FROM producto 
+        WHERE id_categoria = p_id_categoria AND stock > 0;
+    END IF;
+END //
+DELIMITER ;

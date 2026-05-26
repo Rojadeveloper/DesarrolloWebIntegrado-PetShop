@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo.dao;
 
-/**
- *
- * @author User
- */
-public class ICategoriaDAO {
-    
+import java.util.List;
+import modelo.entidad.Categoria;
+
+public interface ICategoriaDAO {
+    // Método para extraer las categorías activas de la BD
+    List<Categoria> listarCategorias();
 }

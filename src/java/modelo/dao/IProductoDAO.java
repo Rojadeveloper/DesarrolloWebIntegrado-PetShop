@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo.dao;
 
 import java.util.List;
-import modelo.entidad.Producto;
+import modelo.dto.ProductoDTO; // Se queda por si tu estructura requiere el import
+import modelo.entidad.Producto;  // 👈 Volvemos a importar la Entidad real
 
 public interface IProductoDAO {
 
@@ -20,5 +17,8 @@ public interface IProductoDAO {
     boolean eliminar(int id);
 
     List<Producto> buscar(String texto);
+    
+    // Nuevos métodos requeridos para la vista top del catálogo usando la Entidad pura
+    List<Producto> listarProductosDestacados();
+    List<Producto> listarProductosPorCategoria(int idCategoria);
 }
-
