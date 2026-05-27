@@ -27,7 +27,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="#">
+        <a class="navbar-brand fw-bold" href="<%= request.getContextPath() %>/index.jsp">
             🐾 PetShop
         </a>
 
@@ -46,10 +46,8 @@
                     </a>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="<%= request.getContextPath() %>/vista/cliente/catalogoProductos.jsp">
-                        Todos los Productos
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="<%= request.getContextPath() %>/vista/cliente/catalogoProductos.jsp"> Ver Productos </a>
                 </li>
             </ul>
 
@@ -102,8 +100,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="<%= request.getContextPath() %>/vista/cliente/catalogoProductos.jsp">
-                                    <i class="fa-solid fa-bag-shopping me-2"></i> Ver Productos
+                                <a class="dropdown-item" href="<%= request.getContextPath() %>/vista/cliente/carrito.jsp">
+                                    <i class="fa-solid fa-bag-shopping me-2"></i> Ver Carrito
                                 </a>
                             </li>
                         <% } %>

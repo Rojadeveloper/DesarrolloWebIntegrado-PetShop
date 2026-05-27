@@ -1,0 +1,228 @@
+/* 
+    Created on : 26 may. 2026, 7:05:58 p. m.
+    Author     : RonaldoYN
+*/
+/* ==========================================================================
+   🎨 1. BASE, FONDO Y TIPOGRAFÍA DEL CATÁLOGO
+   ========================================================================== */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f7f7f7 !important;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ==========================================================================
+   🐾 2. BARRA DE NAVEGACIÓN (NAVBAR) - EXCLUSIVO CATÁLOGO
+   ========================================================================== */
+.custom-navbar {
+    background: #20c997 !important; /* Verde Corporativo PetShop */
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+}
+
+.custom-navbar, 
+.custom-navbar a {
+    font-weight: bold; 
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2); 
+}
+
+/* ==========================================================================
+   🔥 3. SECCIÓN DESTACADOS (¡ÚLTIMAS UNIDADES!)
+   ========================================================================== */
+.seccion-destacados {
+    background: linear-gradient(135deg, rgba(32, 201, 151, 0.06) 0%, rgba(255, 193, 7, 0.03) 100%);
+    border-radius: 24px;
+    padding: 30px;
+    border: 1px dashed rgba(32, 201, 151, 0.2);
+}
+
+/* ==========================================================================
+   🛍️ 4. TARJETAS DE PRODUCTOS PREMIUM (ESTRUCTURA FLEXBOX CONTROLADA)
+   ========================================================================== */
+.card-producto-premium {
+    background: #ffffff !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden;
+    height: 100% !important; /* Obliga a todas las tarjetas de la fila a medir lo mismo */
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease !important;
+}
+
+.card-producto-premium:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08) !important;
+    border-color: rgba(32, 201, 151, 0.3) !important;
+}
+
+/* Contenedor fijo para la imagen del producto */
+.img-container {
+    width: 100%;
+    height: 200px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #ffffff !important;
+    position: relative;
+    padding: 15px;
+}
+
+.card-producto-premium img {
+    max-width: 85% !important;
+    max-height: 85% !important;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.card-producto-premium:hover img {
+    transform: scale(1.05);
+}
+
+/* Cuerpo de la tarjeta (Controla espacios internos) */
+.card-body-premium {
+    padding: 18px;
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important; /* Absorbe el espacio restante y empuja el contenido hacia abajo */
+}
+
+.product-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2b2b2b;
+    margin-bottom: 6px;
+}
+
+/* Forzar altura fija en la descripción para que las tarjetas queden simétricas */
+.product-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 38px;
+    line-height: 19px;
+    font-size: 12.5px;
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+
+/* Contenedor de precio y botón inferior (Sección ÚLTIMAS UNIDADES) */
+.product-footer {
+    margin-top: auto !important; /* Imán dinámico que clava el precio y el botón abajo */
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: 800;
+    color: #20c997;
+}
+
+/* Botón flotante redondo del carrito (Sección Destacados) */
+.btn-cart-round {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: #212529 !important;
+    color: #ffffff !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s ease !important;
+}
+
+.btn-cart-round:hover {
+    background-color: #20c997 !important;
+    color: #ffffff !important;
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(32, 201, 151, 0.35);
+}
+
+.badge-stock {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 30px;
+    font-weight: 600;
+    z-index: 2;
+}
+
+/* ==========================================================================
+   🐾 5. PANEL LATERAL IZQUIERDO (STICKY CATEGORÍAS)
+   ========================================================================== */
+.panel-sticky-menu {
+    position: sticky;
+    top: 85px; 
+    border-radius: 20px;
+    z-index: 10;
+}
+
+/* Botones interactivos de categorías */
+.btn-categoria {
+    background: #fff;
+    color: #495057;
+    border: 1px solid #e9ecef;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+.btn-categoria:hover {
+    background: #f8f9fa;
+    color: #20c997;
+    border-color: rgba(32, 201, 151, 0.2);
+}
+
+.btn-categoria.active {
+    background: rgba(32, 201, 151, 0.1) !important;
+    color: #1aa179 !important;
+    border-color: rgba(32, 201, 151, 0.3) !important;
+}
+
+/* ==========================================================================
+   🛒 6. CARRITO LATERAL OFFCANVAS (MENÚ DESPLEGABLE)
+   ========================================================================== */
+.custom-cart-canvas {
+    width: 420px !important; 
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.08) !important;
+}
+
+.cart-empty-icon {
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.cart-empty-state p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.cart-footer {
+    background: #ffffff;
+}

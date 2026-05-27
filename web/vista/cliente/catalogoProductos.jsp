@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="modelo.entidad.Producto" %> <%-- 👈 Usamos tu entidad Producto real --%>
-<%@ page import="modelo.entidad.Categoria" %> <%-- 👈 Usamos tu entidad Categoria real --%>
+<%@ page import="modelo.entidad.Producto" %> 
+<%@ page import="modelo.entidad.Categoria" %> 
+<%@ page import="modelo.entidad.Usuario" %>
 <%@ page import="modelo.dao.IProductoDAO" %>
 <%@ page import="modelo.dao.impl.ProductoDAOImpl" %>
 <%@ page import="modelo.dao.ICategoriaDAO" %>
@@ -22,7 +23,7 @@
         }
     }
 
-    // 3. Cargamos las listas desde los métodos que acabamos de corregir en el DAO
+    // 3. Cargamos las listas desde el DAO
     List<Categoria> listaCategorias = catDAO.listarCategorias();
     List<Producto> listaDestacados = prodDAO.listarProductosDestacados();
     List<Producto> listaProductos = prodDAO.listarProductosPorCategoria(idCatSeleccionada);
@@ -32,99 +33,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo - PetShop Premium</title>
+    <title>Catálogo Oficial - PetShop</title>
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/EstiloGlobal.css">
-
-    <style>
-        /* --- ESTILOS EXCLUSIVOS PARA DISEÑO FLOTANTE --- */
-        
-        /* Botones de categorías laterales */
-        .btn-categoria {
-            text-align: left;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            padding: 12px 16px;
-            border: 1px solid transparent;
-            background-color: #f8f9fa;
-            color: #495057;
-            transition: all 0.25s ease;
-            font-weight: 500;
-        }
-        .btn-categoria:hover {
-            background-color: #e9ecef;
-            transform: translateX(6px); /* Sutil desplazamiento a la derecha */
-            color: #212529;
-        }
-        .btn-categoria.active {
-            background-color: #198754; /* Cambia este color al tono principal de tu PetShop si deseas */
-            color: white;
-            border-color: #198754;
-            box-shadow: 0 4px 12px rgba(25, 135, 84, 0.25);
-        }
-        
-        /* Tarjetas flotantes estilo "GOD" */
-        .card-producto {
-            border-radius: 18px;
-            overflow: hidden;
-            border: none;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-            background: white;
-        }
-        .card-producto:hover {
-            transform: translateY(-10px); /* Efecto flotante real de elevación */
-            box-shadow: 0 16px 32px rgba(0,0,0,0.12);
-        }
-        
-        /* Contenedor de la foto del producto */
-        .img-container {
-            height: 210px;
-            background-color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-            padding: 15px;
-            border-bottom: 1px solid #f1f3f5;
-        }
-        .img-container img {
-            max-height: 90%;
-            max-width: 90%;
-            object-fit: contain;
-            transition: transform 0.4s ease;
-        }
-        .card-producto:hover .img-container img {
-            transform: scale(1.06); /* Zoom fluido de la foto */
-        }
-        
-        /* Etiqueta flotante de Stock Crítico */
-        .badge-stock {
-            position: absolute;
-            top: 14px;
-            left: 14px;
-            font-size: 0.75rem;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
-            z-index: 2;
-        }
-        
-        /* Panel superior de destacados */
-        .seccion-destacados {
-            background: linear-gradient(135deg, rgba(25, 135, 84, 0.06) 0%, rgba(255, 193, 7, 0.03) 100%);
-            border-radius: 24px;
-            padding: 30px;
-            border: 1px dashed rgba(25, 135, 84, 0.15);
-        }
-    </style>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/EstiloCatalogo.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Responsive.css">
 </head>
 <body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="<%= request.getContextPath() %>/index.jsp">
+                🐾 PetShop
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse gap-2" id="menu">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%= request.getContextPath() %>/index.jsp">Inicio</a>
+                    </li>
+                </ul>
+
+                <form class="d-flex me-3 search-box">
+                    <input class="form-control me-2" type="search" placeholder="Buscar productos...">
+                    <button class="btn btn-light" type="submit">🔍</button>
+                </form>
+
+                <% if (session.getAttribute("usuarioLogueado") == null) { %>
+                    <a class="btn btn-outline-light me-2" href="<%= request.getContextPath() %>/vista/usuario/login.jsp">Login</a>
+                    <a class="btn btn-warning" href="<%= request.getContextPath() %>/vista/usuario/registro.jsp">Registro</a>
+                <% } else { 
+                    Usuario userLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+                    String nombreUsuario = (String) session.getAttribute("nombreUsuario");
+                %>
+                    <div class="nav-item dropdown me-2">
+                        <a class="btn btn-outline-light dropdown-toggle active fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fa-solid fa-user me-1"></i> Bienvenido, <%= nombreUsuario %>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
+                            <% if (userLogueado != null && "ADMIN".equals(userLogueado.getRol())) { %>
+                                <li>
+                                    <a class="dropdown-item fw-bold text-success" href="<%= request.getContextPath() %>/vista/admin/dashboard.jsp">
+                                        <i class="fa-solid fa-gauge me-2"></i> Panel Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="<%= request.getContextPath() %>/vista/cliente/perfil.jsp">
+                                        <i class="fa-solid fa-user-gear me-2"></i> Mi Perfil (Admin)
+                                    </a>
+                                </li>
+                            <% } else { %>
+                                <li>
+                                    <a class="dropdown-item" href="<%= request.getContextPath() %>/vista/cliente/perfil.jsp">
+                                        <i class="fa-solid fa-id-card me-2"></i> Mi Perfil
+                                    </a>
+                                </li>
+                            <% } %>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-danger fw-bold" href="<%= request.getContextPath() %>/logout">
+                                    <i class="fa-solid fa-right-from-bracket me-2"></i> Cerrar Sesión
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                <% } %>
+                    
+                <a class="btn btn-light position-relative me-2" href="#" data-bs-toggle="offcanvas" data-bs-target="#carritoSidebar">
+                    🛒 Carrito
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
 
     <div class="container my-5">
         
@@ -143,19 +129,19 @@
                 <% if(listaDestacados != null && !listaDestacados.isEmpty()) { 
                     for(Producto p : listaDestacados) { %>
                     <div class="col-6 col-md-4 col-lg-3">
-                        <div class="card card-producto h-100">
+                        <div class="card-producto-premium">
                             <div class="img-container">
                                 <span class="badge bg-danger badge-stock">
-                                    <i class="fa-solid fa-triangle-exclamation me-1"></i> Solo Quedan <%= p.getStock() %>
+                                    <i class="fa-solid fa-triangle-exclamation me-1"></i> Solo <%= p.getStock() %>
                                 </span>
                                 <img src="<%= request.getContextPath() %>/img/<%= p.getImagen() %>" alt="<%= p.getNombre() %>" onerror="this.src='https://placehold.co/250x250?text=PetShop+Product';">
                             </div>
-                            <div class="card-body d-flex flex-column p-3">
-                                <h6 class="fw-bold text-dark mb-1 text-truncate"><%= p.getNombre() %></h6>
-                                <p class="text-muted small text-truncate mb-3"><%= p.getDescripcion() %></p>
-                                <div class="mt-auto d-flex justify-content-between align-items-center">
-                                    <span class="fs-5 fw-bold text-success">S/. <%= String.format("%.2f", p.getPrecio()) %></span>
-                                    <button class="btn btn-dark rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;" title="Agregar al carrito">
+                            <div class="card-body-premium">
+                                <h6 class="product-title text-truncate"><%= p.getNombre() %></h6>
+                                <p class="product-desc text-muted small"><%= p.getDescripcion() %></p>
+                                <div class="product-footer">
+                                    <span class="product-price">S/. <%= String.format("%.2f", p.getPrecio()) %></span>
+                                    <button class="btn-cart-round" title="Agregar al carrito" data-bs-toggle="offcanvas" data-bs-target="#carritoSidebar">
                                         <i class="fa-solid fa-cart-plus"></i>
                                     </button>
                                 </div>
@@ -171,15 +157,14 @@
             </div>
         </div>
 
-
         <div class="row g-4">
             
             <div class="col-lg-3">
-                <div class="card border-0 shadow-sm p-4 sticky-top" style="top: 25px; border-radius: 20px;">
+                <div class="card border-0 shadow-sm p-4 panel-sticky-menu">
                     <h5 class="fw-bold text-dark mb-4">
                         <i class="fa-solid fa-paw text-warning me-2"></i>Categorías
                     </h5>
-                    <div class="d-flex flex-column">
+                    <div class="d-flex flex-column gap-1">
                         <a href="catalogo.jsp?idCat=0" class="btn btn-categoria d-flex align-items-center justify-content-between <%= (idCatSeleccionada == 0) ? "active" : "" %>">
                             <span><i class="fa-solid fa-border-all me-2"></i> Todo el catálogo</span>
                             <i class="fa-solid fa-chevron-right small opacity-50"></i>
@@ -199,7 +184,7 @@
             </div>
 
             <div class="col-lg-9">
-                <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 px-2 gap-2">
                     <h4 class="fw-bold text-dark mb-0">
                         <i class="fa-solid fa-boxes-stacked text-secondary me-2"></i>
                         <%= (idCatSeleccionada == 0) ? "Nuestros Productos" : "Filtrado por Categoría" %>
@@ -210,25 +195,26 @@
                 <div class="row g-4">
                     <% if(listaProductos != null && !listaProductos.isEmpty()) {
                         for(Producto p : listaProductos) { %>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="card card-producto h-100">
+                        <div class="col-6 col-md-4">
+                            <div class="card-producto-premium">
                                 <div class="img-container">
                                     <img src="<%= request.getContextPath() %>/img/<%= p.getImagen() %>" alt="<%= p.getNombre() %>" onerror="this.src='https://placehold.co/250x250?text=PetShop+Product';">
                                 </div>
-                                <div class="card-body d-flex flex-column p-3">
-                                    <h6 class="fw-bold text-dark mb-1"><%= p.getNombre() %></h6>
-                                    <p class="text-muted small mb-3" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 38px; line-height: 19px;">
-                                        <%= p.getDescripcion() %>
-                                    </p>
-                                    <div class="mt-auto">
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="fs-4 fw-extrabold text-dark font-monospace">S/. <%= String.format("%.2f", p.getPrecio()) %></span>
-                                            <span class="badge bg-light text-muted border px-2 py-1">Stock: <%= p.getStock() %></span>
-                                        </div>
-                                        <button class="btn btn-warning w-100 fw-bold text-dark rounded-pill shadow-sm py-2 d-flex align-items-center justify-content-center">
-                                            <i class="fa-solid fa-basket-shopping me-2"></i> Agregar al Carrito
-                                        </button>
+                                <div class="card-body-premium">
+                                    <h6 class="product-title text-truncate"><%= p.getNombre() %></h6>
+                                    <p class="product-desc text-muted small mb-3"><%= p.getDescripcion() %></p>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="product-price">S/. <%= String.format("%.2f", p.getPrecio()) %></span>
+                                        <span class="badge text-bg-light border px-2 py-1 font-monospace" style="font-size: 11px;">Stock: <%= p.getStock() %></span>
                                     </div>
+                                    
+                                    <button class="btn btn-warning w-100 fw-bold py-2 rounded-3 text-dark d-flex align-items-center justify-content-center gap-2"
+                                            data-bs-toggle="offcanvas" 
+                                            data-bs-target="#carritoSidebar"
+                                            style="background-color: #ffc107; border: none; box-shadow: 0 4px 10px rgba(255,193,7,0.15);">
+                                        <i class="fa-solid fa-basket-shopping"></i> Agregar al Carrito
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -239,7 +225,6 @@
                                 <i class="fa-solid fa-face-frown fa-4x opacity-50"></i>
                             </div>
                             <h5 class="text-muted fw-bold">No hay stock disponible en este momento</h5>
-                            <p class="text-muted small">Prueba seleccionando otra categoría en el menú lateral izquierdo.</p>
                         </div>
                     <% } %>
                 </div>
@@ -248,6 +233,32 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="offcanvas offcanvas-end custom-cart-canvas" tabindex="-1" id="carritoSidebar">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold text-dark">
+                <i class="fa-solid fa-cart-shopping text-success me-2"></i>Tu Carrito
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+            <div class="cart-empty-state text-center my-auto p-4">
+                <span class="fs-1 cart-empty-icon mb-3">🛒</span>
+                <h6 class="fw-bold text-secondary">¡Tu carrito está vacío!</h6>
+                <p class="text-muted small">Explora el catálogo y añade los mejores productos para tus mascotas.</p>
+            </div>
+            
+            <div class="cart-footer p-3 border-top mt-auto bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="fw-bold text-secondary">Total estimado:</span>
+                    <span class="fs-4 fw-extrabold text-success font-monospace">S/. 0.00</span>
+                </div>
+                <button class="btn btn-success w-100 fw-bold py-2.5 rounded-3 shadow-sm">
+                    <i class="fa-solid fa-credit-card me-2"></i> Continuar Compra
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
