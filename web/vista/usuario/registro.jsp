@@ -1,5 +1,5 @@
 <%-- 
-    Document   : registro
+    Document   : registro.jsp
     Created on : 24 abr 2026, 6:41:57
     Author     : User
 --%>

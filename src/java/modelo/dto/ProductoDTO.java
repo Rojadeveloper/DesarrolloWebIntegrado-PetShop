@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo.dto;
 
 public class ProductoDTO {
@@ -11,16 +7,21 @@ public class ProductoDTO {
     private String descripcion;
     private double precio;
     private int stock;
+    // 🆕 Agregamos estos dos campos clave para el catálogo
+    private String imagen;
+    private int idCategoria;
 
     public ProductoDTO() {
     }
 
-    public ProductoDTO(int idProducto, String nombre, String descripcion, double precio, int stock) {
+    public ProductoDTO(int idProducto, String nombre, String descripcion, double precio, int stock, String imagen, int idCategoria) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.stock = stock;
+        this.imagen = imagen;
+        this.idCategoria = idCategoria;
     }
 
     public int getIdProducto() {
@@ -62,6 +63,21 @@ public class ProductoDTO {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
+    // 🆕 Getters y Setters nuevos
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
 }
-
-

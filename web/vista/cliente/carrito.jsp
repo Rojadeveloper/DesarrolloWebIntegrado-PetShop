@@ -1,7 +1,7 @@
 <%-- 
-    Document   : home.jsp
-    Created on : 20 may 2026, 18:01:08
-    Author     : User
+    Document   : carrito
+    Created on : 25 may. 2026, 2:21:39 p. m.
+    Author     : Usuario
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Bienvenido Cliente</h1>
+        <h1>Hello World!</h1>
     </body>
 </html>

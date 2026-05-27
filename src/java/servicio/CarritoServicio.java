@@ -4,10 +4,22 @@
  */
 package servicio;
 
-/**
- *
- * @author User
- */
+import java.util.ArrayList;
+import modelo.entidad.Producto; // Importamos la entidad que usa el grupo
+
 public class CarritoServicio {
-    
+    private ArrayList<Producto> productos;
+
+    // CORREGIDO: Mismo nombre de la clase
+    public CarritoServicio() {
+        productos = new ArrayList<>();
+    }
+
+    public void agregarProducto(Producto producto) {
+        productos.add(producto);
+    }
+
+    public ArrayList<Producto> getProductos() {
+        return productos;
+    }
 }

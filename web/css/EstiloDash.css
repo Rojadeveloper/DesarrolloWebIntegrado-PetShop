@@ -1,0 +1,132 @@
+/* 
+    Created on : 25 may. 2026, 4:45:30 p. m.
+    Author     : RonaldoYn
+*/
+
+/* ==========================================================================
+   ESTILO EXCLUSIVO PARA EL DASHBOARD DE ADMINISTRACIÓN (PETSHOP)
+   ========================================================================== */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    
+    /* TU IMAGEN DE ISTOCK SELECCIONADA */
+    background-image: url('https://media.istockphoto.com/id/165719790/es/vector/perro-y-garabatos.jpg?s=612x612&w=0&k=20&c=6KOnmK6B3b4lS75vP9fAitg2KshbOf7qV0fA9jTidrw=') !important;
+    
+    /* La colocamos abajo a la izquierda de forma fija para que no estorbe la tabla */
+    background-position: left bottom !important; 
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important; 
+    
+    /* Unificamos el resto del fondo con un gris claro que combine con el papel de la imagen */
+    background-color: #f4f6f9 !important;
+    background-size: 320px auto !important; /* Tamaño ideal para que se vea como un sticker decorativo */
+}
+
+/* Le damos una ligera transparencia a las tarjetas para que se integren con el entorno */
+.card-dash {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(32, 201, 151, 0.2) !important;
+    border-radius: 18px !important;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Reutilizando tu NavBar institucional */
+.custom-navbar {
+    background: #20c997 !important;
+    box-shadow: 0px 4px 15px rgba(32, 201, 151, 0.2);
+    padding: 12px 20px;
+}
+
+.custom-navbar .navbar-brand, 
+.custom-navbar .nav-link,
+.custom-navbar span,
+.custom-navbar strong {
+    color: #ffffff !important;
+    font-weight: bold;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.custom-navbar .nav-link:hover {
+    color: #115c45 !important;
+}
+
+/* Título de la sección */
+.titulo-dashboard {
+    font-weight: 800;
+    color: #1a4f43;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0px 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Tarjetas de Gestión estilizadas como tus Product-Cards */
+.card-dash {
+    background: white !important;
+    border: 1px solid rgba(32, 201, 151, 0.15) !important;
+    border-radius: 18px !important;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.03) !important;
+    transition: all 0.3s ease;
+}
+
+.card-dash:hover {
+    box-shadow: 0px 15px 35px rgba(32, 201, 151, 0.08) !important;
+}
+
+.card-title-custom {
+    color: #1a4f43;
+    font-weight: bold;
+    border-bottom: 2px solid #20c997;
+    padding-bottom: 8px;
+    display: inline-block;
+}
+
+/* Botones alineados a tu paleta web */
+.btn-buscar {
+    background: #2e86de !important;
+    color: white !important;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+}
+
+.btn-buscar:hover {
+    background: #1b6ca8 !important;
+}
+
+.btn-agregar-dash {
+    background: #20c997 !important;
+    color: white !important;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    transition: 0.2s ease;
+}
+
+.btn-agregar-dash:hover {
+    background: #1aa179 !important;
+}
+
+/* Tabla de datos con diseño moderno */
+.table-responsive-custom {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.thead-custom {
+    background-color: #1a4f43 !important;
+    color: white !important;
+}
+
+/* Insignias de stock interactivas */
+.badge-stock {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+}

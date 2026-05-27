@@ -4,9 +4,7 @@
  */
 package controlador;
 
-
 import modelo.entidad.Usuario;
-
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.WebServlet;
@@ -31,25 +29,27 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        
         Usuario user = servicio.login(correo, password);
 
         if (user != null) {
             HttpSession session = request.getSession();
-            session.setAttribute("usuario", user);
-            //VALIDAR ROL
+            
+            // SINCRONIZADO: Guardamos el objeto y las llaves exactas que lee tu index.jsp
+            session.setAttribute("usuarioLogueado", user);
+            session.setAttribute("nombreUsuario", user.getNombre()); // Asegurar que el método sea getNombre() o cambiar por correcto            
+            
+            // VALIDAR ROL
             if ("ADMIN".equals(user.getRol())){
                 response.sendRedirect("vista/admin/dashboard.jsp");
             } else if ("CLIENTE".equals(user.getRol())){
-                response.sendRedirect("vista/cliente/home.jsp");
+                // CORREGIDO: Mandamos al catálogo principal index.jsp
+                response.sendRedirect("index.jsp");
             } else {
                 response.sendRedirect("vista/usuario/login.jsp");
             }
         } else {
-            
             request.setAttribute("error", "Datos incorrectos");
             request.getRequestDispatcher("vista/usuario/login.jsp").forward(request, response);
         }
     }
 }
-

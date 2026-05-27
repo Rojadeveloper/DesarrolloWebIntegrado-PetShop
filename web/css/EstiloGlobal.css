@@ -1,23 +1,34 @@
+/* ==========================================================================
+   🎨 BASE Y TIPOGRAFÍA GLOBALES
+   ========================================================================== */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     background: #f7f7f7;
+    overflow-x: hidden;
 }
 
-/* NavBar */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ==========================================================================
+   🐾 BARRA DE NAVEGACIÓN (NAVBAR)
+   ========================================================================== */
 .custom-navbar {
-    background: #20c997;
+    background: #20c997 !important; /* Verde Corporativo PetShop */
     box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
 }
 
 .custom-navbar, 
 .custom-navbar a {
-    font-weight: bold; /* Hace la letra más gruesa */
-    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra suave para que resalte más sobre el verde */
+    font-weight: bold; 
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2); 
 }
 
 /* ==========================================================================
-   CARRUSEL PREMIUM DE MASCOTAS 
+   🎪 CARRUSEL PREMIUM DE MASCOTAS
    ========================================================================== */
 #petCarousel {
     width: 100%;
@@ -31,7 +42,7 @@ body {
 .carousel-img {
     height: 450px;
     object-fit: cover;
-    filter: brightness(0.85); /* Oscurece un poco el fondo para leer mejor el texto */
+    filter: brightness(0.85); 
 }
 
 .custom-caption {
@@ -110,118 +121,98 @@ body {
 }
 
 /* ==========================================================================
-   PRODUCTOS (TARJETAS ESTILO TOP)
+   🛍️ SECCIÓN: PRODUCTOS DESTACADOS
    ========================================================================== */
 .productos {
-    padding: 40px 20px;
     text-align: center;
+    padding: 40px 0;
 }
 
 .productos h2 {
+    font-size: 28px;
     font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 10px;
+    color: #2b2b2b;
+    margin-bottom: 20px;
 }
 
 .product-card {
-    background: white;
-    padding: 20px; /* Más espacio interno */
-    border-radius: 16px; /* Bordes más curvos */
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.04); /* Sombra difuminada de alta calidad */
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     height: 100%;
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(0,0,0,0.03);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.product-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.12);
-}
-
-/* Contenedor para estandarizar las imágenes de los productos */
-.product-img-container {
-    width: 100%;
-    height: 180px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fdfdfd; 
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 15px;
-}
-
-.product-card img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain; /* Ajusta la foto sin recortarla ni deformarla */
+    justify-content: space-between;
     transition: transform 0.3s ease;
 }
 
-.product-card:hover img {
-    transform: scale(1.05); /* Efecto zoom sutil al pasar el mouse */
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-img-container {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.product-img-container img {
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .product-card h3 {
     font-size: 18px;
     font-weight: bold;
-    color: #2c3e50;
-    margin-top: 5px;
-    margin-bottom: 8px;
+    color: #333;
+    margin-bottom: 10px;
 }
 
 .product-card p {
     font-size: 13px;
-    color: #7f8c8d;
-    line-height: 1.4;
-    margin-bottom: 15px;
+    color: #666;
+    min-height: 40px;
 }
 
 .product-card span {
     font-size: 20px;
-    font-weight: 800; 
-    color: #2e86de;
+    font-weight: 800;
+    color: #20c997;
     display: block;
-    margin-top: auto; /* Empuja el precio y los botones abajo de forma alineada */
     margin-bottom: 15px;
 }
 
-/* Botones dentro de la tarjeta */
 .acciones {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 .custom-btn {
-    padding: 10px;
-    border: none;
+    flex: 1;
+    padding: 8px 12px;
     border-radius: 8px;
-    font-size: 14px;
     font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s ease;
-    width: 100%;
+    font-size: 14px;
+    border: none;
+    transition: background 0.2s ease;
 }
 
-/* Botón Ver Producto con estilo minimalista */
 .ver-producto-btn {
-    background: transparent;
-    color: #2e86de;
-    border: 2px solid #2e86de;
+    background: #e9ecef;
+    color: #495057;
 }
 
 .ver-producto-btn:hover {
-    background: #2e86de;
-    color: white;
+    background: #dee2e6;
 }
 
-/* Botón Comprar alineado a tu color principal */
 .comprar {
     background: #20c997;
-    color: white;
+    color: white !important;
 }
 
 .comprar:hover {
@@ -229,18 +220,16 @@ body {
 }
 
 /* ==========================================================================
-   CARRITO LATERAL PREMIUM (OFFCANVAS)
+   🛒 CARRITO LATERAL (OFFCANVAS)
    ========================================================================== */
-
 .custom-cart-canvas {
-    width: 420px !important; /* Ancho ideal de e-commerce, un poco más espacioso */
+    width: 420px !important; 
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     border-left: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Animación sutil para el icono del carrito vacío */
 .cart-empty-icon {
     display: inline-block;
     animation: float 3s ease-in-out infinite;
@@ -257,20 +246,13 @@ body {
     line-height: 1.5;
 }
 
-/* Formato para el pie del carrito */
 .cart-footer {
     background: #ffffff;
 }
 
-/* Estilo para los productos individuales dentro del carrito (futura vinculación) */
-.cart-item {
-    transition: background 0.2s ease;
-}
-.cart-item:hover {
-    background-color: #f8f9fa;
-}
-
-/* FOOTER */
+/* ==========================================================================
+   🧦 PIE DE PÁGINA (FOOTER)
+   ========================================================================== */
 footer.footer {
     text-align: center;
     padding: 30px 20px;
