@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS tienda_mascotas;
 CREATE DATABASE tienda_mascotas;
 USE tienda_mascotas;
 
@@ -9,7 +10,7 @@ CREATE TABLE usuario (
     nombre VARCHAR(100),
     apellido VARCHAR(100),
     correo VARCHAR(150) UNIQUE,
-    contraseña VARCHAR(255),
+    password VARCHAR(255),
     telefono VARCHAR(20),
     direccion VARCHAR(200),
     rol VARCHAR(20) NOT NULL,
@@ -101,10 +102,10 @@ CREATE TABLE pago (
 );
 
 INSERT INTO usuario (
-    nombre, apellido, correo, contraseña, telefono, direccion, rol
+    nombre, apellido, correo, password, telefono, direccion, rol
 )
 VALUE
-('Jesus', 'Roja', 'adminroja@gmail.com', 'admin', '920575983', 'Lima','ADMIN'),
+('Jesus', 'Roja', 'roja@gmail.com', 'admin', '920575983', 'Lima','ADMIN'),
 ('Maria', 'Paredes', 'maria@gmail.com', 'maria', '953424555', 'Lima','CLIENTE');
 
 -- =========================
@@ -128,11 +129,7 @@ ADD id_proveedor INT;
 ALTER TABLE producto
 ADD FOREIGN KEY (id_proveedor)
 REFERENCES proveedor(id_proveedor);
--- =========================
--- ACTUALIZAR T USUARIO
--- =========================
-ALTER TABLE usuario
-CHANGE contraseña password VARCHAR(255);
+
 
 -- =========================
 -- PROCEDURES
