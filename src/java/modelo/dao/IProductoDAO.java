@@ -21,4 +21,7 @@ public interface IProductoDAO {
     // Nuevos métodos requeridos para la vista top del catálogo usando la Entidad pura
     List<Producto> listarProductosDestacados();
     List<Producto> listarProductosPorCategoria(int idCategoria);
+    
+    // Método para listar exactamente 8 productos fijos de la tienda
+    List<Producto> listarOchoProductosFijos();
 }

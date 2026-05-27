@@ -185,4 +185,31 @@ public class ProductoDAOImpl implements IProductoDAO {
         } catch (Exception e) { e.printStackTrace(); }
         return lista;
     }
+    
+    @Override
+    public List<Producto> listarOchoProductosFijos() {
+         List<Producto> lista = new ArrayList<>();
+         // Selecciona los 8 productos con stock disponibles de forma fija
+         String sql = "SELECT * FROM producto WHERE stock > 0 ORDER BY id_producto DESC LIMIT 8";
+         try {
+             conn = ConexionBD.getInstancia().getConexion();
+             ps = conn.prepareStatement(sql);
+             rs = ps.executeQuery();
+             while (rs.next()) {
+                 Producto p = new Producto();
+                 p.setIdProducto(rs.getInt("id_producto"));
+                 p.setNombre(rs.getString("nombre"));
+                 p.setDescripcion(rs.getString("descripcion"));
+                 p.setPrecio(rs.getDouble("precio"));
+                 p.setStock(rs.getInt("stock"));
+                 p.setImagen(rs.getString("imagen"));
+                 p.setIdCategoria(rs.getInt("id_categoria"));
+                 lista.add(p);
+             }
+         } catch (Exception e) { 
+             e.printStackTrace(); 
+         }
+         return lista;
+     }
+    
 }

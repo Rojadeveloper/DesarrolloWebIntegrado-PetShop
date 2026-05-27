@@ -6,6 +6,8 @@
 
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page import="modelo.entidad.Usuario" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <%
     // 🛡️ Limpieza estricta de caché: Fuerza al navegador a pedir los datos limpios al servidor
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
@@ -174,105 +176,81 @@
     <div class="container py-4">
         <div class="row g-4 justify-content-center">
             
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product-card">
-                    <div class="product-img-container">
-                        <img src="imagen/ComidaPerro_1.png" class="img-fluid" alt="Comida Perro">
-                    </div>
-                    <h3>Comida para Perro</h3>
-                    <p>Alimento balanceado premium. Protege el pelaje de tu perro.</p>
-                    <span>S/. 35.00</span>
-                    <div class="acciones">
-                        <button class="custom-btn ver-producto-btn">Ver producto</button>
-                        <% if (session.getAttribute("usuarioLogueado") == null) { %>
-                            <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
-                        <% } else { %>
-                            <a href="<%= request.getContextPath() %>/CarritoServlet?accion=agregar&id=1" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
+            <%
+                // Cargamos de forma nativa los productos fijos de la base de datos
+                modelo.dao.IProductoDAO prodDAO = new modelo.dao.impl.ProductoDAOImpl();
+                java.util.List<modelo.entidad.Producto> listaProductos = prodDAO.listarOchoProductosFijos();
+                
+                // Los guardamos en el request para que JSTL pueda leerlos mediante Expression Language (${})
+                request.setAttribute("productosBD", listaProductos);
+            %>
+            
+            <%-- Evaluamos con JSTL si la lista obtenida de la base de datos no está vacía --%>
+            <c:choose>
+                <c:when test="${not empty productosBD}">
+                    <%-- Iteramos dinámicamente los productos traídos de la base de datos --%>
+                    <c:forEach var="prod" items="${productosBD}">
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="product-card" 
+                                 data-id="${prod.idProducto}" 
+                                 data-nombre="${prod.nombre}" 
+                                 data-precio="${prod.precio}" 
+                                 data-imagen="${prod.imagen}">
+                                
+                                <div class="product-img-container">
+                                    <img src="${prod.imagen}" class="img-fluid" alt="${prod.nombre}">
+                                </div>
+                                <h3>${prod.nombre}</h3>
+                                <p>${not empty prod.descripcion ? prod.descripcion : ""}</p>
+                                <span>S/. ${prod.precio}</span>
 
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product-card">
-                    <div class="product-img-container">
-                        <img src="imagen/JugueteGato.jpg" class="img-fluid" alt="Juguete Gato">
+<div class="acciones">
+    <%-- 🔍 VER PRODUCTO: Envía el ID por la URL --%>
+    <a href="${pageContext.request.contextPath}/especsProduc?id=${prod.idProducto}" 
+       class="custom-btn ver-producto-btn text-decoration-none text-center d-inline-flex align-items-center justify-content-center">
+        Ver producto
+    </a>
+    
+    <c:choose>
+        <%-- CASO 1: SI NO ESTÁ LOGUEADO --%>
+        <c:when test="${sessionScope.usuarioLogueado == null}">
+            <a href="${pageContext.request.contextPath}/vista/usuario/login.jsp" 
+               class="custom-btn comprar text-decoration-none text-center d-inline-flex align-items-center justify-content-center">
+                Comprar
+            </a>
+        </c:when>
+
+        <%-- CASO 2: SI ES UN ADMIN --%>
+        <c:when test="${sessionScope.usuarioLogueado.rol == 'ADMIN'}">
+            <a href="${pageContext.request.contextPath}/vista/cliente/carrito.jsp" 
+               class="custom-btn comprar text-decoration-none text-center d-inline-flex align-items-center justify-content-center">
+                Agregar (Admin)
+            </a>
+        </c:when>
+
+        <%-- CASO 3: SI ES UN CLIENTE LOGUEADO --%>
+        <c:otherwise>
+            <button type="button" class="custom-btn comprar btn-agregar-carrito">
+                Agregar al carro
+            </button>
+        </c:otherwise>
+    </c:choose>
+</div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <div class="text-center py-4">
+                        <p class="text-muted">No hay productos disponibles en este momento.</p>
                     </div>
-                    <h3>Juguete para Gato</h3>
-                    <p>Divertido y resistente para el entertainment de tu michi.</p>
-                    <span>S/. 15.00</span>
-                    <div class="acciones">
-                        <button class="custom-btn ver-producto-btn">Ver producto</button>
-                        <% if (session.getAttribute("usuarioLogueado") == null) { %>
-                            <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
-                        <% } else { %>
-                            <a href="<%= request.getContextPath() %>/CarritoServlet?accion=agregar&id=2" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
-                        <% } %>
-                    </div>    
-                </div>
-            </div>    
-            
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product-card">
-                    <div class="product-img-container">
-                        <img src="imagen/CorreAjustable.webp" class="img-fluid" alt="Collar">
-                    </div>
-                    <h3>Collar Ajustable</h3>
-                    <p>Para perros medianos Talla (M). Material ergonómico.</p>
-                    <span>S/. 25.00</span>
-                    <div class="acciones">
-                        <button class="custom-btn ver-producto-btn">Ver producto</button>
-                        <% if (session.getAttribute("usuarioLogueado") == null) { %>
-                            <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
-                        <% } else { %>
-                            <a href="<%= request.getContextPath() %>/CarritoServlet?accion=agregar&id=3" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
-                        <% } %>
-                    </div>            
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product-card">
-                    <div class="product-img-container">
-                        <img src="imagen/GatoEsterilizado.webp" class="img-fluid" alt="Comida Gato">
-                    </div>
-                    <h3>Comida-Gatos Esterilizados</h3>
-                    <p>Ideal para la digestión y control de peso de tu gato.</p>
-                    <span>S/. 35.00</span>
-                    <div class="acciones">
-                        <button class="custom-btn ver-producto-btn">Ver producto</button>
-                        <% if (session.getAttribute("usuarioLogueado") == null) { %>
-                            <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
-                        <% } else { %>
-                            <a href="<%= request.getContextPath() %>/CarritoServlet?accion=agregar&id=4" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
-                        <% } %>
-                    </div>      
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product-card">
-                    <div class="product-img-container">
-                        <img src="imagen/CortaUnas.webp" class="img-fluid" alt="Cortauñas">
-                    </div>
-                    <h3>Cortauñas Tijera</h3>
-                    <p>Para gatos y animales pequeños - Fácil de usar.</p>
-                    <span>S/. 15.00</span>
-                    <div class="acciones">
-                        <button class="custom-btn ver-producto-btn">Ver producto</button>
-                        <% if (session.getAttribute("usuarioLogueado") == null) { %>
-                            <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
-                        <% } else { %>
-                            <a href="<%= request.getContextPath() %>/CarritoServlet?accion=agregar&id=5" class="custom-btn comprar text-decoration-none text-center d-flex align-items-center justify-content-center">Comprar</a>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
+                </c:otherwise>
+            </c:choose>
             
         </div>
     </div>
 </section>
-
+            
 <footer class="footer">
     <p>© 2026 Tienda Virtual - PetShop</p>
     <p>Contacto: +51 xxxxxxxx</p>
@@ -283,14 +261,16 @@
     
     <div class="offcanvas-header border-bottom py-3">
         <h5 class="offcanvas-title fw-bold text-dark" id="carritoSidebarLabel">
-            🛒 Mi Carrito <span class="badge bg-secondary ms-1 fs-6 rounded-pill">0</span>
+            🛒 Mi Carrito <span class="badge bg-secondary ms-1 fs-6 rounded-pill JSON-contador">0</span>
         </h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     
     <div class="offcanvas-body d-flex flex-column justify-content-between">
         
-        <div class="cart-empty-state my-auto text-center">
+        <div id="carritoContenidoDinamico" class="overflow-y-auto pe-1" style="max-height: 55vh;"></div>
+        
+        <div id="estadoVacioOriginal" class="cart-empty-state my-auto text-center">
             <div class="cart-empty-icon mb-4">
                 <span class="display-1 text-muted opacity-50">🛒</span>
             </div>
@@ -304,16 +284,163 @@
         <div class="cart-footer border-top pt-3 mt-auto">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <span class="fw-bold text-secondary">Total estimado:</span>
-                <span class="fw-bold text-dark fs-4">S/. 0.00</span>
+                <span class="fw-bold text-dark fs-4" id="cart-monto-total">S/. 0.00</span>
             </div>
-            <button class="btn custom-btn comprar w-100 py-3 fs-6" disabled>
+            <button class="btn custom-btn comprar w-100 py-3 fs-6" id="btnProcesarPago" disabled>
                 Ir a pagar compra
             </button>
         </div>
 
     </div>
 </div>
-                    
+     
+<template id="molde-item-carrito">
+    <div class="cart-item d-flex align-items-center justify-content-between p-2 mb-2 bg-white rounded border shadow-sm">
+        <div class="d-flex align-items-center gap-2">
+            <img class="img-item-cart" style="width: 50px; height: 50px; object-fit: contain;" src="" alt="">
+            <div>
+                <h6 class="mb-0 fw-bold text-dark text-truncate nombre-item-cart" style="max-width: 130px;"></h6>
+                <small class="text-muted info-precio-cart"></small>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-1">
+            <span class="fw-bold text-success subtotal-item-cart"></span>
+            <button type="button" class="btn btn-sm text-danger btn-eliminar-item">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>
+    </div>
+</template>
+
+<script>
+var carrito = [];
+try {
+    carrito = JSON.parse(localStorage.getItem('petshop_cart')) || [];
+} catch(e) {
+    carrito = [];
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    actualizarInterfazCarrito();
+
+    // 🔄 Inicializamos el control del Offcanvas usando la librería nativa de Bootstrap
+    var miOffcanvasElemento = document.getElementById('carritoSidebar');
+    var bsOffcanvas = miOffcanvasElemento ? new bootstrap.Offcanvas(miOffcanvasElemento) : null;
+
+    document.body.addEventListener("click", function(e) {
+        var botonAgregar = e.target.closest(".btn-agregar-carrito");
+        var botonEliminar = e.target.closest(".btn-eliminar-item");
+
+        if (botonAgregar) {
+            var card = botonAgregar.closest(".product-card");
+            if (card) {
+                var producto = {
+                    id: card.dataset.id,
+                    nombre: card.dataset.nombre,
+                    precio: parseFloat(card.dataset.precio) || 0,
+                    imagen: card.dataset.imagen,
+                    cantidad: 1
+                };
+                agregarAlCarrito(producto);
+                
+                // 🚀 ¡AQUÍ ESTÁ LA MAGIA! Si el Offcanvas existe, ordénale que se abra en pantalla
+                if (bsOffcanvas) {
+                    bsOffcanvas.show();
+                }
+            }
+        }
+        
+        if (botonEliminar) {
+            var idProd = botonEliminar.getAttribute("data-id");
+            eliminarDelCarrito(idProd);
+        }
+    });
+
+    var btnPago = document.getElementById("btnProcesarPago");
+    if (btnPago) {
+        btnPago.addEventListener("click", function() {
+            window.location.href = "<%= request.getContextPath() %>/vista/cliente/carrito.jsp";
+        });
+    }
+});
+
+function agregarAlCarrito(producto) {
+    var itemExistente = null;
+    for (var i = 0; i < carrito.length; i++) {
+        if (carrito[i].id === producto.id) {
+            itemExistente = carrito[i];
+            break;
+        }
+    }
+    
+    if (itemExistente) {
+        itemExistente.cantidad++;
+    } else {
+        carrito.push(producto);
+    }
+    salvarCarrito();
+}
+
+function eliminarDelCarrito(id) {
+    carrito = carrito.filter(function(item) {
+        return item.id !== id;
+    });
+    salvarCarrito();
+}
+
+function salvarCarrito() {
+    localStorage.setItem('petshop_cart', JSON.stringify(carrito));
+    actualizarInterfazCarrito();
+}
+
+function actualizarInterfazCarrito() {
+    var contenedorLista = document.getElementById("carritoContenidoDinamico");
+    var vistaVacia = document.getElementById("estadoVacioOriginal");
+    var txtTotal = document.getElementById("cart-monto-total");
+    var btnPago = document.getElementById("btnProcesarPago");
+    var molde = document.getElementById("molde-item-carrito");
+    
+    if (!contenedorLista || !vistaVacia || !txtTotal || !btnPago || !molde) return;
+
+    var totalItems = 0;
+    var montoTotal = 0;
+    for (var i = 0; i < carrito.length; i++) {
+        totalItems += carrito[i].cantidad;
+        montoTotal += (carrito[i].precio * carrito[i].cantidad);
+    }
+    
+    var badges = document.querySelectorAll(".position-absolute.top-0.badge, .JSON-contador");
+    badges.forEach(function(b) {
+        b.innerText = totalItems;
+    });
+
+    contenedorLista.innerHTML = "";
+
+    if (carrito.length === 0) {
+        vistaVacia.style.display = "block";
+        txtTotal.innerText = "S/. 0.00";
+        btnPago.disabled = true;
+        return;
+    }
+
+    vistaVacia.style.display = "none";
+    txtTotal.innerText = "S/. " + montoTotal.toFixed(2);
+    btnPago.disabled = false;
+
+    carrito.forEach(function(item) {
+        var clon = molde.content.cloneNode(true);
+        
+        clon.querySelector(".img-item-cart").src = item.imagen;
+        clon.querySelector(".img-item-cart").alt = item.nombre;
+        clon.querySelector(".nombre-item-cart").innerText = item.nombre;
+        clon.querySelector(".info-precio-cart").innerText = "S/. " + item.precio.toFixed(2) + " x " + item.cantidad;
+        clon.querySelector(".subtotal-item-cart").innerText = "S/. " + (item.precio * item.cantidad).toFixed(2);
+        clon.querySelector(".btn-eliminar-item").setAttribute("data-id", item.id);
+        
+        contenedorLista.appendChild(clon);
+    });
+}
+</script>        
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
