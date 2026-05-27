@@ -1,0 +1,61 @@
+/* 
+    Created on : 22 may. 2026, 3:07:01 p. m.
+    Author     : RonaldoYN
+*/
+/* Responsive */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+
+    .header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .search-box form {
+        max-width: 100%;
+    }
+
+    .grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-card {
+        width: 90%;
+        max-width: 300px;
+    }
+
+    .banner {
+        padding: 20px;
+    }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+
+    .header {
+        padding: 10px;
+    }
+
+    .banner h1 {
+        font-size: 28px;
+    }
+
+    .banner p {
+        font-size: 16px;
+    }
+
+    .product-card {
+        width: 95%;
+    }
+}
