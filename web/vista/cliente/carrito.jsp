@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function() {
             title: '¡Gracias por su Compra en Tienda PetShop! 🐾',
             text: 'Tu pedido está siendo procesado.',
             icon: 'success',
-            confirmButtonColor: '#ffc107', // Color amarillo de la temática
+            confirmButtonColor: '#8b5cf6', // Color Morado Eléctrico para que haga juego absoluto con el CSS
             confirmButtonText: 'Aceptar',
             allowOutsideClick: false
         }).then((result) => {

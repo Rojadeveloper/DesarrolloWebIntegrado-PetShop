@@ -1,28 +1,173 @@
-/* 
-    Created on : 3 jul. 2026, 5:40:57 p. m.
-    Author     : Usuario
-*/
+/* ==========================================================================
+   CSS Nuevo y Elegante - PetShop Dark & Electric Purple (Corregido)
+   ========================================================================== */
 
-/* Estilo estricto para controlar que la imagen del producto no se deforme ni aplaste el texto */
+/* Fondo general de la página: Cambiado a negro profundo espacial para eliminar el fondo blanco */
+html, body, body.bg-light {
+    background-color: #0d0e12 !important; /* Negro mate profundo unificado */
+    color: #e2e8f0 !important; /* Texto claro elegante */
+    min-height: 100vh;
+}
+
+/* Forzar contenedores y overlays de Bootstrap a ser transparentes */
+.container, .container-fluid, .overlay-bg {
+    background-color: transparent !important;
+}
+
+/* Título principal */
+h2, .display-3, .resumen-titulo {
+    color: #b55fe6 !important; /* Morado eléctrico en títulos */
+    text-shadow: 0 0 10px rgba(181, 95, 230, 0.2);
+}
+
+/* Tarjetas (Cards) estilo Premium Dark (Gris mate un toque más claro que el fondo) */
+.card {
+    background-color: #16171d !important; 
+    border: 1px solid #23252f !important; /* Borde sutil */
+    color: #ffffff !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* === ENLACES Y TEXTOS SECUNDARIOS === */
+.text-secondary, .text-muted, #tablaCarritoGrande small {
+    color: #cbd5e1 !important; /* Gris claro/platino para lectura perfecta en fondo oscuro */
+}
+
+/* Forzar blanco en los nombres de los productos y textos fuertes */
+.text-dark, #tablaCarritoGrande h6, .card-body h5, .card-body p, .card-body span {
+    color: #ffffff !important; 
+    font-weight: 600 !important;
+}
+
+/* Botón de seguir comprando */
+.btn-link, [href*="catalogoProductos.jsp"] {
+    color: #b55fe6 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+}
+
+.btn-link:hover {
+    color: #c084fc !important;
+    text-shadow: 0 0 5px rgba(168, 85, 247, 0.4);
+}
+
+/* === DETALLES DE PRODUCTO EN EL CARRITO === */
+
+/* Contenedores internos de cada fila de producto y bloques de dirección */
+#tablaCarritoGrande .bg-light, 
+#tablaCarritoGrande .bg-body-tertiary,
+#bloqueDireccionRegistro,
+.bg-light, 
+.bg-body-tertiary {
+    background-color: #1e2029 !important; /* Gris mate interno intermedio */
+    border: 1px solid #2d313f !important;
+    border-radius: 12px !important;
+}
+
+/* Estilo estricto para controlar la imagen (Se mimetiza con el fondo oscuro) */
 .img-contenedor-carrito {
     width: 80px;
     height: 80px;
-    min-width: 80px; /* Evita que Bootstrap lo achique */
+    min-width: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
-    border-radius: 8px;
+    background-color: #16171d !important; /* Mismo fondo de la tarjeta */
+    border: 1px solid #8b5cf6 !important; /* Borde Morado Eléctrico */
+    border-radius: 12px;
     padding: 5px;
+    overflow: hidden;
 }
 
 .img-contenedor-carrito img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    color: #b55fe6; /* Color del texto alternativo si la imagen se rompe */
+    font-size: 11px;
+    text-align: center;
 }
 
-/* Animación suave para cuando aparece el formulario */
+/* Modificadores de precio (Subtotales y Total General) */
+.text-success, #resumenTotal {
+    color: #c084fc !important; /* Morado brillante para resaltar montos */
+}
+
+/* === BOTONES Y ELEMENTOS INTERACTIVOS === */
+
+/* Botón principal: Proceder al Pago (Morado Eléctrico) */
+.btn-primary, .btn-warning, #btnFinalizarCompra {
+    background-color: #8b5cf6 !important; /* Morado Eléctrico */
+    border-color: #7c3aed !important;
+    color: #ffffff !important;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover, .btn-warning:hover, #btnFinalizarCompra:hover {
+    background-color: #a855f7 !important; /* Brillo neón al pasar el mouse */
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.6); /* Efecto de brillo eléctrico */
+    transform: translateY(-2px);
+}
+
+/* Botones de cantidad (+ y -) */
+.btn-outline-secondary {
+    color: #8b5cf6 !important;
+    border-color: #4c1d95 !important;
+    background-color: transparent !important;
+}
+
+.btn-outline-secondary:hover:not([disabled]) {
+    background-color: #8b5cf6 !important;
+    color: #ffffff !important;
+}
+
+.btn-outline-secondary:disabled {
+    color: #4a4a5a !important;
+    border-color: #2d2d34 !important;
+}
+
+/* Inputs / Cajas de Texto estilo Mate */
+.form-control {
+    background-color: #111216 !important;
+    border: 1px solid #2d313f !important;
+    color: #ffffff !important;
+}
+
+.form-control:focus {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
+}
+
+/* Cajas de texto deshabilitadas o en modo lectura (Readonly) */
+.form-control[readonly] {
+    background-color: #16171d !important;
+    color: #a0aec0 !important;
+}
+
+/* Checkboxes y Radios */
+.form-check-input {
+    background-color: #1e2029;
+    border-color: #8b5cf6;
+}
+
+.form-check-input:checked {
+    background-color: #8b5cf6 !important;
+    border-color: #8b5cf6 !important;
+}
+
+/* Botón eliminar (Tacho de basura) */
+.text-danger {
+    color: #ef4444 !important; /* Rojo vivo para contrastar */
+}
+
+.text-danger:hover {
+    color: #f87171 !important;
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+/* === ANIMACIONES === */
 .animate-fade-in {
     animation: fadeIn 0.3s ease-in-out;
 }
@@ -31,4 +176,3 @@
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
