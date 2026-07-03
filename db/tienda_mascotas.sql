@@ -126,7 +126,7 @@ BEGIN
     WHERE correo = p_correo AND password = p_password;
 END //
 
-DELIMITER ;
+DELIMITER //
 
 -- 3. CATEGORÍAS: CREAR
 CREATE PROCEDURE sp_crearCategoria(
