@@ -11,8 +11,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Carrito - PetShop</title>
         
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/css/EstyleCarrito.css">
         <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Responsive.css">
     </head>
     <body>
@@ -29,7 +31,7 @@
                         </div>
                     </div>
 
-<div class="card shadow-sm border-0 rounded-3">
+<div class="card shadow-sm border-0 rounded-3 mb-4">
     <div class="card-body p-4">
         <h5 class="fw-bold mb-3 text-secondary">📍 Datos de Entrega</h5>
         
@@ -50,11 +52,10 @@
 
         <form id="formDireccionEnvio">
             <div id="bloqueDireccionRegistro" class="p-3 bg-light rounded-3 border mb-3">
-                <p class="mb-1 text-muted small fw-bold">Dirección guardada:</p>
+                <p class="mb-1 text-muted small fw-bold">Dirección guardada en tu cuenta:</p>
                 <h6 class="fw-bold text-dark mb-0" id="lblDireccionRegistro">
-                    ${not empty sessionScope.usuario.direccion ? sessionScope.usuario.direccion : "No registraste una dirección de entrega predeterminada."}
+                    ${not empty sessionScope.usuarioLogueado and not empty sessionScope.usuarioLogueado.direccion ? sessionScope.usuarioLogueado.direccion : "No tienes una dirección registrada en tu perfil."}
                 </h6>
-                <small class="text-muted">Distrito: ${not empty sessionScope.usuario.distrito ? sessionScope.usuario.distrito : "-"}</small>
             </div>
 
             <div id="bloqueDireccionNueva" class="d-none animate-fade-in">
@@ -68,7 +69,7 @@
                         <input type="text" class="form-control py-2 input-nueva-dir" id="txtDistrito" placeholder="Ej: Los Olivos, San Borja">
                     </div>
                     <div class="col-12">
-                        <label class="form-label text-muted small fw-bold">Dirección Exacta</label>
+                        <label class="form-label text-muted small fw-bold">Dirección Exacta de Destino</label>
                         <input type="text" class="form-control py-2 input-nueva-dir" id="txtDireccion" placeholder="Av. Las Flores 123 - Dpto 402">
                     </div>
                     <div class="col-12">
@@ -165,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (btnEliminar) eliminarProductoGrande(btnEliminar.getAttribute("data-id"));
     });
 
-    // Acción de Procesar Pago
+  // Acción de Procesar Pago
     document.getElementById("btnFinalizarCompra").addEventListener("click", function() {
         var form = document.getElementById("formDireccionEnvio");
         
@@ -195,7 +196,23 @@ document.addEventListener("DOMContentLoaded", function() {
             envio: datosFinalesEnvio
         });
         
-        alert("¡Estructura validada! Dirección elegida: " + datosFinalesEnvio.tipo);
+        // 🌟 Reemplazamos el alert antiguo por este pop-up estético que te redirige
+        Swal.fire({
+            title: '¡Gracias por su Compra en Tienda PetShop! 🐾',
+            text: 'Tu pedido está siendo procesado.',
+            icon: 'success',
+            confirmButtonColor: '#ffc107', // Color amarillo de la temática
+            confirmButtonText: 'Aceptar',
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirección directa al Index principal de tu app
+                window.location.href = "<%= request.getContextPath() %>/index.jsp";
+                
+                // 💡 Nota: Si prefieres mandarlo directo a ver productos en lugar del index, cambia la línea de arriba por esta:
+                // window.location.href = "<%= request.getContextPath() %>/vista/cliente/catalogoProductos.jsp";
+            }
+        });
     });
 });
 
