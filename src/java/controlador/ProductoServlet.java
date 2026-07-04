@@ -16,6 +16,12 @@ import java.io.IOException;
 import modelo.dto.ProductoDTO;
 import servicio.ProductoServicio;
 
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.Part;
+
+import java.io.File;
+
+@MultipartConfig
 @WebServlet("/ProductoServlet")
 public class ProductoServlet extends HttpServlet {
 
@@ -66,7 +72,22 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     p.setDescripcion(request.getParameter("descripcion"));
     p.setPrecio(Double.parseDouble(request.getParameter("precio")));
     p.setStock(Integer.parseInt(request.getParameter("stock")));
+    p.setIdCategoria(Integer.parseInt(request.getParameter("idCategoria")));
+    
+    Part archivo = request.getPart("imagen");
+    String nombreImagen = archivo.getSubmittedFileName();
+    String ruta = getServletContext().getRealPath("/img/productos");
+    File carpeta = new File(ruta);
+    if(!carpeta.exists()){
+        carpeta.mkdirs();
+    }
+    if(nombreImagen != null && !nombreImagen.isEmpty()){
 
+        archivo.write(ruta + File.separator + nombreImagen);
+
+        p.setImagen(nombreImagen);
+
+    }
     String mensaje = "";
 
     // AGREGAR
@@ -95,6 +116,13 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         }
 
         p.setIdProducto(Integer.parseInt(idTexto));
+        p.setIdCategoria(Integer.parseInt(request.getParameter("idCategoria")));
+        if(nombreImagen == null || nombreImagen.isEmpty()){
+            ProductoDTO productoActual = servicio.buscarPorId(p.getIdProducto());
+            p.setImagen(productoActual.getImagen());
+            }else{
+                p.setImagen(nombreImagen);
+        }
 
         servicio.modificar(p);
 

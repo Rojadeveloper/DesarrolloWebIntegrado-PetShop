@@ -10,10 +10,15 @@ import modelo.dao.IProductoDAO;
 import modelo.dao.impl.ProductoDAOImpl;
 import modelo.dto.ProductoDTO;
 import modelo.entidad.Producto;
+import modelo.entidad.Categoria;
+
 
 public class ProductoServicio {
 
     IProductoDAO dao = new ProductoDAOImpl();
+    public List<Categoria> listarCategorias() {
+    return dao.listarCategorias();
+    }
 
     // LISTAR
     public List<ProductoDTO> listar() {
@@ -27,6 +32,8 @@ public class ProductoServicio {
             dto.setDescripcion(p.getDescripcion());
             dto.setPrecio(p.getPrecio());
             dto.setStock(p.getStock());
+            dto.setNombreCategoria(p.getNombreCategoria());
+            dto.setImagen(p.getImagen());
             listaDTO.add(dto);
         }
         return listaDTO;
@@ -39,7 +46,8 @@ public class ProductoServicio {
         p.setDescripcion(dto.getDescripcion());
         p.setPrecio(dto.getPrecio());
         p.setStock(dto.getStock());
-
+        p.setIdCategoria(dto.getIdCategoria());
+        p.setImagen(dto.getImagen());
         return dao.agregar(p);
     }
 
@@ -53,7 +61,9 @@ public class ProductoServicio {
         dto.setDescripcion(p.getDescripcion());
         dto.setPrecio(p.getPrecio());
         dto.setStock(p.getStock());
-
+        dto.setIdCategoria(p.getIdCategoria());
+        dto.setNombreCategoria(p.getNombreCategoria());
+        dto.setImagen(p.getImagen());
         return dto;
     }
 
@@ -65,7 +75,8 @@ public class ProductoServicio {
         p.setDescripcion(dto.getDescripcion());
         p.setPrecio(dto.getPrecio());
         p.setStock(dto.getStock());
-
+        p.setIdCategoria(dto.getIdCategoria());
+        p.setImagen(dto.getImagen());
         return dao.modificar(p);
     }
 
@@ -86,6 +97,9 @@ public class ProductoServicio {
             dto.setDescripcion(p.getDescripcion());
             dto.setPrecio(p.getPrecio());
             dto.setStock(p.getStock());
+            dto.setIdCategoria(p.getIdCategoria());
+            dto.setNombreCategoria(p.getNombreCategoria());
+            dto.setImagen(p.getImagen());
             listaDTO.add(dto);
         }
         return listaDTO;

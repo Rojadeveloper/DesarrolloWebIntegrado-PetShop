@@ -7,6 +7,7 @@
 <%@page import="java.util.List"%>
 <%@page import="modelo.dto.ProductoDTO"%>
 <%@page import="servicio.ProductoServicio"%>
+<%@page import="modelo.entidad.Categoria"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -14,6 +15,7 @@
     ProductoServicio servicio = new ProductoServicio();
     String buscar = request.getParameter("buscar");
     List<ProductoDTO> lista;
+    List<Categoria> categorias = servicio.listarCategorias();
 
     if (buscar != null && !buscar.trim().isEmpty()) {
         lista = servicio.buscar(buscar);
@@ -92,7 +94,10 @@
 
     <div class="card card-dash p-4 mb-4">
         <h4 class="mb-3 card-title-custom"><%= (productoEditar != null) ? "🛠️ Modificar Producto Seleccionado" : "➕ Registrar Nuevo Producto" %></h4>
-        <form action="${pageContext.request.contextPath}/ProductoServlet" method="POST">
+        <form action="${pageContext.request.contextPath}/ProductoServlet"
+            method="POST"
+            enctype="multipart/form-data">
+
             <input type="hidden" name="idProducto" value="<%= (productoEditar != null) ? productoEditar.getIdProducto() : "" %>">
 
             <div class="mb-3">
@@ -114,6 +119,35 @@
                     <label class="form-label fw-bold text-muted">Unidades en Stock</label>
                     <input type="number" name="stock" class="form-control" value="<%= (productoEditar != null) ? productoEditar.getStock() : "" %>" required style="border-radius: 8px;">
                 </div>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold text-muted">Categoría</label>
+                <select name="idCategoria" class="form-control" required style="border-radius: 8px;">
+                    <option value="">-- Seleccione categoría --</option>
+                    <% for (Categoria c : categorias) { %>
+                        <option value="<%= c.getIdCategoria() %>"
+                            <%= (productoEditar != null && productoEditar.getIdCategoria() == c.getIdCategoria()) ? "selected" : "" %>>
+                            <%= c.getNombre() %>
+                        </option>
+                    <% } %>
+                </select>
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label fw-bold text-muted">Imagen</label>
+
+                <input type="file"
+                       name="imagen"
+                       class="form-control"
+                       accept="image/*">
+                <% if(productoEditar != null && productoEditar.getImagen()!=null){ %>
+                    <div class="mt-2">
+                        <img src="<%=request.getContextPath()%>/img/productos/<%=productoEditar.getImagen()%>"
+                             width="120"
+                             class="img-thumbnail">
+                    </div>
+                <% } %>
             </div>
 
             <div class="d-flex gap-2 mt-2">
@@ -150,6 +184,8 @@
                         <th>Descripción</th>
                         <th>Precio</th>
                         <th>Stock</th>
+                        <th>Categoría</th>
+                        <th>Imagen</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -163,6 +199,13 @@
                             <span class="badge badge-stock <%= (p.getStock() > 5) ? "bg-success-subtle text-success" : "bg-danger-subtle text-danger" %>">
                                 <%= p.getStock() %> unds
                             </span>
+                        </td>
+                        <td><%= p.getNombreCategoria() %></td>
+                        <td>
+                            <img
+                            src="<%=request.getContextPath()%>/img/productos/<%=p.getImagen()%>"
+                            width="80"
+                            class="img-thumbnail">
                         </td>
                         <td>
                             <div class="d-flex justify-content-center gap-2">
