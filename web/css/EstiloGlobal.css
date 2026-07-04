@@ -1,10 +1,11 @@
 /* ==========================================================================
-   🎨 BASE Y TIPOGRAFÍA GLOBALES
+   🎨 BASE Y TIPOGRAFÍA GLOBALES (Modo Oscuro Premium)
    ========================================================================== */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background: #f7f7f7;
+    background-color: #0d0e12 !important; /* Fuerza el fondo oscuro en todo el index */
+    color: #e2e8f0 !important; 
     overflow-x: hidden;
 }
 
@@ -17,14 +18,22 @@ img {
    🐾 BARRA DE NAVEGACIÓN (NAVBAR)
    ========================================================================== */
 .custom-navbar {
-    background: #20c997 !important; /* Verde Corporativo PetShop */
-    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+    background-color: #16171d !important; /* Sobrescribe el verde turquesa */
+    border-bottom: 1px solid #23252f !important;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.3) !important;
 }
 
 .custom-navbar, 
 .custom-navbar a {
     font-weight: bold; 
-    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2); 
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4); 
+}
+
+.custom-navbar .nav-link {
+    color: #cbd5e1 !important;
+}
+.custom-navbar .nav-link.active, .custom-navbar .nav-link:hover {
+    color: #b55fe6 !important; 
 }
 
 /* ==========================================================================
@@ -36,87 +45,78 @@ img {
     margin: 30px auto;
     border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+    border: 1px solid #23252f;
 }
 
 .carousel-img {
     height: 450px;
     object-fit: cover;
-    filter: brightness(0.85); 
+    filter: brightness(0.65); 
 }
 
 .custom-caption {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(22, 23, 29, 0.6) !important; 
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(139, 92, 246, 0.25) !important; 
     border-radius: 16px;
     padding: 30px;
     text-align: left;
     max-width: 550px;
     left: 8%; 
     bottom: 12%;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 .custom-caption h2 {
     font-size: 32px;
     font-weight: bold;
-    color: #ffffff;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    color: #ffffff !important;
     margin-top: 10px;
     margin-bottom: 12px;
 }
 
 .custom-caption p {
     font-size: 16px;
-    color: #f8fafc;
+    color: #cbd5e1 !important;
     line-height: 1.5;
     margin-bottom: 22px;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
 .badge-premium {
     display: inline-block;
-    background: #20c997; 
-    color: white;
+    background: #8b5cf6 !important; 
+    color: white !important;
     font-weight: bold;
     font-size: 12px;
     text-transform: uppercase;
     padding: 6px 14px;
     border-radius: 20px;
     letter-spacing: 1px;
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
 }
 
 .btn-carousel {
     display: inline-block;
-    background: #ffffff;
-    color: #1a4f43; 
+    background: #8b5cf6 !important;
+    color: #ffffff !important; 
     font-weight: bold;
     padding: 10px 24px;
     border-radius: 30px;
     text-decoration: none;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
 
 .btn-carousel:hover {
-    background: #20c997;
-    color: #ffffff;
+    background: #a855f7 !important; 
     transform: translateY(-2px);
-}
-
-.carousel-indicators [data-bs-target] {
-    width: 35px;
-    height: 4px;
-    border-radius: 2px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border: none;
-    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
 }
 
 .carousel-indicators .active {
-    background-color: #20c997; 
+    background-color: #8b5cf6 !important; 
     width: 50px;
 }
 
@@ -131,25 +131,28 @@ img {
 .productos h2 {
     font-size: 28px;
     font-weight: bold;
-    color: #2b2b2b;
-    margin-bottom: 20px;
+    color: #b55fe6 !important; 
+    margin-bottom: 30px;
 }
 
 .product-card {
-    background: #ffffff;
+    background: #16171d !important; /* Cambia las tarjetas blancas de tu captura a oscuras */
+    border: 1px solid #23252f !important;
     border-radius: 16px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .product-card:hover {
     transform: translateY(-5px);
+    border-color: #8b5cf6 !important; 
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15);
 }
 
 .product-img-container {
@@ -158,30 +161,27 @@ img {
     align-items: center;
     justify-content: center;
     margin-bottom: 15px;
-}
-
-.product-img-container img {
-    max-height: 100%;
-    object-fit: contain;
+    background: #1e2029 !important; 
+    border-radius: 12px;
+    padding: 10px;
 }
 
 .product-card h3 {
     font-size: 18px;
     font-weight: bold;
-    color: #333;
+    color: #ffffff !important; 
     margin-bottom: 10px;
 }
 
 .product-card p {
     font-size: 13px;
-    color: #666;
-    min-height: 40px;
+    color: #a0aec0 !important; 
 }
 
 .product-card span {
     font-size: 20px;
     font-weight: 800;
-    color: #20c997;
+    color: #c084fc !important; 
     display: block;
     margin-bottom: 15px;
 }
@@ -192,77 +192,56 @@ img {
 }
 
 .custom-btn {
-    flex: 1;
     padding: 8px 12px;
     border-radius: 8px;
     font-weight: bold;
     font-size: 14px;
     border: none;
-    transition: background 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .ver-producto-btn {
-    background: #e9ecef;
-    color: #495057;
+    background: #222227 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid #2d313f !important;
 }
 
 .ver-producto-btn:hover {
-    background: #dee2e6;
+    background: #2d313f !important;
+    color: #ffffff !important;
 }
 
 .comprar {
-    background: #20c997;
+    background: #8b5cf6 !important; /* Fuerza los botones verdes a morado */
     color: white !important;
 }
 
 .comprar:hover {
-    background: #1aa179;
+    background: #a855f7 !important;
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
 }
 
 /* ==========================================================================
-   🛒 CARRITO LATERAL (OFFCANVAS)
+   🧦 PIE DE PÁGINA (FOOTER REESTRUCTURADO)
    ========================================================================== */
-.custom-cart-canvas {
-    width: 420px !important; 
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    border-left: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.08) !important;
-}
-
-.cart-empty-icon {
-    display: inline-block;
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
-
-.cart-empty-state p {
+footer.footer, .footer {
+    background: #16171d !important; /* Destruye el fondo verde gigante del footer */
+    color: #e2e8f0 !important;
+    margin-top: 60px;
+    padding: 40px 20px !important;
     font-size: 14px;
-    line-height: 1.5;
+    border-top: 1px solid #23252f !important;
 }
 
-.cart-footer {
-    background: #ffffff;
+.footer h5 {
+    color: #b55fe6 !important; 
 }
 
-/* ==========================================================================
-   🧦 PIE DE PÁGINA (FOOTER)
-   ========================================================================== */
-footer.footer {
-    text-align: center;
-    padding: 30px 20px;
-    background: #20c997;
-    color: white;
-    margin-top: 50px;
-    font-size: 15px;
-    font-weight: bold;
+.footer-link {
+    color: #cbd5e1 !important;
+    text-decoration: none;
 }
 
-.footer p {
-    margin: 6px 0;
+.footer-link:hover {
+    color: #b55fe6 !important;
 }
