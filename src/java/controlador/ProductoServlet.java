@@ -76,7 +76,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     
     Part archivo = request.getPart("imagen");
     String nombreImagen = archivo.getSubmittedFileName();
-    String ruta = getServletContext().getRealPath("/img/productos");
+    String ruta = getServletContext().getRealPath("/imagen");
     File carpeta = new File(ruta);
     if(!carpeta.exists()){
         carpeta.mkdirs();

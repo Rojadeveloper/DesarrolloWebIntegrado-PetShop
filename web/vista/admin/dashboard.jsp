@@ -143,7 +143,7 @@
                        accept="image/*">
                 <% if(productoEditar != null && productoEditar.getImagen()!=null){ %>
                     <div class="mt-2">
-                        <img src="<%=request.getContextPath()%>/img/productos/<%=productoEditar.getImagen()%>"
+                        <img src="<%=request.getContextPath()%>/imagen/<%=productoEditar.getImagen()%>"
                              width="120"
                              class="img-thumbnail">
                     </div>
@@ -202,8 +202,7 @@
                         </td>
                         <td><%= p.getNombreCategoria() %></td>
                         <td>
-                            <img
-                            src="<%=request.getContextPath()%>/img/productos/<%=p.getImagen()%>"
+                            <img src="<%=request.getContextPath()%>/imagen/<%=p.getImagen()%>"
                             width="80"
                             class="img-thumbnail">
                         </td>
