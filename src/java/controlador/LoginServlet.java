@@ -12,6 +12,8 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
 import servicio.UsuarioServicio;
+import util.Validaciones;
+
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -24,9 +26,21 @@ public class LoginServlet extends HttpServlet {
        
         String correo = request.getParameter("correo");
         String password = request.getParameter("password");
+
+        if (Validaciones.campoVacio(correo)) {
+            request.setAttribute("error", "El correo es obligatorio.");
+            request.getRequestDispatcher("vista/usuario/login.jsp").forward(request, response);
+            return;
+        }
+
+        if (!Validaciones.correoValido(correo)) {
+            request.setAttribute("error", "Ingrese un correo electrónico válido.");
+            request.getRequestDispatcher("vista/usuario/login.jsp").forward(request, response);
+            return;
+        }
         
-        if (correo == null || correo.isEmpty() || password == null || password.isEmpty()) {
-            request.setAttribute("error", "Campos obligatorios");
+        if (Validaciones.campoVacio(password)) {
+            request.setAttribute("error", "La contraseña es obligatoria.");
             request.getRequestDispatcher("vista/usuario/login.jsp").forward(request, response);
             return;
         }

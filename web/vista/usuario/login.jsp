@@ -19,6 +19,16 @@
 <div class="login-box">
     <h2>Iniciar Sesión</h2>
     <a href="<%= request.getContextPath() %>/index.jsp" class="close-btn">×</a>
+    <%
+    String error = (String) request.getAttribute("error");
+    if (error != null) {
+%>
+    <p style="color: red; text-align: center; font-weight: bold;">
+        <%= error %>
+    </p>
+<%
+    }
+%>
     <form action="${pageContext.request.contextPath}/login" method="post">
         <input type="text" name="correo" placeholder="Correo" required>
         <input type="password" name="password" placeholder="Contraseña" required>
