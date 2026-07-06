@@ -1,10 +1,19 @@
 # 🐾 PetShop - Venta de Productos para mascotas
 
-[![Licencia: MIT](https://shields.io)](https://opensource.org)
-[![Java: 17](https://shields.io)](https://oracle.com)
-[![Jakarta EE: 10](https://shields.io)](https://jakarta.ee)
+📌 Licencia: MIT  
+☕ Java: 21  
+🌐 Jakarta EE: 10  
+🗄️ Base de Datos: MySQL  
+🚀 Servidor de Aplicaciones: GlassFish 7
 
-Este es un proyecto colaborativo de desarrollo web para un sistema de gestión y venta de productos para mascotas. La aplicación implementa una arquitectura robusta basada en el patrón **MVC** (Modelo-Vista-Controlador), utilizando tecnologías modernas de Jakarta EE con persistencia de datos en **MySQL**.
+
+---
+
+## 📖 Descripción del proyecto
+
+Este es un proyecto colaborativo de desarrollo web para un sistema de gestión y venta de productos para mascotas.
+
+La aplicación implementa una arquitectura robusta basada en el patrón **MVC (Modelo-Vista-Controlador)**, utilizando tecnologías modernas de **Jakarta EE**, con persistencia de datos en **MySQL**.
 
 ---
 
@@ -12,37 +21,42 @@ Este es un proyecto colaborativo de desarrollo web para un sistema de gestión y
 
 Para garantizar la consistencia en el equipo, asegúrate de contar con el siguiente entorno local:
 
-*   **IDE:** Apache NetBeans 19
-*   **Lenguaje:** Java SE / JDK 21
-*   **Tecnología Web:** Jakarta EE 10 (Servlets, JSP, JSTL)
-*   **Servidor de Aplicaciones Actual:** Apache Tomcat 10.1.12 *(Contenedor de Servlets)*
-*   **Base de Datos:** MySQL Server & phpMyAdmin
-*   **Próxima Migración Planificada:** GlassFish 7.x *(Servidor de aplicaciones Full Profile)*
+- IDE: Apache NetBeans 19
+- Lenguaje: Java JDK 21
+- Tecnología Web: Jakarta EE 10 (Servlets, JSP, JSTL)
+- Servidor de Aplicaciones: GlassFish 7 (Jakarta EE compatible)
+- Base de Datos: MySQL Server & phpMyAdmin
 
 ---
 
 ## 📁 Arquitectura del Proyecto
 
-El código fuente sigue un patrón de diseño limpio y una separación estricta de responsabilidades:
+El código fuente sigue una arquitectura en capas con separación de responsabilidades:
 
-*   `src/java/controlador/`: Servlets que interceptan y gestionan las peticiones HTTP (ej. `LoginServlet.java`).
-*   `src/java/modelo/config/`: Clases de infraestructura técnica y conexiones (ej. `ConexionBD.java`).
-*   `src/java/modelo/dao/`: Capa de Acceso a Datos (Data Access Object) para aislamiento de consultas SQL.
-*   `src/java/modelo/dao/impl/`: Implementaciones concretas de los DAOs utilizando JDBC y MySQL.
-*   `src/java/modelo/factory/`: Fábrica de objetos DAO para desacoplar la creación de instancias.
-*   `src/java/modelo/dto/`: Objetos de transferencia de datos utilizados para transportar información entre capas.
-*   `src/java/modelo/entidad/`: Clases POJO que representan las entidades del negocio (ej. `Usuario.java`).
-*   `src/java/util/`: Clases utilitarias como validaciones, constantes y funciones de seguridad.
-*   `src/java/servicio/`: Lógica de negocio intermedia que conecta los controladores con los DAOs.
-*   `web/vista/`: Vistas de usuario estructuradas en subcarpetas para un crecimiento modular y escalable.
+```text
+src/java/
+│
+├── controlador/        → Servlets (Controladores MVC)
+├── servicio/           → Lógica de negocio
+├── modelo/
+│   ├── config/         → Configuración (ej. ConexionBD)
+│   ├── entidad/        → Clases del dominio (BD)
+│   ├── dto/            → Objetos de transferencia de datos
+│   ├── dao/            → Interfaces DAO
+│   ├── dao/impl/       → Implementaciones JDBC
+│   ├── factory/        → Fábrica de DAOs
+│
+├── util/               → Clases utilitarias
+```
+
 
 ## 🔐 Roles del sistema
-*  ADMIN: acceso a CRUD completo
-*  CLIENTE: acceso a compras y catálogo
+- ADMIN: acceso completo al sistema (CRUD de productos y gestión)
+- CLIENTE: acceso a catálogo, carrito y compras
 
 ## 🧩 Funcionalidades
 *  Autenticación con control y sesiones
-*  Gestión de roles(ADMIN / CLIENTE)
+*  Gestión de roles (ADMIN / CLIENTE)
 *  Registro de usuarios
 *  Arquitectura en capas basada en MVC con patrones DAO, Service, DTO, Factory y Util para una mejor separación de responsabilidades
 ---
@@ -68,6 +82,8 @@ Debido a que el repositorio mantiene un historial limpio y libre de archivos bin
 2. En NetBeans, haz clic derecho en el proyecto -> **Properties** -> **Libraries**.
 3. En la pestaña **Compile**, presiona el botón **`+`** (**Add JAR/Folder**) y selecciona dicho archivo.
 
+### 4.⚠️ IMPORTANTE: 
+El proyecto debe ejecutarse con GlassFish 7 configurado en NetBeans. No usar Tomcat.
 ---
 
 ## 👥 Colaboradores y Trabajo en Equipo
