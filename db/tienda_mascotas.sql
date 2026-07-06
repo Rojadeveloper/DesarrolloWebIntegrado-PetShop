@@ -14,7 +14,7 @@ CREATE TABLE usuario (
     nombre VARCHAR(100),
     apellido VARCHAR(100),
     correo VARCHAR(150) UNIQUE,
-    contraseña VARCHAR(255),
+    password VARCHAR(255),
     telefono VARCHAR(20),
     direccion VARCHAR(200),
     rol VARCHAR(20) NOT NULL,
@@ -36,14 +36,16 @@ CREATE TABLE producto (
     precio DECIMAL(10,2),
     stock INT,
     imagen VARCHAR(255),
-    id_categoria INT
+    id_categoria INT,
+    FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
 );
 
 -- TABLA CARRITO
 CREATE TABLE carrito (
     id_carrito INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
-    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 
 -- TABLA DETALLE_CARRITO
@@ -52,7 +54,9 @@ CREATE TABLE detalle_carrito (
     id_carrito INT,
     id_producto INT,
     cantidad INT,
-    subtotal DECIMAL(10,2)
+    subtotal DECIMAL(10,2),
+    FOREIGN KEY (id_carrito) REFERENCES carrito(id_carrito),
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
 );
 
 -- TABLA PEDIDO
@@ -61,7 +65,8 @@ CREATE TABLE pedido (
     id_usuario INT,
     fecha_pedido DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10,2),
-    estado VARCHAR(50)
+    estado VARCHAR(50),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 
 -- TABLA DETALLE_PEDIDO
@@ -71,7 +76,9 @@ CREATE TABLE detalle_pedido (
     id_producto INT,
     cantidad INT,
     precio_unitario DECIMAL(10,2),
-    subtotal DECIMAL(10,2)
+    subtotal DECIMAL(10,2),
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
 );
 
 -- TABLA PAGO
@@ -80,15 +87,9 @@ CREATE TABLE pago (
     id_pedido INT,
     metodo_pago VARCHAR(50),
     fecha_pago DATETIME DEFAULT CURRENT_TIMESTAMP,
-    estado_pago VARCHAR(50)
+    estado_pago VARCHAR(50),
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
 );
-
--- =========================================================
--- AJUSTES Y ALTERACIONES REQUERIDAS
--- =========================================================
-ALTER TABLE usuario
-CHANGE contraseña password VARCHAR(255);
-
 
 -- =========================================================
 -- PROCEDIMIENTOS ALMACENADOS (STORED PROCEDURES)
@@ -110,8 +111,6 @@ BEGIN
 END //
 
 -- 2. USUARIOS: INICIO DE SESIÓN + (NEW: Datos para Mi Perfil)
-
-DROP PROCEDURE IF EXISTS sp_loginUsuario;
 
 DELIMITER //
 
@@ -241,17 +240,10 @@ END //
 
 
 -- =========================================================
--- NUEVOS PROCEDURES PARA PUNTOS A, B Y C (SELECTS)
+-- PROCEDURES (SELECTS)
 -- =========================================================
 
--- PUNTO A) Listar todas las categorías
-CREATE PROCEDURE sp_listarCategorias()
-BEGIN
-    SELECT id_categoria, nombre, descripcion 
-    FROM categoria;
-END //
-
--- PUNTO B) Listar productos por el ID de una categoría específica
+-- PUNTO A) Listar productos por el ID de una categoría específica
 CREATE PROCEDURE sp_buscarProductosPorCategoria(
     IN p_id_categoria INT
 )
@@ -261,7 +253,7 @@ BEGIN
     WHERE id_categoria = p_id_categoria;
 END //
 
--- PUNTO C) Buscar productos por nombre (Búsqueda global flexible con LIKE)
+-- PUNTO B) Buscar productos por nombre (Búsqueda global flexible con LIKE)
 CREATE PROCEDURE sp_buscarProductosPorNombre(
     IN p_nombre_buscar VARCHAR(150)
 )
@@ -354,7 +346,6 @@ CALL sp_registrarCliente('Cliente2', 'Prueba2', 'cliente2@petshop.com', 'cliente
 -- ====================================================================
 -- 1. PROCEDIMIENTO PARA LISTAR TODAS LAS CATEGORÍAS ACTIVAS
 -- ====================================================================
-DROP PROCEDURE IF EXISTS sp_listarCategorias;
 DELIMITER //
 CREATE PROCEDURE sp_listarCategorias()
 BEGIN
@@ -365,7 +356,6 @@ DELIMITER ;
 -- ====================================================================
 -- 2. PROCEDIMIENTO PARA PRODUCTOS DESTACADOS (POCO STOCK / AL AZAR)
 -- ====================================================================
-DROP PROCEDURE IF EXISTS sp_listarProductosDestacados;
 DELIMITER //
 CREATE PROCEDURE sp_listarProductosDestacados()
 BEGIN
@@ -381,7 +371,6 @@ DELIMITER ;
 -- ====================================================================
 -- 3. PROCEDIMIENTO PARA FILTRAR PRODUCTOS POR CATEGORÍA
 -- ====================================================================
-DROP PROCEDURE IF EXISTS sp_listarProductosPorCategoria;
 DELIMITER //
 CREATE PROCEDURE sp_listarProductosPorCategoria(
     IN p_id_categoria INT
