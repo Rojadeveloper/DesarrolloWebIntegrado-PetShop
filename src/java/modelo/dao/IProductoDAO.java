@@ -3,10 +3,14 @@ package modelo.dao;
 import java.util.List;
 import modelo.dto.ProductoDTO; // Se queda por si tu estructura requiere el import
 import modelo.entidad.Producto;  // 👈 Volvemos a importar la Entidad real
+import modelo.entidad.Categoria;
+
 
 public interface IProductoDAO {
 
     List<Producto> listar();
+    
+    List<Categoria> listarCategorias();
 
     boolean agregar(Producto p);
 

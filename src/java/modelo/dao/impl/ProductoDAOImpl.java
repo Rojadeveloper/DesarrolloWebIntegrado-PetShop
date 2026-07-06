@@ -9,6 +9,7 @@ import modelo.config.ConexionBD;
 import modelo.dao.IProductoDAO;
 import modelo.dto.ProductoDTO; // Se queda aquí por si tu estructura lo requiere en otro lado
 import modelo.entidad.Producto;  // 👈 Tu DAO trabaja con la Entidad real
+import modelo.entidad.Categoria;
 
 public class ProductoDAOImpl implements IProductoDAO {
 
@@ -19,7 +20,7 @@ public class ProductoDAOImpl implements IProductoDAO {
     @Override
     public List<Producto> listar() {
         List<Producto> lista = new ArrayList<>();
-        String sql = "SELECT * FROM producto";
+        String sql = "SELECT p.*, c.nombre AS nombre_categoria FROM producto p LEFT JOIN categoria c ON p.id_categoria = c.id_categoria ORDER BY p.id_producto DESC";
         try {
             conn = ConexionBD.getInstancia().getConexion();
             ps = conn.prepareStatement(sql);
@@ -33,6 +34,7 @@ public class ProductoDAOImpl implements IProductoDAO {
                 p.setStock(rs.getInt("stock"));
                 p.setImagen(rs.getString("imagen"));
                 p.setIdCategoria(rs.getInt("id_categoria"));
+                p.setNombreCategoria(rs.getString("nombre_categoria"));
                 lista.add(p);
             }
         } catch (Exception e) { e.printStackTrace(); }
@@ -59,7 +61,7 @@ public class ProductoDAOImpl implements IProductoDAO {
     @Override
     public Producto buscarPorId(int id) {
         Producto p = null;
-        String sql = "SELECT * FROM producto WHERE id_producto=?";
+        String sql = "SELECT p.*, c.nombre AS nombre_categoria FROM producto p LEFT JOIN categoria c ON p.id_categoria = c.id_categoria WHERE id_producto=? ORDER BY p.id_producto DESC";
         try {
             conn = ConexionBD.getInstancia().getConexion();
             ps = conn.prepareStatement(sql);
@@ -74,6 +76,7 @@ public class ProductoDAOImpl implements IProductoDAO {
                 p.setStock(rs.getInt("stock"));
                 p.setImagen(rs.getString("imagen"));
                 p.setIdCategoria(rs.getInt("id_categoria"));
+                p.setNombreCategoria(rs.getString("nombre_categoria"));
             }
         } catch (Exception e) { e.printStackTrace(); }
         return p;
@@ -112,7 +115,7 @@ public class ProductoDAOImpl implements IProductoDAO {
     @Override
     public List<Producto> buscar(String texto) {
         List<Producto> lista = new ArrayList<>();
-        String sql = "SELECT * FROM producto WHERE nombre LIKE ?";
+        String sql = "SELECT p.*, c.nombre AS nombre_categoria FROM producto p LEFT JOIN categoria c ON p.id_categoria = c.id_categoria WHERE p.nombre LIKE ? ORDER BY p.id_producto DESC";
         try {
             conn = ConexionBD.getInstancia().getConexion();
             ps = conn.prepareStatement(sql);
@@ -127,6 +130,7 @@ public class ProductoDAOImpl implements IProductoDAO {
                 p.setStock(rs.getInt("stock"));
                 p.setImagen(rs.getString("imagen"));
                 p.setIdCategoria(rs.getInt("id_categoria"));
+                p.setNombreCategoria(rs.getString("nombre_categoria"));
                 lista.add(p);
             }
         } catch (Exception e) { e.printStackTrace(); }
@@ -211,5 +215,31 @@ public class ProductoDAOImpl implements IProductoDAO {
          }
          return lista;
      }
+    
+    @Override
+    public List<Categoria> listarCategorias() {
+
+    List<Categoria> lista = new ArrayList<>();
+
+    String sql = "SELECT * FROM categoria";
+
+    try {
+        conn = ConexionBD.getInstancia().getConexion();
+        ps = conn.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Categoria c = new Categoria();
+            c.setIdCategoria(rs.getInt("id_categoria"));
+            c.setNombre(rs.getString("nombre"));
+            lista.add(c);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return lista;
+}
     
 }
