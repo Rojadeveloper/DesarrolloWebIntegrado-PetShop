@@ -183,23 +183,9 @@
         </div>
       </div>
     </div>
-
-    <script>
-        const btnTogglePassword = document.getElementById('btnTogglePassword');
-        const txtPassword = document.getElementById('txtPassword');
-        const eyeIcon = document.getElementById('eyeIcon');
-
-        btnTogglePassword.addEventListener('click', function () {
-            const type = txtPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-            txtPassword.setAttribute('type', type);
-            eyeIcon.classList.toggle('fa-eye');
-            eyeIcon.classList.toggle('fa-eye-slash');
-        });
-
-        document.getElementById('btnConfirmarSubmit').addEventListener('click', function() {
-            document.getElementById('formPerfil').submit();
-        });
-    </script>
+    
+    <script src="<%= request.getContextPath() %>/Js/carrito-global.js"></script>
+    <script src="<%= request.getContextPath() %>/Js/perfil-usuario.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
