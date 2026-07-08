@@ -176,8 +176,7 @@
     <div class="container py-4">
         <div class="row g-4 justify-content-center">
             
-            <%
-                // Cargamos de forma nativa los productos fijos de la base de datos
+            <%  // Cargamos de forma nativa los productos fijos de la base de datos
                 modelo.dao.IProductoDAO prodDAO = new modelo.dao.impl.ProductoDAOImpl();
                 java.util.List<modelo.entidad.Producto> listaProductos = prodDAO.listarOchoProductosFijos();
                 
@@ -204,38 +203,38 @@
                                 <p>${not empty prod.descripcion ? prod.descripcion : ""}</p>
                                 <span>S/. ${prod.precio}</span>
 
-<div class="acciones">
-    <%-- 🔍 VER PRODUCTO: Envía el ID por la URL --%>
-    <a href="${pageContext.request.contextPath}/especsProduc?id=${prod.idProducto}" 
-       class="custom-btn ver-producto-btn text-decoration-none text-center d-inline-flex align-items-center justify-content-center">
-        Ver producto
-    </a>
+                                <div class="acciones">
+                                    <%-- 🔍 VER PRODUCTO: Envía el ID por la URL --%>
+                                    <a href="${pageContext.request.contextPath}/especsProduc?id=${prod.idProducto}" 
+                                       class="custom-btn ver-producto-btn text-decoration-none text-center d-inline-flex align-items-center justify-content-center">
+                                        Ver producto
+                                    </a>
     
-    <c:choose>
-        <%-- CASO 1: SI NO ESTÁ LOGUEADO --%>
-        <c:when test="${sessionScope.usuarioLogueado == null}">
-            <a href="${pageContext.request.contextPath}/vista/usuario/login.jsp" 
-               class="custom-btn comprar text-decoration-none text-center d-inline-flex align-items-center justify-content-center">
-                Comprar
-            </a>
-        </c:when>
+                                    <c:choose>
+                                        <%-- CASO 1: SI NO ESTÁ LOGUEADO --%>
+                                        <c:when test="${sessionScope.usuarioLogueado == null}">
+                                            <a href="${pageContext.request.contextPath}/vista/usuario/login.jsp" 
+                                               class="custom-btn comprar text-decoration-none text-center d-inline-flex align-items-center justify-content-center">
+                                                Comprar
+                                            </a>
+                                        </c:when>
 
-        <%-- CASO 2: SI ES UN ADMIN --%>
-        <c:when test="${sessionScope.usuarioLogueado.rol == 'ADMIN'}">
-            <a href="${pageContext.request.contextPath}/vista/cliente/carrito.jsp" 
-               class="custom-btn comprar text-decoration-none text-center d-inline-flex align-items-center justify-content-center">
-                Agregar (Admin)
-            </a>
-        </c:when>
+                                        <%-- CASO 2: SI ES UN ADMIN --%>
+                                        <c:when test="${sessionScope.usuarioLogueado.rol == 'ADMIN'}">
+                                            <a href="${pageContext.request.contextPath}/vista/cliente/carrito.jsp" 
+                                               class="custom-btn comprar text-decoration-none text-center d-inline-flex align-items-center justify-content-center">
+                                                Agregar (Admin)
+                                            </a>
+                                        </c:when>
 
-        <%-- CASO 3: SI ES UN CLIENTE LOGUEADO --%>
-        <c:otherwise>
-            <button type="button" class="custom-btn comprar btn-agregar-carrito">
-                Agregar al carro
-            </button>
-        </c:otherwise>
-    </c:choose>
-</div>
+                                        <%-- CASO 3: SI ES UN CLIENTE LOGUEADO --%>
+                                        <c:otherwise>
+                                            <button type="button" class="custom-btn comprar btn-agregar-carrito">
+                                                Agregar al carro
+                                            </button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                             </div>
                         </div>
                     </c:forEach>
@@ -365,136 +364,18 @@
         </div>
     </div>
 </template>
+                    
+<script src="${pageContext.request.contextPath}/Js/carrito-global.js"></script>
 
 <script>
-var carrito = [];
-try {
-    carrito = JSON.parse(localStorage.getItem('petshop_cart')) || [];
-} catch(e) {
-    carrito = [];
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    actualizarInterfazCarrito();
-
-    // 🔄 Inicializamos el control del Offcanvas usando la librería nativa de Bootstrap
-    var miOffcanvasElemento = document.getElementById('carritoSidebar');
-    var bsOffcanvas = miOffcanvasElemento ? new bootstrap.Offcanvas(miOffcanvasElemento) : null;
-
-    document.body.addEventListener("click", function(e) {
-        var botonAgregar = e.target.closest(".btn-agregar-carrito");
-        var botonEliminar = e.target.closest(".btn-eliminar-item");
-
-        if (botonAgregar) {
-            var card = botonAgregar.closest(".product-card");
-            if (card) {
-                var producto = {
-                    id: card.dataset.id,
-                    nombre: card.dataset.nombre,
-                    precio: parseFloat(card.dataset.precio) || 0,
-                    imagen: card.dataset.imagen,
-                    cantidad: 1
-                };
-                agregarAlCarrito(producto);
-                
-                // 🚀 ¡AQUÍ ESTÁ LA MAGIA! Si el Offcanvas existe, ordénale que se abra en pantalla
-                if (bsOffcanvas) {
-                    bsOffcanvas.show();
-                }
-            }
-        }
-        
-        if (botonEliminar) {
-            var idProd = botonEliminar.getAttribute("data-id");
-            eliminarDelCarrito(idProd);
-        }
-    });
-
     var btnPago = document.getElementById("btnProcesarPago");
     if (btnPago) {
         btnPago.addEventListener("click", function() {
             window.location.href = "<%= request.getContextPath() %>/vista/cliente/carrito.jsp";
         });
     }
-});
-
-function agregarAlCarrito(producto) {
-    var itemExistente = null;
-    for (var i = 0; i < carrito.length; i++) {
-        if (carrito[i].id === producto.id) {
-            itemExistente = carrito[i];
-            break;
-        }
-    }
-    
-    if (itemExistente) {
-        itemExistente.cantidad++;
-    } else {
-        carrito.push(producto);
-    }
-    salvarCarrito();
-}
-
-function eliminarDelCarrito(id) {
-    carrito = carrito.filter(function(item) {
-        return item.id !== id;
-    });
-    salvarCarrito();
-}
-
-function salvarCarrito() {
-    localStorage.setItem('petshop_cart', JSON.stringify(carrito));
-    actualizarInterfazCarrito();
-}
-
-function actualizarInterfazCarrito() {
-    var contenedorLista = document.getElementById("carritoContenidoDinamico");
-    var vistaVacia = document.getElementById("estadoVacioOriginal");
-    var txtTotal = document.getElementById("cart-monto-total");
-    var btnPago = document.getElementById("btnProcesarPago");
-    var molde = document.getElementById("molde-item-carrito");
-    
-    if (!contenedorLista || !vistaVacia || !txtTotal || !btnPago || !molde) return;
-
-    var totalItems = 0;
-    var montoTotal = 0;
-    for (var i = 0; i < carrito.length; i++) {
-        totalItems += carrito[i].cantidad;
-        montoTotal += (carrito[i].precio * carrito[i].cantidad);
-    }
-    
-    var badges = document.querySelectorAll(".position-absolute.top-0.badge, .JSON-contador");
-    badges.forEach(function(b) {
-        b.innerText = totalItems;
-    });
-
-    contenedorLista.innerHTML = "";
-
-    if (carrito.length === 0) {
-        vistaVacia.style.display = "block";
-        txtTotal.innerText = "S/. 0.00";
-        btnPago.disabled = true;
-        return;
-    }
-
-    vistaVacia.style.display = "none";
-    txtTotal.innerText = "S/. " + montoTotal.toFixed(2);
-    btnPago.disabled = false;
-
-    carrito.forEach(function(item) {
-        var clon = molde.content.cloneNode(true);
-        
-        clon.querySelector(".img-item-cart").src = item.imagen;
-        clon.querySelector(".img-item-cart").alt = item.nombre;
-        clon.querySelector(".nombre-item-cart").innerText = item.nombre;
-        clon.querySelector(".info-precio-cart").innerText = "S/. " + item.precio.toFixed(2) + " x " + item.cantidad;
-        clon.querySelector(".subtotal-item-cart").innerText = "S/. " + (item.precio * item.cantidad).toFixed(2);
-        clon.querySelector(".btn-eliminar-item").setAttribute("data-id", item.id);
-        
-        contenedorLista.appendChild(clon);
-    });
-}
-</script>        
+</script>
+     
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
