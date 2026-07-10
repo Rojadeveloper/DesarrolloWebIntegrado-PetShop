@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controlador;
 
 import modelo.entidad.Usuario;
@@ -34,18 +30,20 @@ public class LoginServlet extends HttpServlet {
         if (user != null) {
             HttpSession session = request.getSession();
             
-            // SINCRONIZADO: Guardamos el objeto y las llaves exactas que lee tu index.jsp
+            // Guardamos las llaves exactas tal cual lo necesita tu index.jsp
             session.setAttribute("usuarioLogueado", user);
-            session.setAttribute("nombreUsuario", user.getNombre()); // Asegurar que el método sea getNombre() o cambiar por correcto            
+            session.setAttribute("nombreUsuario", user.getNombre()); 
             
-            // VALIDAR ROL
+            // 🛡️ MANTENEMOS VALIDACIÓN DE ROLES INTACTA 🛡️
             if ("ADMIN".equals(user.getRol())){
-                response.sendRedirect("vista/admin/dashboard.jsp");
+                // Si es ADMIN va directamente a su panel de gestión
+                response.sendRedirect(request.getContextPath() + "/vista/admin/dashboard.jsp");
             } else if ("CLIENTE".equals(user.getRol())){
-                // CORREGIDO: Mandamos al catálogo principal index.jsp
-                response.sendRedirect("index.jsp");
+                // ✅ CORRECCIÓN CLAVE: Si es CLIENTE, en vez de index.jsp, lo manda al /inicio 
+                // para que el InicioServlet cargue los productos de la BD antes de pintar la web
+                response.sendRedirect(request.getContextPath() + "/inicio");
             } else {
-                response.sendRedirect("vista/usuario/login.jsp");
+                response.sendRedirect(request.getContextPath() + "/vista/usuario/login.jsp");
             }
         } else {
             request.setAttribute("error", "Datos incorrectos");

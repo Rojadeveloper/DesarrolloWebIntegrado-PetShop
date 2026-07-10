@@ -134,7 +134,7 @@
                                 <span class="badge bg-danger badge-stock">
                                     <i class="fa-solid fa-triangle-exclamation me-1"></i> Solo <%= p.getStock() %>
                                 </span>
-                                <img src="<%= request.getContextPath() %>/img/<%= p.getImagen() %>" alt="<%= p.getNombre() %>" onerror="this.src='https://placehold.co/250x250?text=PetShop+Product';">
+                                <img src="<%= request.getContextPath() %>/imagen/<%= p.getImagen() %>" alt="<%= p.getNombre() %>" onerror="this.src='https://placehold.co/250x250?text=PetShop+Product';">
                             </div>
                             <div class="card-body-premium">
                                 <h6 class="product-title text-truncate"><%= p.getNombre() %></h6>
@@ -198,7 +198,7 @@
                         <div class="col-6 col-md-4">
                             <div class="card-producto-premium">
                                 <div class="img-container">
-                                    <img src="<%= request.getContextPath() %>/img/<%= p.getImagen() %>" alt="<%= p.getNombre() %>" onerror="this.src='https://placehold.co/250x250?text=PetShop+Product';">
+                                    <img src="<%= request.getContextPath() %>/imagen/<%= p.getImagen() %>" alt="<%= p.getNombre() %>" onerror="this.src='https://placehold.co/250x250?text=PetShop+Product';">
                                 </div>
                                 <div class="card-body-premium">
                                     <h6 class="product-title text-truncate"><%= p.getNombre() %></h6>
