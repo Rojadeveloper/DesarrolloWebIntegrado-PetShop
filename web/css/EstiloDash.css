@@ -1,132 +1,238 @@
-/* 
-    Created on : 25 may. 2026, 4:45:30 p. m.
-    Author     : RonaldoYn
-*/
-
 /* ==========================================================================
-   ESTILO EXCLUSIVO PARA EL DASHBOARD DE ADMINISTRACIÓN (PETSHOP)
+   CSS UNIFICADO CYBERPUNK - PETSHOP DASHBOARD (100% SINCRO CON CARRITO)
+   Author     : RonaldoYn
    ========================================================================== */
 
 html, body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
+    background-color: #0d0e12 !important; /* Negro mate profundo de tu carrito */
+    color: #e2e8f0 !important;
     
-    /* TU IMAGEN DE ISTOCK SELECCIONADA */
+    /* Imagen de iStock integrada */
     background-image: url('https://media.istockphoto.com/id/165719790/es/vector/perro-y-garabatos.jpg?s=612x612&w=0&k=20&c=6KOnmK6B3b4lS75vP9fAitg2KshbOf7qV0fA9jTidrw=') !important;
-    
-    /* La colocamos abajo a la izquierda de forma fija para que no estorbe la tabla */
     background-position: left bottom !important; 
     background-repeat: no-repeat !important;
     background-attachment: fixed !important; 
-    
-    /* Unificamos el resto del fondo con un gris claro que combine con el papel de la imagen */
-    background-color: #f4f6f9 !important;
-    background-size: 320px auto !important; /* Tamaño ideal para que se vea como un sticker decorativo */
+    background-size: 320px auto !important;
 }
 
-/* Le damos una ligera transparencia a las tarjetas para que se integren con el entorno */
+/* Títulos con Morado Eléctrico */
+.titulo-dashboard, .card-title-custom {
+    color: #b55fe6 !important;
+    text-shadow: 0 0 10px rgba(181, 95, 230, 0.2);
+}
+
+/* Tarjetas (Cards) estilo Premium Dark del Carrito */
 .card-dash {
-    background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(32, 201, 151, 0.2) !important;
-    border-radius: 18px !important;
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.03) !important;
+    background-color: #16171d !important; 
+    border: 1px solid #23252f !important; 
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* Reutilizando tu NavBar institucional */
-.custom-navbar {
-    background: #20c997 !important;
-    box-shadow: 0px 4px 15px rgba(32, 201, 151, 0.2);
-    padding: 12px 20px;
-}
-
-.custom-navbar .navbar-brand, 
-.custom-navbar .nav-link,
-.custom-navbar span,
-.custom-navbar strong {
-    color: #ffffff !important;
-    font-weight: bold;
-    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
-}
-
-.custom-navbar .nav-link:hover {
-    color: #115c45 !important;
-}
-
-/* Título de la sección */
-.titulo-dashboard {
-    font-weight: 800;
-    color: #1a4f43;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: 0px 2px 4px rgba(0,0,0,0.05);
-}
-
-/* Tarjetas de Gestión estilizadas como tus Product-Cards */
-.card-dash {
-    background: white !important;
-    border: 1px solid rgba(32, 201, 151, 0.15) !important;
-    border-radius: 18px !important;
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.03) !important;
-    transition: all 0.3s ease;
-}
-
-.card-dash:hover {
-    box-shadow: 0px 15px 35px rgba(32, 201, 151, 0.08) !important;
-}
-
+/* Línea divisoria completa debajo del título */
 .card-title-custom {
-    color: #1a4f43;
-    font-weight: bold;
-    border-bottom: 2px solid #20c997;
-    padding-bottom: 8px;
+    font-weight: 700;
+    padding-bottom: 10px;
     display: inline-block;
+    width: 100%;
+    border-bottom: 3px solid #8b5cf6 !important; /* Subrayado Morado Eléctrico */
 }
 
-/* Botones alineados a tu paleta web */
+/* Cajas de texto e Inputs del Carrito */
+.form-control, .form-select {
+    background-color: #111216 !important;
+    border: 1px solid #2d313f !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+}
+.form-control:focus, .form-select:focus {
+    background-color: #111216 !important;
+    color: #ffffff !important;
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.4) !important;
+}
+
+/* Botones Principales */
 .btn-buscar {
-    background: #2e86de !important;
-    color: white !important;
+    background: #1e2029 !important;
+    border: 1px solid #8b5cf6 !important;
+    color: #b55fe6 !important;
     font-weight: bold;
     border-radius: 8px;
-    border: none;
 }
-
 .btn-buscar:hover {
-    background: #1b6ca8 !important;
+    background: #8b5cf6 !important;
+    color: #ffffff !important;
 }
 
 .btn-agregar-dash {
-    background: #20c997 !important;
-    color: white !important;
+    background-color: #8b5cf6 !important; /* Morado Eléctrico */
+    border: 1px solid #7c3aed !important;
+    color: #ffffff !important;
     font-weight: bold;
-    border: none;
     border-radius: 8px;
-    transition: 0.2s ease;
+    transition: all 0.2s ease;
 }
-
 .btn-agregar-dash:hover {
-    background: #1aa179 !important;
+    background-color: #a855f7 !important;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+    transform: translateY(-2px);
 }
 
-/* Tabla de datos con diseño moderno */
-.table-responsive-custom {
-    background: white;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.05);
-}
-
-.thead-custom {
-    background-color: #1a4f43 !important;
-    color: white !important;
-}
-
-/* Insignias de stock interactivas */
-.badge-stock {
-    padding: 6px 12px;
-    border-radius: 20px;
+.btn-modificar-dash {
+    background-color: #ffc107 !important; /* Amarillo Bootstrap para cambios */
+    border: none;
+    color: #111216 !important;
     font-weight: bold;
+    border-radius: 8px;
+}
+
+.btn-cancelar-dash {
+    background-color: #334155 !important;
+    border: none;
+    color: white !important;
+    border-radius: 8px;
+}
+
+/* ==========================================================================
+   TABLA DE INVENTARIO (Estructura Limpia Dark)
+   ========================================================================== */
+.table-responsive-custom {
+    background-color: #16171d !important;
+    border: 1px solid #23252f !important;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table {
+    background-color: #16171d !important;
+    margin: 0 !important;
+}
+
+/* Cabecera de la tabla (Gris intermedio como bloque interno del carrito) */
+.thead-custom th {
+    background-color: #1e2029 !important;
+    color: #b55fe6 !important; /* Texto morado */
+    font-weight: 700 !important;
+    border-bottom: 2px solid #23252f !important;
+    text-transform: uppercase;
+    font-size: 13px;
+    padding: 14px !important;
+}
+
+/* Filas y columnas */
+.table tbody tr { background-color: #16171d !important; }
+.table tbody tr:hover { background-color: #1e2029 !important; }
+
+.table td {
+    background-color: transparent !important;
+    border-bottom: 1px solid #23252f !important;
+    padding: 12px 14px !important;
+    color: #ffffff !important;
+}
+
+/* Clases específicas de datos reemplazando los errores de Bootstrap */
+.td-nombre {
+    font-weight: 600 !important;
+    color: #ffffff !important;
+}
+
+.td-descripcion {
+    color: #cbd5e1 !important; /* Gris platino de alta lectura */
+    font-size: 13px;
+}
+
+.td-precio {
+    color: #c084fc !important; /* Morado brillante del total general de tu carrito */
+    font-weight: 700 !important;
+    font-size: 15px;
+}
+
+.td-categoria {
+    color: #e2e8f0 !important;
+}
+
+/* Insignias de Stock Rediseñadas */
+.badge-stock {
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+    font-weight: 700 !important;
+}
+.stock-ok {
+    background-color: rgba(139, 92, 246, 0.15) !important; /* Morado translúcido */
+    color: #d8b4fe !important;
+    border: 1px solid rgba(168, 85, 247, 0.3) !important;
+}
+.stock-low {
+    background-color: rgba(239, 68, 68, 0.15) !important; /* Alerta rojo translúcido */
+    color: #f87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Imágenes dentro de la tabla */
+.img-tabla-dash {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    background-color: #111216 !important;
+    border: 1px solid #8b5cf6 !important; /* Borde morado estilo carrito */
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.img-preview-dash {
+    width: 100px;
+    border: 1px solid #8b5cf6 !important;
+    border-radius: 8px;
+}
+
+/* Botones de acción pequeños dentro de la tabla */
+.btn-tabla-editar {
+    background-color: #ffc107 !important;
+    color: #111216 !important;
+    font-weight: 700;
+    font-size: 12px;
+    border-radius: 6px;
+    width: 85px;
+    padding: 5px 0;
+}
+.btn-tabla-eliminar {
+    background-color: #ef4444 !important;
+    color: white !important;
+    font-weight: 700;
+    font-size: 12px;
+    border-radius: 6px;
+    width: 85px;
+    padding: 5px 0;
+}
+
+/* Alertas del Sistema */
+.alert-danger-custom {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+    color: #f87171 !important;
+    border: 1px solid #ef4444 !important;
+    border-radius: 10px;
+    padding: 12px;
+}
+.alert-success-custom {
+    background-color: rgba(168, 85, 247, 0.15) !important;
+    color: #d8b4fe !important;
+    border: 1px solid #8b5cf6 !important;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+/* Blancas por defecto */
+.mb-3 .form-label {
+    color: #ffffff !important;
+    transition: color 0.2s ease;
+}
+
+/* Cambian a morado cuando haces clic en el cuadro de abajo */
+.mb-3:focus-within .form-label {
+    color: #c084fc !important; /* Morado brillante */
 }
