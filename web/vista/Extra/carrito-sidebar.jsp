@@ -35,7 +35,10 @@
                 <span class="fw-bold text-secondary">Total estimado:</span>
                 <span class="fw-bold text-dark fs-4" id="cart-monto-total">S/. 0.00</span>
             </div>
-            <button class="btn custom-btn comprar w-100 py-3 fs-6" id="btnProcesarPago" disabled>
+            <button class="btn custom-btn comprar w-100 py-3 fs-6" 
+                    id="btnProcesarPago" 
+                    onclick="window.location.href='${pageContext.request.contextPath}/vista/cliente/carrito.jsp'" 
+                    disabled>
                 Ir a pagar compra
             </button>
         </div>
