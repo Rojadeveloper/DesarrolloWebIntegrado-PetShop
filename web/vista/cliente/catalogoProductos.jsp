@@ -42,20 +42,21 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/EstiloCatalogo.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Responsive.css">
 </head>
-<body class="bg-light">
+
+<body class="body-cyberpunk">
 
 <jsp:include page="/vista/Extra/Navbar.jsp" />
 <jsp:include page="/vista/Extra/carrito-sidebar.jsp" />
 
     <div class="container my-5">
         
-        <div class="seccion-destacados mb-5 shadow-sm p-4 bg-white rounded-3">
+        <div class="seccion-destacados mb-5 shadow-sm p-4 rounded-3">
             <div class="d-flex align-items-center mb-4">
                 <div class="bg-danger text-white p-2 rounded-3 me-3 shadow-sm">
                     <i class="fa-solid fa-fire fa-lg"></i>
                 </div>
                 <div>
-                    <h3 class="mb-0 fw-bold text-dark">¡Últimas Unidades!</h3>
+                    <h3 class="mb-0 fw-bold text-white">¡Últimas Unidades!</h3>
                     <p class="text-muted small mb-0">Los productos más buscados que están por agotarse</p>
                 </div>
             </div>
@@ -116,7 +117,7 @@
         <div class="row g-4">
             
             <div class="col-lg-3">
-                <div class="card border-0 shadow-sm p-4 panel-sticky-menu bg-white rounded-3">
+                <div class="card border-0 shadow-sm p-4 panel-sticky-menu card-cyberpunk rounded-3">
                     <h5 class="fw-bold text-dark mb-4">
                         <i class="fa-solid fa-paw text-warning me-2"></i>Categorías
                     </h5>

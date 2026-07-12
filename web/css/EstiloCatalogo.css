@@ -1,10 +1,11 @@
 /* ==========================================================================
-   🎨 1. BASE, FONDO Y TIPOGRAFÍA DEL CATÁLOGO
+   🎨 1. BASE, FONDO Y TIPOGRAFÍA DEL CATÁLOGO (Cyberpunk Dark)
    ========================================================================== */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background-color: #f7f7f7 !important;
+    background-color: #0d0e12 !important; /* Negro mate profundo unificado */
+    color: #e2e8f0 !important;
     overflow-x: hidden;
 }
 
@@ -13,24 +14,34 @@ img {
     height: auto;
 }
 
+/* Modificadores globales para compatibilidad de texto sobre fondo oscuro */
+.text-dark {
+    color: #ffffff !important;
+}
+
+.text-muted {
+    color: #cbd5e1 !important; /* Gris platino de alta lectura */
+}
+
 /* ==========================================================================
-   🔥 3. SECCIÓN DESTACADOS (¡ÚLTIMAS UNIDADES!)
+   🔥 3. SECCIÓN DESTACADOS (¡ÚLTIMAS UNIDADES! - Rediseño Neón)
    ========================================================================== */
 .seccion-destacados {
-    background: linear-gradient(135deg, rgba(32, 201, 151, 0.06) 0%, rgba(255, 193, 7, 0.03) 100%);
+    background: #16171d !important; /* Fondo premium dark de tarjeta */
     border-radius: 24px;
     padding: 30px;
-    border: 1px dashed rgba(32, 201, 151, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.3) !important; /* Borde morado neón sutil */
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.1) !important;
 }
 
 /* ==========================================================================
    🛍️ 4. TARJETAS DE PRODUCTOS PREMIUM (ESTRUCTURA FLEXBOX CONTROLADA)
    ========================================================================== */
 .card-producto-premium {
-    background: #ffffff !important;
+    background: #16171d !important; /* Capa oscura premium */
     border-radius: 20px !important;
-    border: 1px solid rgba(0, 0, 0, 0.05) !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+    border: 1px solid #23252f !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden;
@@ -42,8 +53,8 @@ img {
 
 .card-producto-premium:hover {
     transform: translateY(-8px) !important;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08) !important;
-    border-color: rgba(32, 201, 151, 0.3) !important;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.25) !important; /* Resplandor morado */
+    border-color: #8b5cf6 !important;
 }
 
 /* Contenedor fijo para la imagen del producto */
@@ -53,9 +64,10 @@ img {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    background: #ffffff !important;
+    background: #1e2029 !important; /* Tono ligeramente más claro para contrastar el fondo de la foto */
     position: relative;
     padding: 15px;
+    border-bottom: 1px solid #23252f !important;
 }
 
 .card-producto-premium img {
@@ -80,7 +92,7 @@ img {
 .product-title {
     font-size: 15px;
     font-weight: 700;
-    color: #2b2b2b;
+    color: #ffffff !important; /* Texto blanco en la tarjeta */
     margin-bottom: 6px;
 }
 
@@ -93,7 +105,7 @@ img {
     height: 38px;
     line-height: 19px;
     font-size: 12.5px;
-    color: #6c757d;
+    color: #a0aec0 !important; /* Gris intermedio */
     margin-bottom: 15px;
 }
 
@@ -108,29 +120,29 @@ img {
 .product-price {
     font-size: 18px;
     font-weight: 800;
-    color: #20c997;
+    color: #c084fc !important; /* Cambio de verde a Morado Brillante (sincro total con totales de carrito) */
 }
 
-/* Botón flotante redondo del carrito */
+/* Botón flotante redondo del carrito (Sección Destacados) */
 .btn-cart-round {
     width: 40px !important;
     height: 40px !important;
     border-radius: 50% !important;
-    background: #212529 !important;
-    color: #ffffff !important;
-    border: none !important;
+    background: #1e2029 !important;
+    color: #b55fe6 !important;
+    border: 1px solid #8b5cf6 !important;
     display: flex !important;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
     transition: all 0.25s ease !important;
 }
 
 .btn-cart-round:hover {
-    background-color: #20c997 !important;
+    background-color: #8b5cf6 !important;
     color: #ffffff !important;
     transform: scale(1.15);
-    box-shadow: 0 4px 12px rgba(32, 201, 151, 0.35);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.6);
 }
 
 .badge-stock {
@@ -144,21 +156,31 @@ img {
     z-index: 2;
 }
 
+/* Adaptación para insignias nativas sobre fondo oscuro */
+.bg-light.text-dark.border {
+    background-color: #1e2029 !important;
+    color: #ffffff !important;
+    border: 1px solid #2d313f !important;
+}
+
 /* ==========================================================================
-   🐾 5. PANEL LATERAL IZQUIERDO (STICKY CATEGORÍAS)
+   🐾 5. PANEL LATERAL IZQUIERDO (STICKY CATEGORÍAS - Tema Dark)
    ========================================================================== */
 .panel-sticky-menu {
     position: sticky;
     top: 85px; 
     border-radius: 20px;
     z-index: 10;
+    background-color: #16171d !important;
+    border: 1px solid #23252f !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* Botones interactivos de categorías */
 .btn-categoria {
-    background: #fff;
-    color: #495057;
-    border: 1px solid #e9ecef;
+    background: #111216 !important;
+    color: #cbd5e1 !important;
+    border: 1px solid #2d313f !important;
     padding: 12px 16px;
     border-radius: 12px;
     font-weight: 600;
@@ -167,15 +189,15 @@ img {
 }
 
 .btn-categoria:hover {
-    background: #f8f9fa;
-    color: #20c997;
-    border-color: rgba(32, 201, 151, 0.2);
+    background: #1e2029 !important;
+    color: #b55fe6 !important;
+    border-color: rgba(139, 92, 246, 0.4) !important;
 }
 
 .btn-categoria.active {
-    background: rgba(32, 201, 151, 0.1) !important;
-    color: #1aa179 !important;
-    border-color: rgba(32, 201, 151, 0.3) !important;
+    background: rgba(139, 92, 246, 0.15) !important; /* Fondo morado translúcido */
+    color: #d8b4fe !important;
+    border-color: #8b5cf6 !important;
 }
 
 /* ==========================================================================
@@ -185,8 +207,9 @@ img {
     width: 420px !important; 
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-    border-left: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.08) !important;
+    background-color: #16171d !important;
+    border-left: 1px solid #23252f !important;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6) !important;
 }
 
 .cart-empty-icon {
@@ -203,8 +226,10 @@ img {
 .cart-empty-state p {
     font-size: 14px;
     line-height: 1.5;
+    color: #a0aec0 !important;
 }
 
 .cart-footer {
-    background: #ffffff;
+    background: #111216 !important;
+    border-top: 1px solid #23252f !important;
 }
