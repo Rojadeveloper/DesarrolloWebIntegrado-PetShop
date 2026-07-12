@@ -15,28 +15,6 @@ img {
 }
 
 /* ==========================================================================
-   🐾 BARRA DE NAVEGACIÓN (NAVBAR)
-   ========================================================================== */
-.custom-navbar {
-    background-color: #16171d !important; /* Sobrescribe el verde turquesa */
-    border-bottom: 1px solid #23252f !important;
-    box-shadow: 0px 4px 15px rgba(0,0,0,0.3) !important;
-}
-
-.custom-navbar, 
-.custom-navbar a {
-    font-weight: bold; 
-    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4); 
-}
-
-.custom-navbar .nav-link {
-    color: #cbd5e1 !important;
-}
-.custom-navbar .nav-link.active, .custom-navbar .nav-link:hover {
-    color: #b55fe6 !important; 
-}
-
-/* ==========================================================================
    🎪 CARRUSEL PREMIUM DE MASCOTAS
    ========================================================================== */
 #petCarousel {
@@ -136,7 +114,7 @@ img {
 }
 
 .product-card {
-    background: #16171d !important; /* Cambia las tarjetas blancas de tu captura a oscuras */
+    background: #16171d !important; 
     border: 1px solid #23252f !important;
     border-radius: 16px;
     padding: 20px;
@@ -212,7 +190,7 @@ img {
 }
 
 .comprar {
-    background: #8b5cf6 !important; /* Fuerza los botones verdes a morado */
+    background: #8b5cf6 !important; 
     color: white !important;
 }
 
@@ -225,7 +203,7 @@ img {
    🧦 PIE DE PÁGINA (FOOTER REESTRUCTURADO)
    ========================================================================== */
 footer.footer, .footer {
-    background: #16171d !important; /* Destruye el fondo verde gigante del footer */
+    background: #16171d !important; 
     color: #e2e8f0 !important;
     margin-top: 60px;
     padding: 40px 20px !important;

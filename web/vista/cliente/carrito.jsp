@@ -109,7 +109,7 @@
                                 Proceder al pago <i class="fa-solid fa-credit-card ms-2"></i>
                             </button>
 
-                            <a href="<%= request.getContextPath() %>/index.jsp" class="btn btn-link w-100 text-center mt-3 text-decoration-none text-muted small">
+                            <a href="<%= request.getContextPath() %>/inicio" class="btn btn-link w-100 text-center mt-3 text-decoration-none text-muted small">
                                 <i class="fa-solid fa-arrow-left me-1"></i> Seguir comprando
                             </a>
                         </div>
