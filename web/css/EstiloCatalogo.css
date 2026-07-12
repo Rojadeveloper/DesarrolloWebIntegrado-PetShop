@@ -203,14 +203,14 @@ img {
 /* ==========================================================================
    🛒 6. CARRITO LATERAL OFFCANVAS (MENÚ DESPLEGABLE)
    ========================================================================== */
-.custom-cart-canvas {
+/*.custom-cart-canvas {
     width: 420px !important; 
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     background-color: #16171d !important;
     border-left: 1px solid #23252f !important;
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6) !important;
-}
+}*/
 
 .cart-empty-icon {
     display: inline-block;
@@ -229,7 +229,92 @@ img {
     color: #a0aec0 !important;
 }
 
-.cart-footer {
+/*.cart-footer {
     background: #111216 !important;
     border-top: 1px solid #23252f !important;
+}*/
+
+/* ==========================================================================
+   🛡️ BLINDAJE EXCLUSIVO PARA EL OFFCANVAS DEL CARRITO (BLANCO + BOTÓN MORADO)
+   ========================================================================== */
+
+/* 1. Forzar que el fondo del carrito sea blanco puro y no herede oscuros */
+#carritoSidebar,
+.offcanvas,
+.custom-cart-canvas {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border-left: 1px solid #dee2e6 !important;
+}
+
+/* 2. Forzar títulos y encabezado a color oscuro */
+#carritoSidebar .offcanvas-header,
+#carritoSidebar .offcanvas-title,
+#carritoSidebar .offcanvas-header *, 
+#carritoSidebar h5 {
+    color: #212529 !important;
+}
+
+/* 3. Romper el bug de text-dark global: Forzar textos internos a gris oscuro/negro */
+#carritoSidebar .offcanvas-body,
+#carritoSidebar .nombre-item-cart,
+#carritoSidebar .info-precio-cart,
+#carritoSidebar .subtotal-item-cart,
+#carritoSidebar .text-dark,
+#carritoSidebar p,
+#carritoSidebar span,
+#carritoSidebar div:not(.cart-footer) {
+    color: #212529 !important;
+}
+
+/* 4. Subtotal y textos secundarios legibles */
+#carritoSidebar .text-muted {
+    color: #6c757d !important;
+}
+
+/* 5. Asegurar el contenedor del footer del carrito (Monto total y botón) */
+#carritoSidebar .cart-footer {
+    background-color: #f8f9fa !important;
+    border-top: 1px solid #dee2e6 !important;
+    color: #212529 !important;
+}
+
+#carritoSidebar .cart-footer *,
+#carritoSidebar #cart-monto-total {
+    color: #212529 !important;
+}
+
+/* 6. REDISEÑO DEL BOTÓN DE PAGO A MORADO PREMIUM (Igual al Index) */
+#carritoSidebar #btnProcesarPago,
+#carritoSidebar .cart-footer .btn-primary,
+#btnProcesarPago {
+    background-color: #8b5cf6 !important; /* Tu morado neón */
+    border-color: #8b5cf6 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    padding: 12px !important;
+    border-radius: 12px !important;
+    opacity: 1 !important;
+    transition: all 0.25s ease !important;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Efecto Hover del botón morado */
+#carritoSidebar #btnProcesarPago:hover:not(:disabled),
+#btnProcesarPago:hover:not(:disabled) {
+    background-color: #7c4dff !important;
+    border-color: #7c4dff !important;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.5) !important;
+    transform: translateY(-1px);
+}
+
+/* Estado deshabilitado si el carrito está vacío */
+#carritoSidebar #btnProcesarPago:disabled,
+#btnProcesarPago:disabled {
+    background-color: #e2e8f0 !important;
+    border-color: #cbd5e1 !important;
+    color: #94a3b8 !important;
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
 }

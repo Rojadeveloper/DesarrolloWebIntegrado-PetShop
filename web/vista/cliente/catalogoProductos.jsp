@@ -209,7 +209,7 @@
 
         </div>
     </div>
-s     
+     
     <jsp:include page="/vista/Extra/Footer.jsp" />
     <script src="${pageContext.request.contextPath}/Js/carrito-global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
