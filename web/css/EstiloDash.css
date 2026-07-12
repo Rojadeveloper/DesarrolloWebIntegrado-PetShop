@@ -1,6 +1,6 @@
 /* ==========================================================================
    CSS UNIFICADO CYBERPUNK - PETSHOP DASHBOARD (100% SINCRO CON CARRITO)
-   Author     : RonaldoYn
+   Author     : RonaldoYn & UI Refinement
    ========================================================================== */
 
 html, body {
@@ -8,7 +8,7 @@ html, body {
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     min-height: 100vh;
-    background-color: #0d0e12 !important; /* Negro mate profundo de tu carrito */
+    background-color: #0d0e12 !important; /* Negro mate profundo */
     color: #e2e8f0 !important;
     
     /* Imagen de iStock integrada */
@@ -56,7 +56,20 @@ html, body {
     box-shadow: 0 0 8px rgba(139, 92, 246, 0.4) !important;
 }
 
-/* Botones Principales */
+/* Etiquetas del formulario fijadas en Blanco por defecto */
+.mb-3 .form-label {
+    color: #ffffff !important;
+    transition: color 0.2s ease;
+}
+
+/* Cambian a morado brillante al hacer foco en el input */
+.mb-3:focus-within .form-label {
+    color: #c084fc !important;
+}
+
+/* ==========================================================================
+   BOTONES DEL SISTEMA Y ESTADOS DESHABILITADOS
+   ========================================================================== */
 .btn-buscar {
     background: #1e2029 !important;
     border: 1px solid #8b5cf6 !important;
@@ -70,25 +83,30 @@ html, body {
 }
 
 .btn-agregar-dash {
-    background-color: #8b5cf6 !important; /* Morado Eléctrico */
+    background-color: #8b5cf6 !important; 
     border: 1px solid #7c3aed !important;
     color: #ffffff !important;
     font-weight: bold;
     border-radius: 8px;
     transition: all 0.2s ease;
 }
-.btn-agregar-dash:hover {
+.btn-agregar-dash:hover:not(:disabled) {
     background-color: #a855f7 !important;
     box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
     transform: translateY(-2px);
 }
 
 .btn-modificar-dash {
-    background-color: #ffc107 !important; /* Amarillo Bootstrap para cambios */
+    background-color: #ffc107 !important; 
     border: none;
     color: #111216 !important;
     font-weight: bold;
     border-radius: 8px;
+    transition: all 0.2s ease;
+}
+.btn-modificar-dash:hover:not(:disabled) {
+    background-color: #e0a800 !important;
+    transform: translateY(-2px);
 }
 
 .btn-cancelar-dash {
@@ -98,8 +116,16 @@ html, body {
     border-radius: 8px;
 }
 
+/* Bloqueo estético para botones inactivos controlados por el JSP */
+.btn-agregar-dash:disabled, .btn-modificar-dash:disabled {
+    opacity: 0.35 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
 /* ==========================================================================
-   TABLA DE INVENTARIO (Estructura Limpia Dark)
+   TABLA DE INVENTARIO CON SCROLL INTERNO (LAYOUT SPLIT)
    ========================================================================== */
 .table-responsive-custom {
     background-color: #16171d !important;
@@ -108,23 +134,43 @@ html, body {
     overflow: hidden;
 }
 
+.table-responsive-custom-scroll {
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+/* Personalización del scroll minimalista estilo Cyberpunk */
+.table-responsive-custom-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.table-responsive-custom-scroll::-webkit-scrollbar-track {
+    background: #16171d;
+}
+.table-responsive-custom-scroll::-webkit-scrollbar-thumb {
+    background: #8b5cf6; 
+    border-radius: 4px;
+}
+
 .table {
     background-color: #16171d !important;
     margin: 0 !important;
 }
 
-/* Cabecera de la tabla (Gris intermedio como bloque interno del carrito) */
+/* Cabecera Fija */
 .thead-custom th {
+    position: sticky !important;
+    top: 0;
+    z-index: 5;
     background-color: #1e2029 !important;
-    color: #b55fe6 !important; /* Texto morado */
+    color: #b55fe6 !important; 
     font-weight: 700 !important;
-    border-bottom: 2px solid #23252f !important;
+    box-shadow: inset 0 -2px 0 #23252f !important;
     text-transform: uppercase;
     font-size: 13px;
     padding: 14px !important;
 }
 
-/* Filas y columnas */
 .table tbody tr { background-color: #16171d !important; }
 .table tbody tr:hover { background-color: #1e2029 !important; }
 
@@ -135,19 +181,18 @@ html, body {
     color: #ffffff !important;
 }
 
-/* Clases específicas de datos reemplazando los errores de Bootstrap */
 .td-nombre {
     font-weight: 600 !important;
     color: #ffffff !important;
 }
 
 .td-descripcion {
-    color: #cbd5e1 !important; /* Gris platino de alta lectura */
+    color: #cbd5e1 !important; 
     font-size: 13px;
 }
 
 .td-precio {
-    color: #c084fc !important; /* Morado brillante del total general de tu carrito */
+    color: #c084fc !important; 
     font-weight: 700 !important;
     font-size: 15px;
 }
@@ -163,23 +208,43 @@ html, body {
     font-weight: 700 !important;
 }
 .stock-ok {
-    background-color: rgba(139, 92, 246, 0.15) !important; /* Morado translúcido */
+    background-color: rgba(139, 92, 246, 0.15) !important; 
     color: #d8b4fe !important;
     border: 1px solid rgba(168, 85, 247, 0.3) !important;
 }
 .stock-low {
-    background-color: rgba(239, 68, 68, 0.15) !important; /* Alerta rojo translúcido */
+    background-color: rgba(239, 68, 68, 0.15) !important; 
     color: #f87171 !important;
     border: 1px solid rgba(239, 68, 68, 0.3) !important;
 }
 
-/* Imágenes dentro de la tabla */
+/* Insignia Dinámica para Productos Nuevos */
+.bg-purple-neon {
+    background-color: #8b5cf6 !important;
+    color: #ffffff !important;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+@keyframes pulse-animation {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+.animate-pulse {
+    animation: pulse-animation 1.5s infinite ease-in-out;
+}
+
+/* Componentes Multimedia */
 .img-tabla-dash {
     width: 65px;
     height: 65px;
     object-fit: contain;
     background-color: #111216 !important;
-    border: 1px solid #8b5cf6 !important; /* Borde morado estilo carrito */
+    border: 1px solid #8b5cf6 !important; 
     border-radius: 8px;
     padding: 4px;
 }
@@ -190,7 +255,6 @@ html, body {
     border-radius: 8px;
 }
 
-/* Botones de acción pequeños dentro de la tabla */
 .btn-tabla-editar {
     background-color: #ffc107 !important;
     color: #111216 !important;
@@ -210,29 +274,33 @@ html, body {
     padding: 5px 0;
 }
 
-/* Alertas del Sistema */
+/* ==========================================================================
+   NUEVAS ALERTAS Y DISEÑO DE MODAL PREMIUM (TIPO CARRITO)
+   ========================================================================== */
 .alert-danger-custom {
-    background-color: rgba(239, 68, 68, 0.15) !important;
+    background-color: rgba(239, 68, 68, 0.1) !important;
     color: #f87171 !important;
-    border: 1px solid #ef4444 !important;
-    border-radius: 10px;
-    padding: 12px;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    border-radius: 12px;
+    padding: 14px;
+    font-weight: 600;
 }
 .alert-success-custom {
-    background-color: rgba(168, 85, 247, 0.15) !important;
-    color: #d8b4fe !important;
-    border: 1px solid #8b5cf6 !important;
-    border-radius: 10px;
-    padding: 12px;
+    background-color: rgba(139, 92, 246, 0.1) !important;
+    color: #c084fc !important;
+    border: 1px solid rgba(139, 92, 246, 0.4) !important;
+    border-radius: 12px;
+    padding: 14px;
+    font-weight: 600;
 }
 
-/* Blancas por defecto */
-.mb-3 .form-label {
-    color: #ffffff !important;
-    transition: color 0.2s ease;
+/* Estilización del Modal de Confirmación Dark */
+.modal-cyber {
+    background-color: #16171d !important;
+    border: 2px solid #8b5cf6 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.3) !important;
 }
-
-/* Cambian a morado cuando haces clic en el cuadro de abajo */
-.mb-3:focus-within .form-label {
-    color: #c084fc !important; /* Morado brillante */
+.modal-backdrop-custom {
+    background-color: rgba(13, 14, 18, 0.8) !important;
 }

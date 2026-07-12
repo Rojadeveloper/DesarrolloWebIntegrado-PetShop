@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <%
-    // 🛡️ Limpieza estricta de caché a nivel de servidor
+    // Limpieza estricta de caché a nivel de servidor
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
     response.setHeader("Pragma", "no-cache"); 
     response.setDateHeader("Expires", 0); 
@@ -27,11 +27,11 @@
 
 <body>
 
-    <%-- 🧩 Inclusión de Componentes Comunes --%>
+    <%-- Inclusión de Componentes Comunes --%>
     <jsp:include page="vista/Extra/Navbar.jsp" />
     <jsp:include page="vista/Extra/carrito-sidebar.jsp" />
 
-    <%-- 🎡 Carrusel Informativo --%>
+    <%-- Carrusel Informativo --%>
     <div id="petCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="8000">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#petCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -72,13 +72,12 @@
         </div>
     </div>
 
-    <%-- 🛍️ Catálogo Dinámico de Productos --%>
+    <%-- sCatálogo Dinámico de Productos --%>
     <section id="productos" class="productos">
         <h2 class="text-center fw-bold my-4 text-dark">Productos Destacados</h2>
 
         <div class="container py-2">
             <div class="row g-4 justify-content-center">
-                
                 <c:choose>
                     <c:when test="${not empty productosBD}">
                         <c:forEach var="prod" items="${productosBD}">
@@ -153,7 +152,7 @@
         </div>
     </section>
           
-    <%-- 🧩 Inclusión de Pie de Página --%>
+    <%-- Inclusión de Pie de Página --%>
     <jsp:include page="vista/Extra/Footer.jsp" />
     
     <%-- ⚡ Scripts de Funcionalidad Global --%>
