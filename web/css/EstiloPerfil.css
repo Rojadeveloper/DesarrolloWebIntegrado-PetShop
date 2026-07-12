@@ -1,65 +1,214 @@
 /* ==========================================================================
-   👤 VISTA EXCLUSIVA DE USUARIO: EstiloPerfil.css
+   👤 VISTA EXCLUSIVA DE USUARIO: EstiloPerfil.css (Cyberpunk Dark Mode)
+   Author     : RonaldoYN & UI Refinement
    ========================================================================== */
 
-body {
+body.body-cyber-perfil {
+    background-color: #0d0e12 !important; /* Negro mate profundo unificado */
+    color: #e2e8f0 !important;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+    /* Mantenemos tu fondo de huellas en opacidad Cyberpunk */
     background-image: url('https://img.freepik.com/vector-gratis/patron-elementos-mascotas-dibujados-mano_23-2148956971.jpg');
     background-size: auto; 
     background-attachment: fixed;
     background-position: center;
-    min-height: 100vh;
-    margin: 0;
-    font-family: Arial, sans-serif;
 }
 
-/* Capa que suaviza el fondo brillante para que los textos sean legibles */
+/* Capa oscura translúcida que unifica la barra superior con el fondo general */
 .overlay-bg {
-    background-color: rgba(248, 249, 250, 0.85) !important;
+    background-color: rgba(13, 14, 18, 0.8) !important;
     width: 100%;
     min-height: 100vh;
 }
 
 /* Tarjeta contenedora del Perfil */
 .card-perfil {
-    border-radius: 20px !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08) !important;
+    background-color: #16171d !important; 
+    border: 1px solid #23252f !important; 
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
     overflow: hidden;
-    background-color: #ffffff;
 }
 
-/* Encabezado Premium Oscuro */
+/* Encabezado Premium Dark con Morado Eléctrico */
 .header-perfil {
-    background: linear-gradient(135deg, #212529 0%, #2c3034 100%) !important;
-    color: white;
+    background: #1e2029 !important;
+    border-bottom: 2px solid #8b5cf6 !important; /* Ribete de neón morado */
     position: relative;
-    padding: 2rem 1rem;
+    padding: 2.5rem 1rem !important;
 }
 
-/* Huella gigante decorativa en FontAwesome */
-.header-perfil::before {
-    content: "\f1b0";
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    position: absolute;
-    right: 25px;
-    bottom: 10px;
-    font-size: 5.5rem;
-    color: rgba(255, 255, 255, 0.04);
-    pointer-events: none;
+.titulo-cyber-header {
+    color: #b55fe6 !important;
+    text-shadow: 0 0 10px rgba(181, 95, 230, 0.3);
 }
 
-/* Diseño estilizado para los inputs del formulario */
-.input-group-text { 
-    border-right: none !important; 
-    background-color: #f8f9fa !important;
-    color: #6c757d;
+.header-paw-icon {
+    color: #b55fe6 !important;
 }
 
-.form-control { 
-    border-left: none !important; 
+/* Cuerpo interno de la tarjeta */
+.card-body-cyber {
+    background-color: #16171d !important;
 }
 
-.form-control:focus { 
-    box-shadow: none !important; 
-    border-color: #dee2e6 !important; 
+/* Contenedores estructurales para las entradas (Inputs) */
+.input-group-cyber {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    background-color: #111216 !important;
+    border: 1px solid #2d313f !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-group-cyber:focus-within {
+    border-color: #8b5cf6 !important;
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.4) !important;
+}
+
+/* Íconos internos de los inputs */
+.input-icon-span {
+    background-color: #1e2029 !important;
+    color: #cbd5e1 !important;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    border-right: 1px solid #2d313f !important;
+}
+
+/* Cajas de texto incrustadas nativas */
+.input-group-cyber .form-control {
+    background-color: transparent !important;
+    border: none !important;
+    color: #ffffff !important;
+    padding: 10px 12px;
+    box-shadow: none !important;
+}
+
+/* Estado bloqueado para el Correo (Readonly) */
+.input-disabled-group {
+    background-color: #0d0e12 !important;
+    opacity: 0.6;
+}
+.control-disabled {
+    color: #a0aec0 !important;
+}
+
+/* Botón interactivo para ver/ocultar contraseña */
+.btn-toggle-eye {
+    background-color: transparent;
+    border: none;
+    color: #cbd5e1;
+    padding: 0 14px;
+    transition: color 0.2s;
+}
+.btn-toggle-eye:hover {
+    color: #b55fe6;
+}
+
+/* ==========================================================================
+   BOTONES E INTERACCIONES DEL PERFIL
+   ========================================================================== */
+.btn-warning-cyber {
+    background-color: #ffc107 !important;
+    border: none !important;
+    color: #111216 !important;
+    border-radius: 8px !important;
+    padding: 10px 0;
+    transition: all 0.2s ease;
+}
+.btn-warning-cyber:hover {
+    background-color: #e0a800 !important;
+    transform: translateY(-1px);
+}
+
+.btn-cancelar-dash {
+    background-color: #334155 !important;
+    border: none !important;
+    color: white !important;
+    border-radius: 8px !important;
+    padding: 10px 0;
+    transition: background 0.2s;
+}
+.btn-cancelar-dash:hover {
+    background-color: #1e293b !important;
+    color: white !important;
+}
+
+/* ==========================================================================
+   ALERTAS Y MODAL (TIPO DASHBOARD/CARRITO)
+   ========================================================================== */
+.alert-success-custom {
+    background-color: rgba(139, 92, 246, 0.15) !important;
+    color: #d8b4fe !important;
+    border: 1px solid rgba(168, 85, 247, 0.4) !important;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.alert-danger-custom {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+    color: #f87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.bg-purple-neon {
+    background-color: #8b5cf6 !important;
+    color: #ffffff !important;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.modal-cyber {
+    background-color: #16171d !important;
+    border: 2px solid #8b5cf6 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Color Verde Neón personalizado para el icono del Modal */
+.modal-cyber .text-success {
+    color: #10b981 !important; /* Verde esmeralda vibrante */
+    filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.4));
+}
+
+@keyframes pulse-animation {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+.animate-pulse {
+    animation: pulse-animation 1.5s infinite ease-in-out;
+}
+
+/* ==========================================================================
+   🚨 CORRECCIÓN ANTISOLAPAMIENTO Y NAVBAR FIJO
+   ========================================================================== */
+
+/* Forzar que el navbar en la vista de perfil sea oscuro y visible */
+.navbar, 
+nav {
+    background-color: #16171d !important;
+    border-bottom: 1px solid #23252f !important;
+    backdrop-filter: none !important; /* Elimina cualquier efecto translúcido residual */
+    z-index: 1050 !important; /* Asegura que quede por encima de todo */
+}
+
+/* Ajuste del cuerpo y contenedor para que no se metan debajo del Navbar */
+body.body-cyber-perfil {
+    padding-top: 20px !important; /* Espaciado de seguridad */
+}
+
+.overlay-bg {
+    background-color: rgba(13, 14, 18, 0.85) !important;
+    width: 100%;
+    min-height: calc(100vh - 85px); /* Resta la altura promedio del Navbar */
 }
