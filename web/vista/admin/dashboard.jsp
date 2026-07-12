@@ -13,7 +13,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
-    // 🛡️ LÓGICA DE NEGOCIO PROCESADA EN EL SERVIDOR Y PREPARADA PARA JSTL
+    // LÓGICA DE NEGOCIO PROCESADA EN EL SERVIDOR Y PREPARADA PARA JSTL
     try {
         ProductoServicio servicio = new ProductoServicio();
         String buscar = request.getParameter("buscar");
@@ -165,16 +165,17 @@
                 <%-- Contenedor con scroll interno para la tabla --%>
                 <div class="table-responsive table-responsive-custom-scroll" style="max-height: 550px; overflow-y: auto;">
                     <table class="table table-hover text-center align-middle m-0">
-                        <thead class="thead-custom" style="position: sticky; top: 0; z-index: 5;">
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Categoría</th>
-                                <th>Imagen</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
+<thead class="thead-custom">
+    <tr>
+        <th onclick="ordenarTabla(0)" style="cursor: pointer; user-select: none;">Nombre</th>
+        <th onclick="ordenarTabla(1)" style="cursor: pointer; user-select: none;">Precio</th>
+        <th onclick="ordenarTabla(2)" style="cursor: pointer; user-select: none;">Stock</th>
+        <th onclick="ordenarTabla(3)" style="cursor: pointer; user-select: none;">Categoría</th>
+        
+        <th>Imagen</th>
+        <th>Acciones</th>
+    </tr>
+</thead>
                         <tbody>
                             <c:forEach var="p" items="${requestScope.listaProductos}" varStatus="status">
                                 <tr>
@@ -215,29 +216,23 @@
     </div>
 </div>
                 <div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content modal-cyber p-3">
-<div class="modal-body text-center">
-    <h4 class="text-white mb-3 fw-bold">🚨 ¿Confirmar Eliminación?</h4>
-    
-    <p class="text-white-50 small">Esta acción quitará de forma permanente el producto de tu inventario general.</p>
-    
-    <div class="d-flex justify-content-center gap-3 mt-4">
-        <button type="button" class="btn btn-cancelar-dash px-4" data-bs-dismiss="modal">Cancelar</button>
-        <a id="btnConfirmarEliminarUrl" href="#" class="btn btn-tabla-eliminar px-4 d-flex align-items-center justify-content-center">Eliminar</a>
-    </div>
-</div>
-    </div>
-  </div>
-</div>
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content modal-cyber p-3">
+                            <div class="modal-body text-center">
+                                <h4 class="text-white mb-3 fw-bold">🚨 ¿Confirmar Eliminación?</h4>
 
-<script>
-  function abrirModalEliminar(url) {
-      document.getElementById('btnConfirmarEliminarUrl').setAttribute('href', url);
-      var myModal = new bootstrap.Modal(document.getElementById('modalConfirmarEliminar'));
-      myModal.show();
-  }
-</script>
+                                <p class="text-white-50 small">Esta acción quitará de forma permanente el producto de tu inventario general.</p>
+
+                                <div class="d-flex justify-content-center gap-3 mt-4">
+                                    <button type="button" class="btn btn-cancelar-dash px-4" data-bs-dismiss="modal">Cancelar</button>
+                                    <a id="btnConfirmarEliminarUrl" href="#" class="btn btn-tabla-eliminar px-4 d-flex align-items-center justify-content-center">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<script src="${pageContext.request.contextPath}/Js/dashboard.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
