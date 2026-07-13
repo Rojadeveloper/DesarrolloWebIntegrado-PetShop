@@ -37,7 +37,7 @@
     </form>  
     
     <div class="switch-link">
-        ¿Nuevo por aquí? <a href="<%= request.getContextPath() %>/vista/usuario/registro.jsp">Regístrate aquí</a>
+        ¿Nuevo por aquí? <a href="<%= request.getContextPath() %>/registro">Regístrate aquí</a>
     </div>
 </div>
 

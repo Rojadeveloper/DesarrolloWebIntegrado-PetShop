@@ -24,17 +24,16 @@ public class RegistroServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Reenvío al archivo JSP físico de manera interna
         request.getRequestDispatcher("/vista/usuario/registro.jsp").forward(request, response);
     }
 
     // 📤 PROCESA LA CREACIÓN DE LA CUENTA
     @Override
-    protected void doPost(HttpServletRequest request,
-            HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         RegistroDTO dto = new RegistroDTO();
-
         dto.setNombre(request.getParameter("nombre"));
         dto.setApellido(request.getParameter("apellido"));
         dto.setCorreo(request.getParameter("correo"));
@@ -45,11 +44,10 @@ public class RegistroServlet extends HttpServlet {
         boolean registrado = usuarioServicio.registrarUsuario(dto);
 
         if (registrado) {
-            // Si el registro funciona, lo mandamos al servlet /login
-            response.sendRedirect(request.getContextPath() + "/login");
+            // Redirige al LOGIN mandando el parámetro "registroExitoso=true"
+            response.sendRedirect(request.getContextPath() + "/login?registroExitoso=true");
         } else {
-            // Si el correo ya existe, volvemos a cargar con el mensaje de error
-            request.setAttribute("error", "El correo ya está registrado");
+            request.setAttribute("error", "El correo ingresado ya se encuentra registrado.");
             request.getRequestDispatcher("/vista/usuario/registro.jsp").forward(request, response);
         }
     }

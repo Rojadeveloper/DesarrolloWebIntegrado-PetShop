@@ -46,7 +46,7 @@
                     <span class="badge-premium">🐾 Especial Canino</span>
                     <h2>¡Todo para tu Mejor Amigo!</h2>
                     <p>Descubre alimentos premium, juguetes interactivos y accesorios con 20% de descuento directo.</p>
-                    <a href="#productos" class="btn-carousel">Ver Catálogo</a>
+                    <a href="${pageContext.request.contextPath}/catalogo" class="btn-carousel">Ver Catálogo</a>
                 </div>
             </div>
 
@@ -56,7 +56,7 @@
                     <span class="badge-premium">🐱 Universo Felino</span>
                     <h2>Confort para tus Michis</h2>
                     <p>Rascadores modernos, arenas ecológicas y snacks deliciosos para mantenerlos saludables.</p>
-                    <a href="#productos" class="btn-carousel">Ver Productos</a>
+                    <a href="${pageContext.request.contextPath}/catalogo" class="btn-carousel">Ver Productos</a>
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
                     <span class="badge-premium">❤️ Cuidado Diario</span>
                     <h2>Salud e Higiene Superior</h2>
                     <p>Vitaminas, shampoos especializados y servicios de grooming con profesionales certificados.</p>
-                    <a href="#productos" class="btn-carousel">Saber Más</a>
+                    <a href="${pageContext.request.contextPath}/catalogo" class="btn-carousel">Saber Más</a>
                 </div>
             </div>
         </div>

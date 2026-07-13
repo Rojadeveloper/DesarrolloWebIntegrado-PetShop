@@ -1,97 +1,114 @@
 /* ==========================================================================
-   COMPONENTE CENTRALIZADO: NAVBAR CYBERPUNK (SINCRO GLOBAL)
-   Author     : RonaldoYN & UI Refinement
-   ========================================================================== 
-*/
+   COMPONENTE CENTRALIZADO: NAVBAR CYBERPUNK
+   ========================================================================== */
 
-.custom-navbar {
-    background-color: #16171d !important; 
-    border-bottom: 1px solid #23252f !important;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3) !important;
+/* Fondo del Navbar principal */
+.style-navbar-custom {
+    background-color: #121214 !important;
+    border-bottom: 2px solid #23252f !important;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.6) !important;
 }
 
-.custom-navbar, 
-.custom-navbar a {
-    font-weight: bold !important; 
-    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4); 
-}
-
-.custom-navbar .nav-link {
-    color: #cbd5e1 !important;
-    transition: color 0.2s ease;
-}
-
-.custom-navbar .nav-link.active, 
-.custom-navbar .nav-link:hover {
-    color: #b55fe6 !important; 
-}
-
-/* --- Buscador Integrado en Navbar --- */
-.custom-navbar .bg-dark-input {
-    background-color: #111216 !important;
-    border: 1px solid #2d313f !important;
+/* Enlaces del menú */
+.style-navbar-custom .nav-link-custom {
     color: #ffffff !important;
-    border-radius: 8px 0 0 8px !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    padding: 8px 16px !important;
+    transition: color 0.25s ease, transform 0.2s ease;
 }
 
-.custom-navbar .bg-dark-input:focus {
-    border-color: #8b5cf6 !important;
-    box-shadow: 0 0 8px rgba(139, 92, 246, 0.4) !important;
-    background-color: #111216 !important;
+.style-navbar-custom .nav-link-custom:hover {
+    color: #b55fe6 !important;
+}
+
+/* --- Buscador Redondeado Premium --- */
+.search-box-custom {
+    display: flex;
+    align-items: center;
+    background-color: #1a1b20 !important;
+    border: 1px solid #3f4456 !important;
+    border-radius: 30px !important; /* Esquinas redondeadas perfectas */
+    padding: 2px 6px 2px 14px;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.search-box-custom:focus-within {
+    border-color: #b55fe6 !important;
+    box-shadow: 0 0 10px rgba(181, 95, 230, 0.4) !important;
+}
+
+.search-box-custom .input-buscar {
+    background: transparent !important;
+    border: none !important;
     color: #ffffff !important;
+    font-size: 0.9rem;
+    outline: none !important;
+    box-shadow: none !important;
+    width: 200px;
 }
 
-.btn-buscar-nav {
-    background-color: #1e2029 !important;
-    border: 1px solid #2d313f !important;
-    border-left: none !important;
-    color: #cbd5e1 !important;
-    border-radius: 0 8px 8px 0 !important;
-    transition: all 0.2s ease;
+.search-box-custom .input-buscar::placeholder {
+    color: #8892b0 !important;
 }
 
-.btn-buscar-nav:hover {
-    background-color: #8b5cf6 !important;
+.search-box-custom .btn-buscar-lupa {
+    background: transparent !important;
+    border: none !important;
+    color: #b55fe6 !important;
+    font-size: 1rem;
+    padding: 6px 10px !important;
+    cursor: pointer;
+}
+
+/* --- Botones de Acción --- */
+.btn-login-custom {
+    background-color: transparent !important;
+    border: 2px solid #b55fe6 !important;
     color: #ffffff !important;
+    font-weight: 700 !important;
+    border-radius: 30px !important;
+    padding: 7px 18px !important;
+    transition: all 0.25s ease;
 }
 
-/* --- Botón de Perfil / Sesión --- */
-.btn-perfil-nav {
-    background-color: #1e2029 !important;
-    border: 1px solid #8b5cf6 !important;
-    border-radius: 8px !important;
+.btn-login-custom:hover {
+    background-color: #b55fe6 !important;
+    box-shadow: 0 0 12px rgba(181, 95, 230, 0.5) !important;
+}
+
+.btn-registro-custom {
+    background-color: #b55fe6 !important;
+    border: 2px solid #b55fe6 !important;
     color: #ffffff !important;
-    transition: all 0.2s ease;
+    font-weight: 700 !important;
+    border-radius: 30px !important;
+    padding: 7px 18px !important;
+    transition: all 0.25s ease;
 }
 
-.btn-perfil-nav:hover, 
-.btn-perfil-nav:focus, 
-.show > .btn-perfil-nav {
-    background-color: #8b5cf6 !important;
+.btn-registro-custom:hover {
+    background-color: #9b46cb !important;
+    border-color: #9b46cb !important;
+    box-shadow: 0 0 15px rgba(181, 95, 230, 0.6) !important;
+}
+
+.btn-carrito-custom {
+    background-color: #1a1b20 !important;
+    border: 2px solid #3f4456 !important;
     color: #ffffff !important;
-    box-shadow: 0 0 12px rgba(139, 92, 246, 0.5) !important;
+    font-weight: 700 !important;
+    border-radius: 30px !important;
+    padding: 7px 18px !important;
+    transition: all 0.25s ease;
 }
 
-/* --- Menú Desplegable (Dropdown) --- */
-.dropdown-cyber-menu {
-    background-color: #16171d !important;
-    border: 1px solid #23252f !important;
-    border-top: 2px solid #8b5cf6 !important;
-    border-radius: 8px !important;
-    padding: 6px !important;
+.btn-carrito-custom:hover {
+    border-color: #b55fe6 !important;
+    box-shadow: 0 0 12px rgba(181, 95, 230, 0.3) !important;
 }
 
-.dropdown-cyber-menu .dropdown-item {
-    color: #cbd5e1 !important;
-    border-radius: 6px !important;
-    transition: all 0.15s ease;
-}
-
-.dropdown-cyber-menu .dropdown-item:hover {
-    background-color: #8b5cf6 !important;
+.badge-custom {
+    background-color: #ef4444 !important;
     color: #ffffff !important;
-}
-
-.border-secondary-custom {
-    border-color: #2d313f !important;
 }
