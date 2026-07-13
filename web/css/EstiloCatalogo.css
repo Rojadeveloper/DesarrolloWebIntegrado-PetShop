@@ -318,3 +318,149 @@ img {
     cursor: not-allowed !important;
     box-shadow: none !important;
 }
+
+/* ==========================================================================
+   🛍️ CONFIGURACIÓN REDUCIDA - HERO SLIDER CATÁLOGO (CORREGIDO Y ESTILIZADO)
+   ========================================================================== */
+
+.container-hero-slider {
+    background-color: #fbf1e8 !important; 
+    border-radius: 24px !important; /* Bordes alineados con las tarjetas de catálogo */
+    min-height: 360px;
+    height: 380px; 
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    
+    /* 🛠️ SOLUCIÓN A MÁRGENES Y ANCHO: Separación lateral y vertical automática */
+    margin: 25px auto !important; 
+    width: calc(100% - 30px) !important; /* Evita que choque al borde en pantallas chicas */
+    max-width: 1200px; /* Mantiene una proporción estética en pantallas muy grandes */
+}
+
+.fw-black {
+    font-weight: 800 !important;
+}
+
+.text-dark-custom {
+    color: #1e1b18 !important; 
+}
+
+.text-muted-custom {
+    color: #6a645e !important;
+    line-height: 1.5;
+}
+
+.text-gradient-purple {
+    color: #8b5cf6 !important; /* Alineado a tu morado neón */
+}
+
+/* Insignia superior compacta */
+.badge-subtitulo {
+    background-color: #ffffff !important;
+    color: #1e1b18 !important;
+    padding: 6px 14px !important;
+    border-radius: 30px !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+}
+
+/* Botón Naranja Compacto */
+.btn-hero-orange {
+    background-color: #ff5e3a !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    padding: 10px 22px !important;
+    border-radius: 50px !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 12px rgba(255, 94, 58, 0.25) !important;
+}
+
+.btn-hero-orange:hover {
+    background-color: #e04f2e !important;
+    transform: translateY(-1px);
+}
+
+/* 🎯 IMÁGENES Y MINIATURAS REDUCIDAS */
+.img-mascota-hero {
+    max-height: 310px !important; 
+    object-fit: contain;
+    z-index: 3;
+    animation: flotarMascotaBreve 4s ease-in-out infinite;
+}
+
+/* Círculos decorativos de fondo achicados */
+.blob-decorativo {
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    background-color: #f7dfcb; 
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.blob-crema-oscuro {
+    background-color: #eed6c0;
+}
+
+/* Panel de Miniaturas del Costado Reducido */
+.hero-lateral-thumbnails {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 8px;
+    padding-right: 12px;
+    z-index: 10;
+}
+
+.thumb-btn {
+    background-color: #ffffff;
+    width: 65px;
+    height: 65px;
+    border-radius: 20px 0 0 20px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(10px);
+    border: 2px solid transparent;
+}
+
+.thumb-circle {
+    background-color: #f7dfcb;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.thumb-circle img {
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+}
+
+.thumb-btn.active, .thumb-btn:hover {
+    transform: translateX(0px);
+    background-color: #ffffff;
+    box-shadow: -4px 4px 12px rgba(0, 0, 0, 0.06);
+    border: 2px solid #ff5e3a !important; /* Borde naranja activo */
+}
+
+@keyframes flotarMascotaBreve {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}

@@ -71,7 +71,7 @@
             </div>
         </div>
     </div>
-
+   
     <%-- sCatálogo Dinámico de Productos --%>
     <section id="productos" class="productos">
         <h2 class="text-center fw-bold my-4 text-dark">Productos Destacados</h2>
@@ -156,7 +156,7 @@
     <jsp:include page="vista/Extra/Footer.jsp" />
     
     <%-- ⚡ Scripts de Funcionalidad Global --%>
-    <script src="${pageContext.request.contextPath}/Js/carrito-global.js"></script>
+    <script src="${pageContext.request.contextPath}/Js/carrito-global.js"></script>    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

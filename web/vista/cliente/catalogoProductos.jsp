@@ -48,6 +48,96 @@
 <jsp:include page="/vista/Extra/Navbar.jsp" />
 <jsp:include page="/vista/Extra/carrito-sidebar.jsp" />
 
+<div id="heroPetCarousel" class="carousel slide carousel-fade my-4" data-bs-ride="carousel" data-bs-interval="8000">
+    
+    <div class="carousel-inner container-hero-slider">
+        
+        <div class="carousel-item active">
+            <div class="row align-items-center h-100 px-4 px-md-5">
+                <div class="col-lg-6 order-2 order-lg-1 txt-hero-side">
+                    <span class="badge badge-subtitulo mb-2">Nutrición Felina Especializada</span>
+                    <h1 class="display-5 fw-black text-dark-custom mb-2">Alimentos Premium <br>para tu <span class="text-gradient-purple">Gato</span></h1>
+                    <p class="text-muted-custom mb-3 fs-6">Dale a tu felino la vitalidad que necesita con croquetas y recetas húmedas balanceadas de alta gama.</p>
+                    <a href="#productos-seccion" class="btn btn-hero-orange btn-sm-custom">Ver Nutrición Felina</a>
+                </div>
+                <div class="col-lg-5 order-1 order-lg-2 position-relative d-flex justify-content-center align-items-center img-hero-side">
+                    <div class="blob-decorativo"></div>
+                    <img src="${pageContext.request.contextPath}/imagen/mascota1.png" class="img-fluid img-mascota-hero" alt="Alimento para Gato">
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="row align-items-center h-100 px-4 px-md-5">
+                <div class="col-lg-6 order-2 order-lg-1 txt-hero-side">
+                    <span class="badge badge-subtitulo mb-2">Energía y Desarrollo Canino</span>
+                    <h1 class="display-5 fw-black text-dark-custom mb-2">Máxima Nutrición <br>para tu <span class="text-gradient-purple">Perro</span></h1>
+                    <p class="text-muted-custom mb-3 fs-6">Fórmulas científicamente desarrolladas para proteger sus articulaciones, pelaje y sistema inmune.</p>
+                    <a href="#productos-seccion" class="btn btn-hero-orange btn-sm-custom">Ver Alimentos de Perro</a>
+                </div>
+                <div class="col-lg-5 order-1 order-lg-2 position-relative d-flex justify-content-center align-items-center img-hero-side">
+                    <div class="blob-decorativo blob-crema-oscuro"></div>
+                    <img src="${pageContext.request.contextPath}/imagen/mascota2.png" class="img-fluid img-mascota-hero" alt="Alimento para Perro">
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="row align-items-center h-100 px-4 px-md-5">
+                <div class="col-lg-6 order-2 order-lg-1 txt-hero-side">
+                    <span class="badge badge-subtitulo mb-2">Entretenimiento e Instinto Felino</span>
+                    <h1 class="display-5 fw-black text-dark-custom mb-2">Juguetes Activos <br>para tu <span class="text-gradient-purple">Gato</span></h1>
+                    <p class="text-muted-custom mb-3 fs-6">Rascadores, ratones interactivos y circuitos diseñados para estimular el juego en casa.</p>
+                    <a href="#productos-seccion" class="btn btn-hero-orange btn-sm-custom">Ver Juguetes de Gato</a>
+                </div>
+                <div class="col-lg-5 order-1 order-lg-2 position-relative d-flex justify-content-center align-items-center img-hero-side">
+                    <div class="blob-decorativo"></div>
+                    <img src="${pageContext.request.contextPath}/imagen/mascota3.png" class="img-fluid img-mascota-hero" alt="Juguetes para Gato">
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="row align-items-center h-100 px-4 px-md-5">
+                <div class="col-lg-6 order-2 order-lg-1 txt-hero-side">
+                    <span class="badge badge-subtitulo mb-2">Diversión y Resistencia Canina</span>
+                    <h1 class="display-5 fw-black text-dark-custom mb-2">Juguetes de Acción <br>para tu <span class="text-gradient-purple">Perro</span></h1>
+                    <p class="text-muted-custom mb-3 fs-6">Mordedores ultra resistentes, pelotas con rebote y cuerdas ideales para reducir la ansiedad.</p>
+                    <a href="#productos-seccion" class="btn btn-hero-orange btn-sm-custom">Ver Juguetes de Perro</a>
+                </div>
+                <div class="col-lg-5 order-1 order-lg-2 position-relative d-flex justify-content-center align-items-center img-hero-side">
+                    <div class="blob-decorativo blob-crema-oscuro"></div>
+                    <img src="${pageContext.request.contextPath}/imagen/mascota4.png" class="img-fluid img-mascota-hero" alt="Juguetes para Perro">
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-lateral-thumbnails d-none d-xl-flex">
+            <div class="thumb-btn active" data-bs-target="#heroPetCarousel" data-bs-slide-to="0">
+                <div class="thumb-circle">
+                    <img src="${pageContext.request.contextPath}/imagen/mascota1_mini.png" alt="Mini Gato Alimento">
+                </div>
+            </div>
+            <div class="thumb-btn" data-bs-target="#heroPetCarousel" data-bs-slide-to="1">
+                <div class="thumb-circle">
+                    <img src="${pageContext.request.contextPath}/imagen/mascota2_mini.png" alt="Mini Perro Alimento">
+                </div>
+            </div>
+            <div class="thumb-btn" data-bs-target="#heroPetCarousel" data-bs-slide-to="2">
+                <div class="thumb-circle">
+                    <img src="${pageContext.request.contextPath}/imagen/mascota3_mini.png" alt="Mini Gato Juguetes">
+                </div>
+            </div>
+            <div class="thumb-btn" data-bs-target="#heroPetCarousel" data-bs-slide-to="3">
+                <div class="thumb-circle">
+                    <img src="${pageContext.request.contextPath}/imagen/mascota4_mini.png" alt="Mini Perro Juguetes">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
     <div class="container my-5">
         
         <div class="seccion-destacados mb-5 shadow-sm p-4 rounded-3">
@@ -212,6 +302,9 @@
      
     <jsp:include page="/vista/Extra/Footer.jsp" />
     <script src="${pageContext.request.contextPath}/Js/carrito-global.js"></script>
+    
+
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
