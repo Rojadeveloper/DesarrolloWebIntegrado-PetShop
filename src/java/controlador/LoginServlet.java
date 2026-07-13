@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
             // 🛡️ CONTROL DE ROLES
             if ("ADMIN".equals(user.getRol())){
                 // Si es ADMIN va directamente a su panel de gestión
-                response.sendRedirect(request.getContextPath() + "/vista/admin/dashboard.jsp");
+                response.sendRedirect(request.getContextPath() + "/dashboard");
             } else if ("CLIENTE".equals(user.getRol())){
                 // Si es CLIENTE va al InicioServlet para procesar la BD
                 response.sendRedirect(request.getContextPath() + "/inicio");

@@ -28,7 +28,7 @@
                 <%-- VISTA EXCLUSIVA PARA ADMIN --%>
                 <c:if test="${not empty sessionScope.usuarioLogueado && sessionScope.usuarioLogueado.rol eq 'ADMIN'}">
                     <li class="nav-item">
-                        <a class="nav-link active fw-bold" style="color: #b55fe6 !important;" href="${pageContext.request.contextPath}/vista/admin/dashboard.jsp">
+                        <a class="nav-link active fw-bold" style="color: #b55fe6 !important;" href="${pageContext.request.contextPath}/dashboard">
                             <i class="fa-solid fa-gauge me-1"></i> Dashboard
                         </a>
                     </li>

@@ -4,37 +4,8 @@
     Author     : User & Refactored by: RonaldoYN
 --%>
 
-<%@page import="java.util.List"%>
-<%@page import="modelo.dto.ProductoDTO"%>
-<%@page import="servicio.ProductoServicio"%>
-<%@page import="modelo.entidad.Categoria"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<%
-    // LÓGICA DE NEGOCIO PROCESADA EN EL SERVIDOR Y PREPARADA PARA JSTL
-    try {
-        ProductoServicio servicio = new ProductoServicio();
-        String buscar = request.getParameter("buscar");
-        List<ProductoDTO> lista;
-        
-        if (buscar != null && !buscar.trim().isEmpty()) {
-            lista = servicio.buscar(buscar);
-        } else {
-            lista = servicio.listar();
-        }
-
-        // Seteamos las variables dentro del Request Scope para habilitar la lectura con JSTL/EL
-        request.setAttribute("listaProductos", lista);
-        request.setAttribute("listaCategorias", servicio.listarCategorias());
-        
-        // El producto en edición y el nombre de sesión ya vienen inyectados o gestionados
-    } catch(Exception e) {
-        System.out.println("Error al inicializar contextos en Dashboard: " + e.getMessage());
-    }
-%>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -53,7 +24,7 @@
 <jsp:include page="/vista/Extra/Navbar.jsp" />
 <jsp:include page="/vista/Extra/carrito-sidebar.jsp" />
 
-<div class="container-fluid px-4 mt-4 mb-5"> <%-- Usamos container-fluid para aprovechar más la pantalla --%>
+<div class="container-fluid px-4 mt-4 mb-5">
 
     <h2 class="text-center mb-4 titulo-dashboard">Sistema de Gestión de Productos</h2>
 
@@ -64,17 +35,21 @@
         </div>
     </c:if>
 
-    <c:if test="${not empty requestScope.mensajeError}">
+    <%-- Soporta tanto mensajes de parámetros como de requests con error --%>
+    <c:if test="${not empty requestScope.mensajeError || not empty param.mensajeError}">
         <div class="alert alert-danger-custom shadow d-flex align-middle gap-2 mb-4">
             <span>⚠️</span> 
-            <div><strong>Error de Sistema:</strong> ${requestScope.mensajeError}</div>
+            <div>
+                <strong>Error de Sistema:</strong> 
+                <c:out value="${not empty requestScope.mensajeError ? requestScope.mensajeError : param.mensajeError}" />
+            </div>
         </div>
     </c:if>
 
     <div class="row g-4">
         
         <div class="col-xl-4 col-lg-5">
-            <div class="card card-dash p-4 sticky-top" style="top: 90px; z-index: 10;"> <%-- sticky-top para que no se mueva al hacer scroll --%>
+            <div class="card card-dash p-4 sticky-top" style="top: 90px; z-index: 10;">
                 <h4 class="mb-3 card-title-custom">
                     <c:choose>
                         <c:when test="${not empty requestScope.productoEditar}">🛠️ Modificar Producto</c:when>
@@ -138,7 +113,8 @@
                     </div>
                     <c:if test="${not empty requestScope.productoEditar}">
                         <div class="mt-2">
-                            <a href="${pageContext.request.contextPath}/vista/admin/dashboard.jsp" class="btn btn-cancelar-dash w-100">Cancelar Edición</a>
+                            <%-- Regresa al servlet controlador para limpiar el estado de edición --%>
+                            <a href="${pageContext.request.contextPath}/dashboard" class="btn btn-cancelar-dash w-100">Cancelar Edición</a>
                         </div>
                     </c:if>
                 </form>
@@ -148,7 +124,8 @@
         <div class="col-xl-8 col-lg-7">
             
             <div class="card card-dash p-3 mb-4">
-                <form method="GET" action="${pageContext.request.contextPath}/vista/admin/dashboard.jsp">
+                <%-- El buscador ahora envía la solicitud al Servlet Controlador del Dashboard --%>
+                <form method="GET" action="${pageContext.request.contextPath}/dashboard">
                     <div class="row g-2">
                         <div class="col-md-9">
                             <input type="text" name="buscar" value="${param.buscar}" class="form-control" placeholder="Buscar producto por nombre...">
@@ -163,20 +140,18 @@
             <div class="card card-dash p-4">
                 <h4 class="mb-3 card-title-custom">Inventario General</h4>
                 
-                <%-- Contenedor con scroll interno para la tabla --%>
                 <div class="table-responsive table-responsive-custom-scroll" style="max-height: 550px; overflow-y: auto;">
                     <table class="table table-hover text-center align-middle m-0">
-<thead class="thead-custom">
-    <tr>
-        <th onclick="ordenarTabla(0)" style="cursor: pointer; user-select: none;">Nombre</th>
-        <th onclick="ordenarTabla(1)" style="cursor: pointer; user-select: none;">Precio</th>
-        <th onclick="ordenarTabla(2)" style="cursor: pointer; user-select: none;">Stock</th>
-        <th onclick="ordenarTabla(3)" style="cursor: pointer; user-select: none;">Categoría</th>
-        
-        <th>Imagen</th>
-        <th>Acciones</th>
-    </tr>
-</thead>
+                        <thead class="thead-custom">
+                            <tr>
+                                <th onclick="ordenarTabla(0)" style="cursor: pointer; user-select: none;">Nombre</th>
+                                <th onclick="ordenarTabla(1)" style="cursor: pointer; user-select: none;">Precio</th>
+                                <th onclick="ordenarTabla(2)" style="cursor: pointer; user-select: none;">Stock</th>
+                                <th onclick="ordenarTabla(3)" style="cursor: pointer; user-select: none;">Categoría</th>
+                                <th>Imagen</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <c:forEach var="p" items="${requestScope.listaProductos}" varStatus="status">
                                 <tr>
@@ -216,25 +191,23 @@
         </div>
     </div>
 </div>
-                <div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content modal-cyber p-3">
-                            <div class="modal-body text-center">
-                                <h4 class="text-white mb-3 fw-bold">🚨 ¿Confirmar Eliminación?</h4>
 
-                                <p class="text-white-50 small">Esta acción quitará de forma permanente el producto de tu inventario general.</p>
-
-                                <div class="d-flex justify-content-center gap-3 mt-4">
-                                    <button type="button" class="btn btn-cancelar-dash px-4" data-bs-dismiss="modal">Cancelar</button>
-                                    <a id="btnConfirmarEliminarUrl" href="#" class="btn btn-tabla-eliminar px-4 d-flex align-items-center justify-content-center">Eliminar</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-cyber p-3">
+            <div class="modal-body text-center">
+                <h4 class="text-white mb-3 fw-bold">🚨 ¿Confirmar Eliminación?</h4>
+                <p class="text-white-50 small">Esta acción quitará de forma permanente el producto de tu inventario general.</p>
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <button type="button" class="btn btn-cancelar-dash px-4" data-bs-dismiss="modal">Cancelar</button>
+                    <a id="btnConfirmarEliminarUrl" href="#" class="btn btn-tabla-eliminar px-4 d-flex align-items-center justify-content-center">Eliminar</a>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="${pageContext.request.contextPath}/Js/dashboard.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
