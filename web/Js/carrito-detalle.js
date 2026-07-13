@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
             
             // SEGURIDAD: Intentamos leer de múltiples formas y si falla, usamos la ruta raíz por defecto
-            const redirectUrl = this.getAttribute("data-redirect") || this.dataset.redirect || "../../index.jsp";
+            const redirectUrl = this.getAttribute("data-redirect") || this.dataset.redirect || "../../inicio";
             
             // Pop-up estético con SweetAlert2
             Swal.fire({
