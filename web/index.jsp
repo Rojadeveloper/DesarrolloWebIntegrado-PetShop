@@ -66,7 +66,7 @@
                     <span class="badge-premium">❤️ Cuidado Diario</span>
                     <h2>Salud e Higiene Superior</h2>
                     <p>Vitaminas, shampoos especializados y servicios de grooming con profesionales certificados.</p>
-                    <a href="${pageContext.request.contextPath}/catalogo" class="btn-carousel">Saber Más</a>
+                    <a href="${pageContext.request.contextPath}/vista/Extra/Nosotros.jsp" class="btn-carousel">Saber Más</a>
                 </div>
             </div>
         </div>
