@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package controlador;
 
 import jakarta.servlet.ServletException;
@@ -132,8 +127,3 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     response.sendRedirect("vista/admin/dashboard.jsp?mensaje=" + mensaje);
 }
 }
-
-
-
-
-

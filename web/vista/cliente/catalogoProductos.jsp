@@ -1,35 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="modelo.entidad.Producto" %> 
-<%@ page import="modelo.entidad.Categoria" %> 
-<%@ page import="modelo.entidad.Usuario" %>
-<%@ page import="modelo.dao.IProductoDAO" %>
-<%@ page import="modelo.dao.impl.ProductoDAOImpl" %>
-<%@ page import="modelo.dao.ICategoriaDAO" %>
-<%@ page import="modelo.dao.impl.CategoriaDAOImpl" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
-<%
-    // 🛡️ Inicialización de capas de datos a nivel de servidor (Request Scope para JSTL)
-    try {
-        IProductoDAO prodDAO = new ProductoDAOImpl();
-        ICategoriaDAO catDAO = new CategoriaDAOImpl();
-
-        int idCatSeleccionada = 0;
-        String paramCat = request.getParameter("idCat");
-        if (paramCat != null && !paramCat.trim().isEmpty()) {
-            idCatSeleccionada = Integer.parseInt(paramCat);
-        }
-        
-        // Guardamos todo de forma explícita para que JSTL Expressions pueda leerlo sin problemas
-        request.setAttribute("idCatSeleccionada", idCatSeleccionada);
-        request.setAttribute("listaCategorias", catDAO.listarCategorias());
-        request.setAttribute("listaDestacados", prodDAO.listarProductosDestacados());
-        request.setAttribute("listaProductos", prodDAO.listarProductosPorCategoria(idCatSeleccionada));
-    } catch(Exception e) {
-        System.out.println("Error procesando datos en el Catálogo: " + e.getMessage());
-    }
-%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -138,7 +108,7 @@
     </div>
 </div>
 
-    <div class="container my-5">
+    <div class="container my-5" id="productos-seccion">
         
         <div class="seccion-destacados mb-5 shadow-sm p-4 rounded-3">
             <div class="d-flex align-items-center mb-4">
@@ -181,7 +151,7 @@
                                             
                                             <c:choose>
                                                 <c:when test="${empty sessionScope.usuarioLogueado}">
-                                                    <a href="${pageContext.request.contextPath}/vista/usuario/login.jsp" class="btn btn-sm btn-warning rounded-circle"><i class="fa-solid fa-cart-plus"></i></a>
+                                                    <a href="${pageContext.request.contextPath}/login" class="btn btn-sm btn-warning rounded-circle"><i class="fa-solid fa-cart-plus"></i></a>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <button type="button" class="btn-cart-round btn-agregar-carrito btn border-0 p-0 text-white d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; background-color: #198754; border-radius: 50%;">
@@ -212,15 +182,16 @@
                         <i class="fa-solid fa-paw text-warning me-2"></i>Categorías
                     </h5>
                     <div class="d-flex flex-column gap-1">
-                        <%-- Botón Mostrar Todo --%>
-                        <a href="catalogoProductos.jsp?idCat=0" class="btn btn-categoria d-flex align-items-center justify-content-between ${requestScope.idCatSeleccionada == 0 ? 'active btn-primary' : 'btn-light'}">
+                        
+                        <%-- Botón Mostrar Todo apuntando al Servlet --%>
+                        <a href="${pageContext.request.contextPath}/catalogo?idCat=0" class="btn btn-categoria d-flex align-items-center justify-content-between ${requestScope.idCatSeleccionada == 0 || empty requestScope.idCatSeleccionada ? 'active btn-primary' : 'btn-light'}">
                             <span><i class="fa-solid fa-border-all me-2"></i> Todo el catálogo</span>
                             <i class="fa-solid fa-chevron-right small opacity-50"></i>
                         </a>
                         
-                        <%-- Lista Dinámica de Categorías --%>
+                        <%-- Lista Dinámica apuntando de forma segura al Servlet --%>
                         <c:forEach var="c" items="${requestScope.listaCategorias}">
-                            <a href="catalogoProductos.jsp?idCat=${c.idCategoria}" 
+                            <a href="${pageContext.request.contextPath}/catalogo?idCat=${c.idCategoria}" 
                                class="btn btn-categoria d-flex align-items-center justify-content-between ${requestScope.idCatSeleccionada == c.idCategoria ? 'active btn-primary' : 'btn-light'}">
                                 <span><i class="fa-solid fa-tag me-2 small"></i> ${c.nombre}</span>
                                 <i class="fa-solid fa-chevron-right small opacity-50"></i>
@@ -232,10 +203,13 @@
 
             <div class="col-lg-9">
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 px-2 gap-2">
-<h4 class="fw-bold text-dark mb-0">
-    <i class="fa-solid fa-boxes-stacked text-secondary me-2"></i>
-    ${requestScope.idCatSeleccionada == 0 ? 'Nuestros Productos' : 'Filtrado por Categoría'}
-</h4>
+                    <h4 class="fw-bold text-dark mb-0">
+                        <i class="fa-solid fa-boxes-stacked text-secondary me-2"></i>
+                        <c:choose>
+                            <c:when test="${requestScope.idCatSeleccionada == 0 || empty requestScope.idCatSeleccionada}">Nuestros Productos</c:when>
+                            <c:otherwise>Filtrado por Categoría</c:otherwise>
+                        </c:choose>
+                    </h4>
                     <span class="badge bg-dark px-3 py-2 rounded-pill fw-semibold">${not empty requestScope.listaProductos ? requestScope.listaProductos.size() : 0} artículos listados</span>
                 </div>
 
@@ -257,7 +231,7 @@
                                         
                                         <div class="card-body-premium flex-grow-1 d-flex flex-column justify-content-between">
                                             <div>
-                                                <h6 class="product-title fw-bold text-dark text-truncate mb-1">${p.getNombre()}</h6>
+                                                <h6 class="product-title fw-bold text-dark text-truncate mb-1">${p.nombre}</h6>
                                                 <p class="product-desc text-muted small text-truncate-2" style="height: 36px; overflow: hidden;">${p.descripcion}</p>
                                                 
                                                 <div class="d-flex justify-content-between align-items-center mb-3 mt-2">
@@ -302,9 +276,6 @@
      
     <jsp:include page="/vista/Extra/Footer.jsp" />
     <script src="${pageContext.request.contextPath}/Js/carrito-global.js"></script>
-    
-
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

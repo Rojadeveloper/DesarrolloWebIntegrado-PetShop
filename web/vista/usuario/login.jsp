@@ -19,9 +19,15 @@
 <body>
 
 <div class="login-box">
-    <a href="<%= request.getContextPath() %>/index.jsp" class="close-btn" title="Volver al Inicio">×</a>
+    <a href="<%= request.getContextPath() %>/inicio" class="close-btn" title="Volver al Inicio">×</a>
     
     <h2>Iniciar Sesión</h2>
+    
+    <% if (request.getAttribute("error") != null) { %>
+        <div class="alert alert-danger text-center py-2" style="font-size: 14px; border-radius: 10px;">
+            <%= request.getAttribute("error") %>
+        </div>
+    <% } %>
     
     <form action="${pageContext.request.contextPath}/login" method="post">
         <input type="email" name="correo" placeholder="Correo electrónico" required>

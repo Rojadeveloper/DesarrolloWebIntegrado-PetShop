@@ -1,6 +1,3 @@
-/*
-SERVLET BY RNYV
-*/
 package controlador;
 
 import jakarta.servlet.ServletException;

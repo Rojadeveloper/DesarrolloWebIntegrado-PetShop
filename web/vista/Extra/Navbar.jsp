@@ -33,7 +33,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white-50" href="${pageContext.request.contextPath}/vista/cliente/catalogoProductos.jsp">
+                        <a class="nav-link text-white-50" href="${pageContext.request.contextPath}/catalogo">
                             <i class="fa-solid fa-boxes-stacked me-1"></i> Ver Productos
                         </a>
                     </li>
@@ -42,7 +42,7 @@
                 <%-- VISTA PARA VISITANTES O CLIENTES --%>
                 <c:if test="${empty sessionScope.usuarioLogueado || sessionScope.usuarioLogueado.rol ne 'ADMIN'}">
                     <li class="nav-item">
-                        <a class="nav-link text-white-50" href="${pageContext.request.contextPath}/vista/cliente/catalogoProductos.jsp">Catálogo</a>
+                        <a class="nav-link text-white-50" href="${pageContext.request.contextPath}/catalogo">Catálogo</a>
                     </li>
                 </c:if>
             </ul>
@@ -58,7 +58,7 @@
             <c:choose>
                 <%-- SI NO HAY SESIÓN ACTIVA --%>
                 <c:when test="${empty sessionScope.usuarioLogueado}">
-                    <a class="btn btn-outline-light me-2 border-secondary-custom text-white-50" href="${pageContext.request.contextPath}/vista/usuario/login.jsp">Login</a>
+                    <a class="btn btn-outline-light me-2 border-secondary-custom text-white-50" href="${pageContext.request.contextPath}/login">Login</a>
                     <a class="btn btn-agregar-dash" href="${pageContext.request.contextPath}/vista/usuario/registro.jsp">Registro</a>
                 </c:when>
                 

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controlador;
 
 import servicio.UsuarioServicio;
@@ -24,6 +20,14 @@ public class RegistroServlet extends HttpServlet {
         usuarioServicio = new UsuarioServicio();
     }
 
+    // 📥 MUESTRA LA VISTA DE REGISTRO
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/vista/usuario/registro.jsp").forward(request, response);
+    }
+
+    // 📤 PROCESA LA CREACIÓN DE LA CUENTA
     @Override
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response)
@@ -41,13 +45,11 @@ public class RegistroServlet extends HttpServlet {
         boolean registrado = usuarioServicio.registrarUsuario(dto);
 
         if (registrado) {
-
-            response.sendRedirect(request.getContextPath() + "/vista/usuario/login.jsp");
-
+            // Si el registro funciona, lo mandamos al servlet /login
+            response.sendRedirect(request.getContextPath() + "/login");
         } else {
-
+            // Si el correo ya existe, volvemos a cargar con el mensaje de error
             request.setAttribute("error", "El correo ya está registrado");
-
             request.getRequestDispatcher("/vista/usuario/registro.jsp").forward(request, response);
         }
     }

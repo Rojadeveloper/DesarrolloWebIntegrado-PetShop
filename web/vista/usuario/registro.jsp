@@ -19,7 +19,7 @@
 <body>
 
 <div class="login-box">
-    <a href="<%= request.getContextPath() %>/index.jsp" class="close-btn" title="Volver al Inicio">×</a>
+    <a href="<%= request.getContextPath() %>/inicio" class="close-btn" title="Volver al Inicio">×</a>
 
     <h2>Registro de Usuario</h2>
 
@@ -54,7 +54,7 @@
     </form>
 
     <div class="switch-link">
-        ¿Ya tienes cuenta? <a href="<%= request.getContextPath() %>/vista/usuario/login.jsp">Inicia sesión</a>
+        ¿Ya tienes cuenta? <a href="<%= request.getContextPath() %>/login">Inicia sesión</a>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
